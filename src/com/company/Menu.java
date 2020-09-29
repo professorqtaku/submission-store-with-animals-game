@@ -10,6 +10,7 @@ public class Menu {
         print("Choose following:");
         print("1. New game");
         print("2. Load game");
+        print("3. End game");
     }
 
     public void printMenu(){
