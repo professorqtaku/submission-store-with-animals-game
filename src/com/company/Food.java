@@ -1,6 +1,6 @@
 package com.company;
 
-public class Food {
+public abstract class Food {
     private int price;
     public int amount;
 }

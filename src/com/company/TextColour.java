@@ -1,6 +1,7 @@
 package com.company;
 
 public class TextColour {
+    // a help class to add colours on text printed in the terminal
     public static final String RESET = "\u001B[0m"; //add reset to end the colour command
     public static final String BLACK = "\u001B[30m";
     public static final String RED = "\u001B[31m";

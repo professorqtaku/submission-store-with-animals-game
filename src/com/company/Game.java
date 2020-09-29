@@ -14,7 +14,8 @@ public class Game {
     }
 
     public void gameStart(){
-        menu.printWelcome();
+        menu.printMainMenu();
+
     }
 
 }

@@ -1,6 +1,6 @@
 package com.company;
 
-public class Animal {
+public abstract class Animal {
     private String name;
     private String gender;
     public int health;
