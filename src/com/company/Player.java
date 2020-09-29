@@ -10,24 +10,19 @@ public class Player {
     public Player(PlayerBuilder builder){
         this.name = builder.name;
         this.balance = builder.balance;
-        this.ownedAnimals = builder.ownedAnimals;
+        this.ownedAnimals = new ArrayList<>();
     }
 
-    class PlayerBuilder{
+    public static class PlayerBuilder {
         private String name;
         private int balance = 0;
-        private ArrayList<Animal> ownedAnimals = new ArrayList<>();
 
-        public void name(String name){
+        public PlayerBuilder(String name){
             this.name = name;
         }
 
         public void balance(int balance){
             this.balance = balance;
-        }
-
-        public void ownedAnimals(ArrayList<Animal> animals){
-            this.ownedAnimals = ownedAnimals;
         }
 
         public Player build(){
@@ -37,7 +32,7 @@ public class Player {
         }
 
         private void validatePlayer(Player player){
-            if(player.name == null || player.balance == 0){
+            if(player.name == null){
                 System.out.println(TextColour.YELLOW + "PLAYER NEED NAMES!" + TextColour.RESET);
                 System.exit(0);
             }

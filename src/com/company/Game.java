@@ -20,9 +20,12 @@ public class Game {
     }
 
     public void newGame(){
+        players = new ArrayList<>();
         int playerQuantity = Menu.askPlayerANumber(true, "How many players?", 4);
-        while(players.size() < playerQuantity){
-
+        while(players == null || players.size() < playerQuantity){
+            String name = Menu.askPlayer(true,
+                    "Name of player " + (players.size() == 0 ? 1 : players.size()+1));
+            players.add(new Player.PlayerBuilder(name).build());
         }
     }
 

@@ -31,6 +31,14 @@ public class Menu {
         }
     }
 
+    public static String askPlayer(boolean print, String question){
+        if(print){
+            print(question);
+        }
+        print(TextColour.GREEN + "Your choice: " + TextColour.RESET);
+        return scanner.next();
+    }
+
     public static int askPlayerANumber(boolean print, String question, int maxNumber){
         if(print) {
             print(question);
