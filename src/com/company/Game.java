@@ -15,12 +15,13 @@ public class Game {
 
     public void gameStart(){
         menu.printMainMenu();
-        int userChoice = menu.askPlayer(false, "", "1","2","3");
+        int userChoice = menu.askPlayerWithOptions(false, "", "1","2","3");
         menu.mainMenuAction(userChoice);
     }
 
     public void newGame(){
-
+        int players = menu.askPlayerWithOptions(true, "How many players?",
+                "Single play","");
     }
 
     public void loadGame(){
