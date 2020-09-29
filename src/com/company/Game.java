@@ -20,8 +20,10 @@ public class Game {
     }
 
     public void newGame(){
-        int players = menu.askPlayerWithOptions(true, "How many players?",
-                "Single play","");
+        int playerQuantity = Menu.askPlayerANumber(true, "How many players?", 4);
+        while(players.size() < playerQuantity){
+
+        }
     }
 
     public void loadGame(){
@@ -33,5 +35,4 @@ public class Game {
     }
 
     public void endGame(){}
-
 }
