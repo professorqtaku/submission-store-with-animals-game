@@ -1,5 +1,6 @@
 package com.company;
 
+import javax.print.attribute.standard.PrinterMoreInfoManufacturer;
 import java.util.ArrayList;
 
 public class Game {
@@ -22,10 +23,13 @@ public class Game {
     public void newGame(){
         players = new ArrayList<>();
         int playerQuantity = Menu.askPlayerANumber(true, "How many players?", 4);
+        int balanceStart = Menu.askPlayerANumber(true, "What is the start balance? (Max 1000)", 1000);
         while(players == null || players.size() < playerQuantity){
             String name = Menu.askPlayer(true,
-                    "Name of player " + (players.size() == 0 ? 1 : players.size()+1));
-            players.add(new Player.PlayerBuilder(name).build());
+                    "Name of player " + (players == null ? 1 : players.size()+1));
+            players.add(new Player.PlayerBuilder(name)
+                    .balance(balanceStart)
+                    .build());
         }
     }
 

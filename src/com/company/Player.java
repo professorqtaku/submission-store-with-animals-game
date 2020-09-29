@@ -21,8 +21,9 @@ public class Player {
             this.name = name;
         }
 
-        public void balance(int balance){
+        public PlayerBuilder balance(int balance){
             this.balance = balance;
+            return this;
         }
 
         public Player build(){
