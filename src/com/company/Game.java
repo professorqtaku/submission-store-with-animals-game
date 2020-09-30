@@ -16,8 +16,20 @@ public class Game {
 
     public void gameStart(){
         menu.printMainMenu();
-        int userChoice = menu.askPlayerWithOptions(false, "", "1","2","3");
-        menu.mainMenuAction(userChoice);
+        mainMenuAction(menu.askPlayerWithOptions(false, "", "1","2","3"));
+    }
+    public void mainMenuAction(int action){
+        switch(action){
+            case 1 ->{
+                newGame();
+            }
+            case 2 ->{
+                loadGame();
+            }
+            case 3 ->{
+                endGame();
+            }
+        }
     }
 
     public void newGame(){

@@ -17,20 +17,6 @@ public class Menu {
         print("3. End game");
     }
 
-    public void mainMenuAction(int action){
-        switch(action){
-            case 1 ->{
-                game.newGame();
-            }
-            case 2 ->{
-                game.loadGame();
-            }
-            case 3 ->{
-                game.endGame();
-            }
-        }
-    }
-
     public static String askPlayer(boolean print, String question){
         if(print){
             print(question);
