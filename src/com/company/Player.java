@@ -5,12 +5,16 @@ import java.util.ArrayList;
 public class Player {
     private String name;
     private int balance;
-    private ArrayList<Animal> ownedAnimals;
+    private ArrayList<Dragon> ownedAnimals;
 
     public Player(PlayerBuilder builder){
         this.name = builder.name;
         this.balance = builder.balance;
         this.ownedAnimals = new ArrayList<>();
+    }
+
+    public String getName(){
+        return this.name;
     }
 
     public static class PlayerBuilder {

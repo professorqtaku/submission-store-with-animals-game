@@ -3,18 +3,17 @@ package com.company;
 import java.util.Scanner;
 
 public class Menu {
-    Game game;
     private static Scanner scanner = new Scanner(System.in);
-    public Menu(Game game){
-        this.game = game;
-    }
+
+    public Menu(){}
 
     public void printMainMenu(){
-        print("*-*-*-* Welcome to \"MONOPOL WITH ANIMALS\"! *-*-*-*");
+        print("*-*-*-* Welcome to \"DRAGON BREEDER\"! *-*-*-*");
         print("Choose following:");
         print("1. New game");
         print("2. Load game");
-        print("3. End game");
+        print("3. How to play");
+        print("4. End game");
     }
 
     public static String askPlayer(boolean print, String question){
@@ -25,7 +24,7 @@ public class Menu {
         return scanner.next();
     }
 
-    public static int askPlayerANumber(boolean print, String question, int max, int min){
+    public static int askPlayerNumber(boolean print, String question, int max, int min){
         if(print) {
             print(question);
         }
@@ -52,7 +51,7 @@ public class Menu {
                 print(i + " " + choices[i]);
             }
         }
-        return askPlayerANumber(false, "", choices.length);
+        return askPlayerNumber(false, "", choices.length, 1);
     }
 
     private static void print(String x){
