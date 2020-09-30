@@ -5,21 +5,50 @@ import java.util.ArrayList;
 public class Player {
     private String name;
     private int balance;
-    private ArrayList<Dragon> ownedAnimals;
+    private ArrayList<Dragon> ownedDragons;
+    private ArrayList<Food> ownedFood;
+    private boolean isLost;
 
     public Player(PlayerBuilder builder){
         this.name = builder.name;
         this.balance = builder.balance;
-        this.ownedAnimals = new ArrayList<>();
+        this.ownedDragons = new ArrayList<>();
+        this.ownedFood = new ArrayList<>();
+        this.isLost = builder.isLost;
     }
 
     public String getName(){
         return this.name;
     }
 
+    public ArrayList<Dragon> getOwnedDragons() {
+        return ownedDragons;
+    }
+
+    public ArrayList<Food> getOwnedFood() {
+        return ownedFood;
+    }
+
+    public void lose(){
+        this.isLost = true;
+    }
+
+    public boolean lost(){
+        return this.isLost;
+    }
+
+    public void buyFood(Food food){
+        ownedFood.add(food);
+    }
+
+    public void buyDragon(Dragon dragon){
+        ownedDragons.add(dragon);
+    }
+
     public static class PlayerBuilder {
         private String name;
         private int balance = 0;
+        private boolean isLost = false;
 
         public PlayerBuilder(String name){
             this.name = name;
@@ -43,6 +72,4 @@ public class Player {
             }
         }
     }
-
-
 }

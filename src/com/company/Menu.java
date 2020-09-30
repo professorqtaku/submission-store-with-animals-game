@@ -7,20 +7,21 @@ public class Menu {
 
     public Menu(){}
 
-    public void printMainMenu(){
-        print("*-*-*-* Welcome to \"DRAGON BREEDER\"! *-*-*-*");
-        print("Choose following:");
+    public static void printMainMenu(){
+        print("*-*-*-* Welcome to <<DRAGON BREEDER>> *-*-*-*");
+        print("< Main menu >");
         print("1. New game");
         print("2. Load game");
         print("3. How to play");
         print("4. End game");
     }
 
+
     public static String askPlayer(boolean print, String question){
         if(print){
             print(question);
         }
-        print(TextColour.GREEN + "Your choice: " + TextColour.RESET);
+        System.out.print(TextColour.GREEN + "Your choice: " + TextColour.RESET);
         return scanner.next();
     }
 
@@ -40,7 +41,7 @@ public class Menu {
                 System.out.println("Please enter an integer!");
                 toReturn = -1;
             }
-        }while(toReturn == -1 || toReturn > max);
+        }while(toReturn == -1 || toReturn > max || toReturn < min);
         return toReturn;
     }
 

@@ -1,63 +1,99 @@
 package com.company;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class Game {
-    private Menu menu;
-    private ArrayList<Player> players;
+    Scanner scanner = new Scanner(System.in);
+    private int playedRounds;
     private int roundToPlay;
-    private DragonBreederGame currentGame;
-    public Game() {
-        menu = new Menu();
-        gameMain();
+    private ArrayList<Player> players;
+    private Player currentPlayer;
+    private Store store;
+
+
+    public Game(int playedRounds, int roundToPlay, ArrayList<Player> players){
+        this.playedRounds = playedRounds;
+        this.roundToPlay = roundToPlay;
+        this.players = players;
+        this.store = new Store();
     }
 
-    public void gameMain() {
-        menu.printMainMenu();
-        mainMenuAction(Menu.askPlayerNumber(false, "", 4, 1));
+    public void startGame(){
+        currentPlayer = players.get(0);
+        do{
+            newRound();
+            do {
+                playerTurn();
+                changePlayer();
+            } while(currentPlayer != players.get(0));
+            playedRounds++;
+        } while(playedRounds<roundToPlay);
     }
 
-    public void mainMenuAction(int action) {
-        switch (action) {
-            case 1 -> {
-                newGame();
+    public void playerTurn(){
+        printPlayerStatus();
+        printPlayerMenu();
+        playerMenuAction(Menu.askPlayerNumber(false,"",5,1));
+    }
+
+    public void printPlayerMenu(){
+        print("<Choose menu>");
+        print("1. Buy dragon");
+        print("2. Buy food");
+        print("3. Feed your dragons");
+        print("4. Breed dragons");
+        print("5. Sell dragons");
+    }
+
+    public void playerMenuAction(int action){
+        switch(action){
+            case 1, 2 -> {store.visit(currentPlayer, action);}
+            case 3 -> {}
+            case 4 -> {}
+            case 5 -> {}
+        }
+    }
+
+    public void printPlayerStatus(){
+        print("\n".repeat(50));
+        print("[" + currentPlayer.getName() + "]");
+        print("Owned dragons: " + currentPlayer.getOwnedDragons().size());
+        if(currentPlayer.getOwnedDragons().size() != 0) {
+            print("Name\tHealth");
+            for (var dragon : currentPlayer.getOwnedDragons()) {
+                print(dragon.getName() + "\t" + dragon.health);
             }
-            case 2 -> {
-                //loadGame();
-            }
-            case 3 -> {
-                //howToPlay();
-            }
-            case 4 -> {
-                //endGame();
+        }
+        print("Owned food: " + currentPlayer.getOwnedFood().size());
+        if(currentPlayer.getOwnedFood().size() != 0) {
+            print("Name\tHealth");
+            for (var food : currentPlayer.getOwnedFood()) {
+                System.out.println(food.amount);
             }
         }
     }
 
-    public void newGame() {
-        players = new ArrayList<>();
-        roundToPlay = Menu.askPlayerNumber(true, "How many rounds? (5-30)", 30, 5);
-        int playerQuantity = Menu.askPlayerNumber(true, "How many players? (1-4)", 4, 1);
-        int balanceStart = Menu.askPlayerNumber(true, "What is the start balance? (10-1000)", 1000, 10);
-        while(players == null || players.size() < playerQuantity){
-            String name = Menu.askPlayer(true,
-                    "Name of player " + (players == null ? 1 : players.size()+1));
-            players.add(new Player.PlayerBuilder(name)
-                    .balance(balanceStart)
-                    .build());
+    private void changePlayer(){
+        print("[" + currentPlayer.getName() + "] your turn has end. Please turn the computer to next player.");
+        Menu.askPlayerNumber(true,"ENTER a number when newt player is ready",10,0);
+        if(players.indexOf(currentPlayer) == players.size()-1) {
+            currentPlayer = players.get(0); //start over
         }
-        currentGame = new DragonBreederGame(0, roundToPlay, players);
+        else
+        currentPlayer = players.get(players.indexOf(currentPlayer)+1);
     }
 
-    public void loadGame() {
+    private void newRound(){
+        // lower the dragons health points
+        for(var player: players){
 
+        }
     }
 
-    public void saveGame() {
-
+    private static void print(String x){
+        // print a string if it is not empty
+        if(!x.equals("")){ System.out.println(x); }
     }
 
-    public void endGame() {
-    }
 }
 

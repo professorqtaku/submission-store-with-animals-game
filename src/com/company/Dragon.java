@@ -1,8 +1,7 @@
 package com.company;
 
-public abstract class Dragon {
-    private String name;
-    private String gender;
-    public int health;
-    private boolean isAlive;
+public class Dragon extends Animal{
+    public Dragon(String name, String gender) {
+        super(name, gender, 100, true);
+    }
 }
