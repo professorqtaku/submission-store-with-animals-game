@@ -25,7 +25,7 @@ public class Menu {
         return scanner.next();
     }
 
-    public static int askPlayerANumber(boolean print, String question, int maxNumber){
+    public static int askPlayerANumber(boolean print, String question, int max, int min){
         if(print) {
             print(question);
         }
@@ -34,14 +34,14 @@ public class Menu {
         do{
             try {
                 toReturn = Integer.parseInt(scanner.next());
-                if(toReturn > maxNumber){
-                    System.out.println("Please enter a number between 1-" + maxNumber);
+                if(toReturn > max || toReturn < min){
+                    System.out.println("Please enter a number between " + min + "-" + max);
                 }
             } catch (Exception e) {
                 System.out.println("Please enter an integer!");
                 toReturn = -1;
             }
-        }while(toReturn == -1 || toReturn > maxNumber);
+        }while(toReturn == -1 || toReturn > max);
         return toReturn;
     }
 
