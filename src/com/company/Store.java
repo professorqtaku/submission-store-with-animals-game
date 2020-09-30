@@ -12,9 +12,17 @@ public class Store {
     }
 
     public void sellDragon(){
-
+        printDragonMenu();
     }
     public void sellFood(){
+        printFoodMenu();
+    }
+
+    private void printDragonMenu(){
+
+    }
+
+    private void printFoodMenu(){
 
     }
 
