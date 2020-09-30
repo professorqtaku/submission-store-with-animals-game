@@ -2,7 +2,7 @@ package com.company;
 
 public abstract class Food {
     private int price;
-    public int amount;
+    private int amount;
 
     public Food(int price, int amount) {
         this.price = price;
