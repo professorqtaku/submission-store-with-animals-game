@@ -3,14 +3,15 @@ package com.company;
 public abstract class Animal {
     private String name;
     private String gender;
-    private int health;
+    protected int health;
     private boolean isAlive;
     private String[] foodCanEat;
     private int price;
     private int maxAge;
     private int maxBreedTimes;
+    protected int breedTimes;
 
-    public Animal(String name, String gender, int health, boolean isAlive, String[] foodCanEat, int price, int maxAge, int maxBreedTimes) {
+    public Animal(String name, String gender, int health, boolean isAlive, String[] foodCanEat, int price, int maxAge, int maxBreedTimes, int breedTimes) {
         this.name = name;
         this.gender = gender;
         this.health = health;
@@ -19,6 +20,7 @@ public abstract class Animal {
         this.price = price;
         this.maxAge = maxAge;
         this.maxBreedTimes = maxBreedTimes;
+        this.breedTimes = breedTimes;
     }
 
     public boolean living() {
@@ -29,8 +31,7 @@ public abstract class Animal {
         isAlive = false;
     }
 
-    public void eat(Food food){
-        health += food.getAmount()*10;
+    public void eat(Food food){ health += food.getAmount()*10;
     }
 
     public String getName() {

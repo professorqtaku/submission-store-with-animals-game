@@ -68,7 +68,7 @@ public class Game {
         if(currentPlayer.getOwnedFood().size() != 0) {
             print("Name\tHealth");
             for (var food : currentPlayer.getOwnedFood()) {
-                System.out.println(food.amount);
+                System.out.println(food.getAmount());
             }
         }
     }

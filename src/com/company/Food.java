@@ -9,7 +9,11 @@ public abstract class Food {
         this.amount = amount;
     }
 
-    public int getAmount(){
-        return this.amount;
+    public int getPrice() {
+        return price;
+    }
+
+    public int getAmount() {
+        return amount;
     }
 }
