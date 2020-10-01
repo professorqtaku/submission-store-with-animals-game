@@ -59,9 +59,9 @@ public class Game {
         print("[" + currentPlayer.getName() + "]");
         print("Owned dragons: " + currentPlayer.getOwnedDragons().size());
         if(currentPlayer.getOwnedDragons().size() != 0) {
-            print("Name\tHealth");
+            print("Name\tType\tHealth");
             for (var dragon : currentPlayer.getOwnedDragons()) {
-                print(dragon.getName() + "\t" + dragon.health);
+                print(dragon.getName() + "\t" + dragon.getClass().getSimpleName() + "\t" + dragon.health);
             }
         }
         //show owned food
