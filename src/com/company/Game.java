@@ -64,13 +64,7 @@ public class Game {
                 print(dragon.getName() + "\t" + dragon.health);
             }
         }
-        print("Owned food: " + currentPlayer.getOwnedFood().size());
-        if(currentPlayer.getOwnedFood().size() != 0) {
-            print("Name\tHealth");
-            for (var food : currentPlayer.getOwnedFood()) {
-                System.out.println(food.getAmount());
-            }
-        }
+        //show owned food
     }
 
     private void changePlayer(){
