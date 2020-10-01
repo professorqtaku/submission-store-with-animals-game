@@ -17,10 +17,20 @@ public abstract class Dragon {
         this.breedTimes = breedTimes;
     }
 
-    public boolean living()
+    public void eat(){}
+
+    public void looseHealth(int lostHealth){
+        this.health -= lostHealth;
     }
 
-    public void eat(Food food){}
+    public boolean living(){
+        if(health > 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 
     // abstract like interface, forces the subclasses to have this class
     public abstract void breed(Dragon partner);
