@@ -7,7 +7,7 @@ public class WoodDragon extends Dragon {
     private int maxBreedTimes = 3;
 
     public WoodDragon(String name, String gender, Player owner) {
-        super(name, gender, owner, 100, true,0,0);
+        super(name, gender, owner, 100,0,0);
     }
     public void breed(Dragon partner){
         this.breedTimes++;
@@ -18,5 +18,5 @@ public class WoodDragon extends Dragon {
             WoodDragon newDragon = new WoodDragon(name,gender,this.owner);
             this.owner.buyDragon(newDragon);
         }
-    };
+    }
 }

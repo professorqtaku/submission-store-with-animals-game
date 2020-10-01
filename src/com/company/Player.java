@@ -25,7 +25,7 @@ public class Player {
         return ownedDragons;
     }
 
-    public ArrayList<Food> getOwnedFood(){ }
+    public HashMap<String, Integer> getOwnedFood(){ return ownedFood;}
 
     public void lose(){
         this.isLost = true;
@@ -35,8 +35,7 @@ public class Player {
         return this.isLost;
     }
 
-    public void buyFood(Food food){
-    }
+    public void buyFood(Food food){}
 
     public void buyDragon(Dragon dragon){
         ownedDragons.add(dragon);

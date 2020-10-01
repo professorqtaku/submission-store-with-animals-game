@@ -7,7 +7,7 @@ public class FireDragon extends Dragon {
     private int maxBreedTimes = 5;
 
     public FireDragon(String name, String gender, Player owner) {
-        super(name, gender, owner, 100, true,0,0);
+        super(name, gender, owner, 100,0,0);
     }
     public void breed(Dragon partner){};
 }
