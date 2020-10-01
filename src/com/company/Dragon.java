@@ -18,37 +18,31 @@ public abstract class Dragon {
         owner.addDragon(this); //make sure owner knows me (Le dragon)
     }
 
-    public void eat(){}
+    public void eat(Food food, int foodQuantity){
+        health += 10*foodQuantity;
+        owner.consumeFood(food.getClass().getSimpleName(), foodQuantity);
+    }
 
-    public void looseHealth(int lostHealth){
-        this.health -= lostHealth;
+    public void reduceHealth(int healthToLose){
+        this.health -= healthToLose;
     }
 
     public boolean living(){
-        if(health > 0){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return health > 0;
     }
 
-    // abstract like interface, forces the subclasses to have this class
     public void breed(Dragon partner){
         this.breedTimes++;
         partner.breedTimes++;
         int breedSuccessFul = (int) (Math.random() * 2);
         if (breedSuccessFul == 1) {
-            System.out.printf("Congratulation! %s and %s got a baby dragon!\n", this.getName(), partner.getName());
+            System.out.printf("Congratulation! %s and %s got a baby dragon!\n", this.name, partner.name);
             makeDragon(this.owner);
         }
     }
 
+    // abstract like interface, forces the subclasses to have this class, without body
     public abstract void makeDragon(Player owner);
-
-    public String getName() {
-        return name;
-    }
 
     public void changeOwner(Player owner){
         if(this.owner.equals(owner)){
@@ -62,24 +56,5 @@ public abstract class Dragon {
             owner.addDragon(this);
         }
     }
-
-    /*
-
-    public Dragon newDragon(String dragonClassName){
-        String name = Menu.askPlayer(true, "Name the new " + dragonClassName + ".");
-        String gender = ((int)(Math.random()*2) == 1 ? "male": "female");
-        Dragon dragonToReturn;
-        switch(dragonClassName){
-            case "FireDragon" -> {dragonToReturn = new FireDragon(name,gender,this.owner);}
-            case "WoodDragon" -> {dragonToReturn = new WoodDragon(name,gender,this.owner);}
-            case "WaterDragon" -> {dragonToReturn = new WaterDragon(name,gender,this.owner);}
-            case "EarthDragon" -> {dragonToReturn = new EarthDragon(name,gender,this.owner);}
-            case "MetalDragon" -> {dragonToReturn = new MetalDragon(name,gender,this.owner);}
-            default -> throw new IllegalStateException("Unexpected value: " + dragonClassName);
-        }
-        return dragonToReturn;
-    }
-
-     */
 
 }

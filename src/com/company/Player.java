@@ -13,6 +13,13 @@ public class Player {
         this.balance = builder.balance;
         this.ownedDragons = new ArrayList<>();
         this.ownedFood = new HashMap<>();
+        addFoodToList();
+    }
+
+    private void addFoodToList(){
+        this.ownedFood.put("Fruit", 0);
+        this.ownedFood.put("Meat", 0);
+        this.ownedFood.put("Metal", 0);
     }
 
     public String getName(){
@@ -26,13 +33,17 @@ public class Player {
     public HashMap<String, Integer> getOwnedFood(){ return ownedFood;}
 
     public boolean losing(){
-        if(balance <= 0 && ownedDragons.size() == 0){
-            return true;
-        }
-        return false;
+        return (balance <= 0 && ownedDragons.size() == 0);
     }
 
-    public void buyFood(Food food){}
+    public void buyFood(Food food, int quantity){
+        balance -= food.getPrice()*quantity;
+        ownedFood.put(food.getClass().getSimpleName(), ownedFood.get(food.getClass().getSimpleName())+quantity);
+    }
+
+    public void consumeFood(Food food, int consumedQuantity){
+        ownedFood.put(food.getClass().getSimpleName(), ownedFood.get(food.getClass().getSimpleName())-consumedQuantity);
+    }
 
     public void addDragon(Dragon dragon){
         if(ownedDragons.contains(dragon)){
