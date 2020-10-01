@@ -38,7 +38,11 @@ public class Player {
     public void buyFood(Food food){}
 
     public void buyDragon(Dragon dragon){
+        if(ownedDragons.contains(dragon)){
+            return;
+        }
         ownedDragons.add(dragon);
+        dragon.changeOwner(this);
     }
 
     public static class PlayerBuilder {

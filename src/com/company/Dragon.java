@@ -51,6 +51,14 @@ public abstract class Dragon {
         this.health = health;
     }
 
+    public void changeOwner(Player owner){
+        if(this.owner.equals(owner)){
+            return;
+        }
+        this.owner = owner;
+        owner.buyDragon(this);
+    }
+
     /*
 
     public Dragon newDragon(String dragonClassName){
