@@ -9,14 +9,11 @@ public class WoodDragon extends Dragon {
     public WoodDragon(String name, String gender, Player owner) {
         super(name, gender, owner, 100,0,0);
     }
-    public void breed(Dragon partner){
-        this.breedTimes++;
-        partner.breedTimes++;
-        int breedSuccessFul = (int) (Math.random() * 2);
-        if (breedSuccessFul == 1) {
-            System.out.printf("Congratulation! %s and %s got a baby dragon!", this.getName(), partner.getName());
-            WoodDragon newDragon = new WoodDragon(name,gender,this.owner);
-            this.owner.buyDragon(newDragon);
-        }
+
+    public void makeDragon(Player owner){
+        String name = Menu.askPlayer(true, "Please name the new " + this.getClass().getSimpleName());
+        String gender = ((int) (Math.random()*2) == 1 ? "male": "female");
+        WoodDragon newDragon = new WoodDragon(name,gender,owner);
+        owner.addDragon(newDragon);
     }
 }

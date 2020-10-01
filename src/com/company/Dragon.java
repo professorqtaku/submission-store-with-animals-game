@@ -15,6 +15,7 @@ public abstract class Dragon {
         this.health = health;
         this.age = age;
         this.breedTimes = breedTimes;
+        owner.addDragon(this); //make sure owner knows me (Le dragon)
     }
 
     public void eat(){}
@@ -33,22 +34,20 @@ public abstract class Dragon {
     }
 
     // abstract like interface, forces the subclasses to have this class
-    public abstract void breed(Dragon partner);
+    public void breed(Dragon partner){
+        this.breedTimes++;
+        partner.breedTimes++;
+        int breedSuccessFul = (int) (Math.random() * 2);
+        if (breedSuccessFul == 1) {
+            System.out.printf("Congratulation! %s and %s got a baby dragon!\n", this.getName(), partner.getName());
+            makeDragon(this.owner);
+        }
+    }
+
+    public abstract void makeDragon(Player owner);
 
     public String getName() {
         return name;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public int getHealth() {
-        return health;
-    }
-
-    public void setHealth(int health) {
-        this.health = health;
     }
 
     public void changeOwner(Player owner){
@@ -57,10 +56,10 @@ public abstract class Dragon {
         }
         this.owner = owner;
         if(owner == null){
-            owner.sellDragon(this);
+            owner.removeDragon(this);
         }
         else {
-            owner.buyDragon(this);
+            owner.addDragon(this);
         }
     }
 

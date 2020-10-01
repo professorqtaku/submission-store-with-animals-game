@@ -7,14 +7,12 @@ public class Player {
     private int balance;
     private ArrayList<Dragon> ownedDragons;
     private HashMap<String, Integer> ownedFood; // key = name of food, value = quantity
-    private boolean isLost;
 
     public Player(PlayerBuilder builder){
         this.name = builder.name;
         this.balance = builder.balance;
         this.ownedDragons = new ArrayList<>();
         this.ownedFood = new HashMap<>();
-        this.isLost = builder.isLost;
     }
 
     public String getName(){
@@ -27,17 +25,16 @@ public class Player {
 
     public HashMap<String, Integer> getOwnedFood(){ return ownedFood;}
 
-    public void lose(){
-        this.isLost = true;
-    }
-
-    public boolean lost(){
-        return this.isLost;
+    public boolean losing(){
+        if(balance <= 0 && ownedDragons.size() == 0){
+            return true;
+        }
+        return false;
     }
 
     public void buyFood(Food food){}
 
-    public void buyDragon(Dragon dragon){
+    public void addDragon(Dragon dragon){
         if(ownedDragons.contains(dragon)){
             return;
         }
@@ -45,7 +42,7 @@ public class Player {
         dragon.changeOwner(this);
     }
 
-    public void sellDragon(Dragon dragon){
+    public void removeDragon(Dragon dragon){
         if(!ownedDragons.contains(dragon)){
             return;
         }
@@ -56,7 +53,6 @@ public class Player {
     public static class PlayerBuilder {
         private String name;
         private int balance = 0;
-        private boolean isLost = false;
 
         public PlayerBuilder(String name){
             this.name = name;
