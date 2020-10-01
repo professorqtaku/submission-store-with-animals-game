@@ -1,14 +1,14 @@
 package com.company;
 
 public abstract class Animal {
-    private String name;
-    private String gender;
+    protected String name;
+    protected String gender;
     protected int health;
-    private boolean isAlive;
-    private String[] foodCanEat;
-    private int price;
-    private int maxAge;
-    private int maxBreedTimes;
+    protected boolean isAlive;
+    protected String[] foodCanEat;
+    protected int price;
+    protected int maxAge;
+    protected int maxBreedTimes;
     protected int breedTimes;
 
     public Animal(String name, String gender, int health, boolean isAlive, String[] foodCanEat, int price, int maxAge, int maxBreedTimes, int breedTimes) {
