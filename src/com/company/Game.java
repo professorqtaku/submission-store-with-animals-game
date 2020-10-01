@@ -64,7 +64,11 @@ public class Game {
                 print(dragon.name + "\t" + dragon.getClass().getSimpleName() + "\t" + dragon.health);
             }
         }
-        //show owned food
+        print("Owned food: ");
+        for(var foodType: currentPlayer.getOwnedFood().keySet()){
+            System.out.print(foodType + ": " + currentPlayer.getOwnedFood().get(foodType) + "\t");
+        }
+        print("\n");
     }
 
     private void changePlayer(){
