@@ -45,6 +45,14 @@ public class Player {
         dragon.changeOwner(this);
     }
 
+    public void sellDragon(Dragon dragon){
+        if(!ownedDragons.contains(dragon)){
+            return;
+        }
+        ownedDragons.remove(dragon);
+        dragon.changeOwner(null);
+    }
+
     public static class PlayerBuilder {
         private String name;
         private int balance = 0;

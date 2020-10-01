@@ -56,7 +56,12 @@ public abstract class Dragon {
             return;
         }
         this.owner = owner;
-        owner.buyDragon(this);
+        if(owner == null){
+            owner.sellDragon(this);
+        }
+        else {
+            owner.buyDragon(this);
+        }
     }
 
     /*
