@@ -1,22 +1,59 @@
 package com.company;
 
-public class Dragon extends Animal{
+public abstract class Dragon {
+    protected String name;
+    protected String gender;
     protected Player owner;
-    protected int price;
-    public Dragon(String name, String gender, String[] foodCanEat, int price, int maxAge, int maxBreedTimes, Player owner) {
-        super(name, gender, 100, true, foodCanEat, maxAge, maxBreedTimes, 0);
+    protected int health;
+    protected boolean isAlive;
+
+    public Dragon(String name, String gender, Player owner, int health, boolean isAlive) {
+        this.name = name;
+        this.gender = gender;
         this.owner = owner;
-        this.price = price;
+        this.health = health;
+        this.isAlive = isAlive;
     }
 
-    public void breed(Dragon partner) {
+    public boolean living() {
+        return isAlive;
+    }
+
+    public void die(){
+        isAlive = false;
+    }
+
+    public void eat(Food food){ health += food.getAmount()*10;
+    }
+
+    // abstract like interface
+    public abstract void breed();
+
+    public String getName() {
+        return name;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    /*
+    public void breedDragon(Dragon partner) {
         this.breedTimes++;
         partner.breedTimes++;
         int breedSuccessFul = (int) (Math.random() * 2);
         if (breedSuccessFul == 1) {
             System.out.printf("Congratulation! %s and %s got a baby dragon!", this.getName(), partner.getName());
-             Dragon newDragon = newDragon(this.getClass().getSimpleName());
-             owner.buyDragon(newDragon);
+            Dragon newDragon = newDragon(this.getClass().getSimpleName());
+            //owner.buyDragon(newDragon);
         }
     }
 
@@ -34,4 +71,7 @@ public class Dragon extends Animal{
         }
         return dragonToReturn;
     }
+
+     */
+
 }

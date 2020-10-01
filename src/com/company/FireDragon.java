@@ -1,7 +1,15 @@
 package com.company;
 
-public class FireDragon extends Dragon{
+public class FireDragon extends Dragon {
+    private int price = 500;
+    private String[] foodCanEat = new String[]{"fruit", "meat"};
+    private int maxAge = 15;
+    private int maxBreedTimes = 5;
+
+    private int age;
+    private int breedTimes;
     public FireDragon(String name, String gender, Player owner) {
-        super(name, gender, new String[]{"fruit", "meat"}, 500, 15, 5, owner);
+        super(name, gender, owner, 100, true);
     }
+    public void breed(){};
 }
