@@ -20,7 +20,7 @@ public abstract class Dragon {
 
     public void eat(Food food, int foodQuantity){
         health += 10*foodQuantity;
-        owner.consumeFood(food.getClass().getSimpleName(), foodQuantity);
+        owner.consumeFood(food, foodQuantity);
     }
 
     public void reduceHealth(int healthToLose){
