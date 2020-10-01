@@ -1,7 +1,9 @@
 package com.company;
 
 public class Metal extends Food{
-    public Metal(int amount) {
-        super(10*amount, amount);
+    private int price = 100;
+
+    public int getPrice(){
+        return this.price;
     }
 }

@@ -32,9 +32,9 @@ public class GameMainMenu {
 
     public void newGame() {
         ArrayList<Player> players = new ArrayList<>();
-        int roundToPlay = Menu.askPlayerNumber(true, "How many rounds? (5-30)", 30, 5);
-        int playerQuantity = Menu.askPlayerNumber(true, "How many players? (1-4)", 4, 1);
-        int balanceStart = Menu.askPlayerNumber(true, "What is the start balance? (10-1000)", 1000, 10);
+        int roundToPlay = Menu.askPlayerNumber(true, "How many rounds (5-30)?", 30, 5);
+        int playerQuantity = Menu.askPlayerNumber(true, "How many players (1-4)?", 4, 1);
+        int balanceStart = Menu.askPlayerNumber(true, "What is the start balance(10-10000)?", 10000, 10);
         while(players.size() < playerQuantity){
             String name = Menu.askPlayer(true,
                     "Name of player " + (players.size()+1));

@@ -9,5 +9,5 @@ public class WaterDragon extends Dragon {
     public WaterDragon(String name, String gender, Player owner) {
         super(name, gender, owner, 100, true,0,0);
     }
-    public void breed(){};
+    public void breed(Dragon partner){};
 }

@@ -5,33 +5,25 @@ public abstract class Dragon {
     protected String gender;
     protected Player owner;
     protected int health;
-    protected boolean isAlive;
     protected int age;
     protected int breedTimes;
 
-    public Dragon(String name, String gender, Player owner, int health, boolean isAlive, int age, int breedTimes) {
+    public Dragon(String name, String gender, Player owner, int health, int age, int breedTimes) {
         this.name = name;
         this.gender = gender;
         this.owner = owner;
         this.health = health;
-        this.isAlive = isAlive;
         this.age = age;
         this.breedTimes = breedTimes;
     }
 
-    public boolean living() {
-        return isAlive;
+    public boolean living()
     }
 
-    public void die(){
-        isAlive = false;
-    }
+    public void eat(Food food){}
 
-    public void eat(Food food){ health += food.getAmount()*10;
-    }
-
-    // abstract like interface
-    public abstract void breed();
+    // abstract like interface, forces the subclasses to have this class
+    public abstract void breed(Dragon partner);
 
     public String getName() {
         return name;
@@ -50,16 +42,6 @@ public abstract class Dragon {
     }
 
     /*
-    public void breedDragon(Dragon partner) {
-        this.breedTimes++;
-        partner.breedTimes++;
-        int breedSuccessFul = (int) (Math.random() * 2);
-        if (breedSuccessFul == 1) {
-            System.out.printf("Congratulation! %s and %s got a baby dragon!", this.getName(), partner.getName());
-            Dragon newDragon = newDragon(this.getClass().getSimpleName());
-            //owner.buyDragon(newDragon);
-        }
-    }
 
     public Dragon newDragon(String dragonClassName){
         String name = Menu.askPlayer(true, "Name the new " + dragonClassName + ".");

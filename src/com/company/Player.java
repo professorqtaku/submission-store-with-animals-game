@@ -1,19 +1,19 @@
 package com.company;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class Player {
     private String name;
     private int balance;
     private ArrayList<Dragon> ownedDragons;
-    private ArrayList<Food> ownedFood;
+    private HashMap<String, Integer> ownedFood; // key = name of food, value = quantity
     private boolean isLost;
 
     public Player(PlayerBuilder builder){
         this.name = builder.name;
         this.balance = builder.balance;
         this.ownedDragons = new ArrayList<>();
-        this.ownedFood = new ArrayList<>();
+        this.ownedFood = new HashMap<>();
         this.isLost = builder.isLost;
     }
 
@@ -25,9 +25,7 @@ public class Player {
         return ownedDragons;
     }
 
-    public ArrayList<Food> getOwnedFood() {
-        return ownedFood;
-    }
+    public ArrayList<Food> getOwnedFood(){ }
 
     public void lose(){
         this.isLost = true;
@@ -38,7 +36,6 @@ public class Player {
     }
 
     public void buyFood(Food food){
-        ownedFood.add(food);
     }
 
     public void buyDragon(Dragon dragon){
