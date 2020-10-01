@@ -2,9 +2,11 @@ package com.company;
 
 public class Dragon extends Animal{
     protected Player owner;
+    protected int price;
     public Dragon(String name, String gender, String[] foodCanEat, int price, int maxAge, int maxBreedTimes, Player owner) {
-        super(name, gender, 100, true, foodCanEat, price, maxAge, maxBreedTimes, 0);
+        super(name, gender, 100, true, foodCanEat, maxAge, maxBreedTimes, 0);
         this.owner = owner;
+        this.price = price;
     }
 
     public void breed(Dragon partner) {

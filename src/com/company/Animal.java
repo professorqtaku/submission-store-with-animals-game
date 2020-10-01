@@ -6,18 +6,16 @@ public abstract class Animal {
     protected int health;
     protected boolean isAlive;
     protected String[] foodCanEat;
-    protected int price;
     protected int maxAge;
     protected int maxBreedTimes;
     protected int breedTimes;
 
-    public Animal(String name, String gender, int health, boolean isAlive, String[] foodCanEat, int price, int maxAge, int maxBreedTimes, int breedTimes) {
+    public Animal(String name, String gender, int health, boolean isAlive, String[] foodCanEat, int maxAge, int maxBreedTimes, int breedTimes) {
         this.name = name;
         this.gender = gender;
         this.health = health;
         this.isAlive = isAlive;
         this.foodCanEat = foodCanEat;
-        this.price = price;
         this.maxAge = maxAge;
         this.maxBreedTimes = maxBreedTimes;
         this.breedTimes = breedTimes;
