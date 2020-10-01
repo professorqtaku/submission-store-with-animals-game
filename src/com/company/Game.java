@@ -23,11 +23,13 @@ public class Game {
         do{
             newRound();
             do {
+                if(!currentPlayer.losing()){
                 playerTurn();
+                }
                 changePlayer();
             } while(currentPlayer != players.get(0));
             playedRounds++;
-        } while(playedRounds<roundToPlay);
+        } while(playedRounds<roundToPlay || gameOver());
     }
 
     public void playerTurn(){
@@ -88,8 +90,16 @@ public class Game {
         }
     }
 
+    private boolean gameOver(){
+        for(var player: players){
+            if(!player.losing()){
+                return false;
+            }
+        }
+        return true;
+    }
+
     private static void print(String x){
-        // print a string if it is not empty
         if(!x.equals("")){ System.out.println(x); }
     }
 
