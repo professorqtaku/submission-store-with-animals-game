@@ -6,13 +6,17 @@ public abstract class Dragon {
     protected Player owner;
     protected int health;
     protected boolean isAlive;
+    protected int age;
+    protected int breedTimes;
 
-    public Dragon(String name, String gender, Player owner, int health, boolean isAlive) {
+    public Dragon(String name, String gender, Player owner, int health, boolean isAlive, int age, int breedTimes) {
         this.name = name;
         this.gender = gender;
         this.owner = owner;
         this.health = health;
         this.isAlive = isAlive;
+        this.age = age;
+        this.breedTimes = breedTimes;
     }
 
     public boolean living() {
