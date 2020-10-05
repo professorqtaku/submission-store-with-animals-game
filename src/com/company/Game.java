@@ -45,11 +45,12 @@ public class Game {
         print("3. Feed your dragons");
         print("4. Breed dragons");
         print("5. Sell dragons");
+        print("6. Skip round (any other number is fine)");
     }
 
     public void playerMenuAction(int action){
         switch(action){
-            case 1, 2 -> {store.visit(currentPlayer, action);}
+            case 1, 2, 5-> {store.visit(currentPlayer, action);}
             case 3 -> {
                 if(currentPlayer.getOwnedDragons().size() == 0 || !currentPlayer.foodAvailable()){
                     print("There is no dragon/food to feed");
@@ -62,8 +63,14 @@ public class Game {
                     }
                 }
             }
-            case 4 -> {}
-            case 5 -> {}
+            case 4 -> {
+                if(currentPlayer.getOwnedDragons().size()>2){
+                }
+                else{
+                    System.out.println(TextColour.RED + "Not enough dragons!" + TextColour.RESET);
+                    playerTurn();
+                }
+            }
         }
     }
 

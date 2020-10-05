@@ -2,7 +2,6 @@ package com.company;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.Objects;
 
 public class Store {
     private Player visitor;
@@ -37,19 +36,13 @@ public class Store {
         switch(action){
             case 1 -> {sellDragon();}
             case 2 -> {sellFood();}
+            case 5 -> {buyDragonFromPlayer();}
         }
     }
 
     public void sellDragon(){
         ArrayList<String> dragonsCanBuy = dragonsPlayerCanBuyMenu();
         sellDragonAction(dragonsCanBuy);
-    }
-
-    public void sellFood(){
-        printFoodMenu();
-        sellFoodMenuAction(Objects.requireNonNull(getFoodByIndex(Menu.askPlayerNumber(
-                true, "Which food do you want to buy?", foodTypes.keySet().size(), 1))));
-
     }
 
     public ArrayList<String> dragonsPlayerCanBuyMenu(){
@@ -65,6 +58,7 @@ public class Store {
         }
         if(dragonsAvailable.size() == 0){
             System.out.println(TextColour.RED + "You do not have money to buy more dragons!" + TextColour.RESET);
+            Menu.sleep(2000);
             game.playerTurn(); // back to action menu
         }
         return dragonsAvailable;
@@ -93,41 +87,48 @@ public class Store {
         }
     }
 
-    public void printFoodMenu(){
+    public void sellFood(){
+        ArrayList<String> foodCanBuy = foodPlayerCanBuyMenu();
+        sellFoodMenuAction(foodCanBuy);
+
+    }
+
+    public ArrayList<String> foodPlayerCanBuyMenu(){
         System.out.println("*** Food ***");
-        boolean noMoney = true;
-        int listCount = 1;
+        ArrayList<String> foodsCanBuy = new ArrayList<>();
         if(visitor != null){
             for (var key : foodTypes.keySet()) {
-                System.out.println((visitor.getBalance() <= foodTypes.get(key).getPrice() ? TextColour.BLACK : "") +
-                        listCount + ". " + key + TextColour.RESET);
-                listCount++;
-                if(visitor.getBalance() >= foodTypes.get(key).getPrice())
-                noMoney = false;
+                if(visitor.getBalance() >= foodTypes.get(key).getPrice()){
+                    foodsCanBuy.add(key);
+                    System.out.println(foodsCanBuy.size() + ". " + key);
+                }
             }
         }
-        if(noMoney){
+        if(foodsCanBuy.size() == 0){
             System.out.println(TextColour.RED + "You do not have money to buy more food!" + TextColour.RESET);
+            Menu.sleep(2000);
             game.playerTurn(); // back to action menu
         }
+        return foodsCanBuy;
     }
 
-    private String getFoodByIndex(int index){
-        int i = 1;
-        for(var key: foodTypes.keySet()){
-            if(i == index) return key;
-            i++;
-        }
-        return null;
-    }
-
-    private void sellFoodMenuAction(String foodType){
-        int amount = Menu.askPlayerNumber(true, "How much do you want to buy? ",
-                visitor.getBalance()/foodTypes.get(foodType).getPrice(),0);
-        visitor.buyFood(foodTypes.get(foodType), amount);
-        boolean buyMore = (Menu.askPlayerNumber(true, "Do you want to buy more food? (1 = yes, 0 = no)", 1, 0) == 1);
+    private void sellFoodMenuAction(ArrayList<String> foodCanBuy){
+        String foodToBuy = foodCanBuy.get(
+                Menu.askPlayerNumber(true, "What food do you want to buy?",foodCanBuy.size(),1)-1);
+        int amount = Menu.askPlayerNumber(true, "How much do you want to buy (0-" +
+                        visitor.getBalance()/foodTypes.get(foodToBuy).getPrice() + ")? ",
+                visitor.getBalance()/foodTypes.get(foodToBuy).getPrice(),0);
+        visitor.buyFood(foodTypes.get(foodToBuy), amount);
+        boolean buyMore = (Menu.askPlayerNumber(true,
+                "Do you want to buy more food? (1 = yes, 0 = no)", 1, 0) == 1);
         if(buyMore){
             sellFood();
+        }
+    }
+
+    private void buyDragonFromPlayer(){
+        for(var dragon: visitor.getOwnedDragons()){
+
         }
     }
 

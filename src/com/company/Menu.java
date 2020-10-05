@@ -42,6 +42,7 @@ public class Menu {
                 toReturn = -1;
             }
         }while(toReturn == -1 || toReturn > max || toReturn < min);
+        Menu.sleep(300);
         return toReturn;
     }
 
@@ -58,6 +59,15 @@ public class Menu {
     private static void print(String x){
         // print a string if it is not empty
         if(!x.equals("")){ System.out.println(x); }
+    }
+
+    public static void sleep(int milliseconds){
+        try {
+            Thread.sleep(milliseconds);
+        }
+        catch(Exception e){
+            System.out.println("Error: " + e);
+        }
     }
 
 
