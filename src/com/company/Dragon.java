@@ -4,18 +4,22 @@ public abstract class Dragon {
     protected String name;
     protected String gender;
     protected Player owner;
+    private int price;
     protected int health;
     protected int age;
     protected int breedTimes;
 
-    public Dragon(String name, String gender, Player owner, int health, int age, int breedTimes) {
+    public Dragon(String name, String gender, Player owner, int price, int health, int age, int breedTimes) {
         this.name = name;
         this.gender = gender;
         this.owner = owner;
+        this.price = price;
         this.health = health;
         this.age = age;
         this.breedTimes = breedTimes;
-        owner.addDragon(this); //make sure owner knows me (Le dragon)
+        if(owner != null) {
+            owner.addDragon(this); //make sure owner knows me (Le dragon)
+        }
     }
 
     public void eat(Food food, int foodQuantity){
@@ -32,12 +36,17 @@ public abstract class Dragon {
     }
 
     public void breed(Dragon partner){
-        this.breedTimes++;
-        partner.breedTimes++;
-        int breedSuccessFul = (int) (Math.random() * 2);
-        if (breedSuccessFul == 1) {
-            System.out.printf("Congratulation! %s and %s got a baby dragon!\n", this.name, partner.name);
-            makeDragon(this.owner);
+        if(this.getClass().getSimpleName() == partner.getClass().getSimpleName()) {
+            this.breedTimes++;
+            partner.breedTimes++;
+            int breedSuccessFul = (int) (Math.random() * 2);
+            if (breedSuccessFul == 1) {
+                System.out.printf("Congratulation! %s and %s got a baby dragon!\n", this.name, partner.name);
+                makeDragon(this.owner);
+            }
+        }
+        else{
+            System.out.println(TextColour.RED + "OBS! Dragons with different elements cannot breed. Breed unsuccessful!" + TextColour.RESET);
         }
     }
 
@@ -57,4 +66,7 @@ public abstract class Dragon {
         }
     }
 
+    public int getPrice() {
+        return price;
+    }
 }

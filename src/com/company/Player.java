@@ -48,10 +48,6 @@ public class Player {
         this.ownedFood.put("Metal", 0);
     }
 
-    public String getName(){
-        return this.name;
-    }
-
     public ArrayList<Dragon> getOwnedDragons() {
         return ownedDragons;
     }
@@ -86,4 +82,12 @@ public class Player {
         ownedDragons.remove(dragon);
         dragon.changeOwner(null);
     }
+
+    public String getName(){
+        return this.name;
+    }
+
+    public int getBalance(){ return this.balance; }
+
+
 }
