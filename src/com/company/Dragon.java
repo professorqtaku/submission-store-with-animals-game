@@ -11,15 +11,17 @@ public abstract class Dragon {
 
     public Dragon(String name, String gender, Player owner, int price, int health, int age, int breedTimes) {
         this.name = name;
-        this.gender = gender.toUpperCase();
+        if(gender != null)
+            this.gender = gender.toUpperCase();
+        else this.gender = null;
         this.owner = owner;
         this.price = price;
         this.health = health;
         this.age = age;
         this.breedTimes = breedTimes;
-        if(owner != null) {
-            owner.addDragon(this); //make sure owner knows me (Le dragon)
-        }
+        if(owner != null)
+            owner.addDragon(this, false); //make sure owner knows me (Le dragon)
+        else this.owner = null;
     }
 
     public void eat(String foodType, int foodQuantity){
@@ -37,7 +39,7 @@ public abstract class Dragon {
     }
 
     public void breed(Dragon partner){
-        if(this.getClass().getSimpleName() == partner.getClass().getSimpleName()) {
+        if(this.getClass().getSimpleName().equals(partner.getClass().getSimpleName())) {
             this.breedTimes++;
             partner.breedTimes++;
             int breedSuccessFul = (int) (Math.random() * 2);
@@ -54,7 +56,7 @@ public abstract class Dragon {
     // abstract like interface, forces the subclasses to have this class, without body
     public abstract void makeDragon(Player owner);
 
-    public void changeOwner(Player owner){
+    public void changeOwner(Player owner, boolean purchase){
         if(this.owner.equals(owner)){
             return;
         }
@@ -63,7 +65,7 @@ public abstract class Dragon {
             owner.removeDragon(this);
         }
         else {
-            owner.addDragon(this);
+            owner.addDragon(this, purchase);
         }
     }
 

@@ -1,5 +1,6 @@
 package com.company;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Objects;
 
@@ -40,10 +41,8 @@ public class Store {
     }
 
     public void sellDragon(){
-        printDragonMenu();
-        sellDragonAction(
-                Objects.requireNonNull(getDragonByIndex(Menu.askPlayerNumber(
-                        true, "Which dragon do you want to buy?", dragonTypes.keySet().size(), 1))));
+        ArrayList<String> dragonsCanBuy = dragonsPlayerCanBuyMenu();
+        sellDragonAction(dragonsCanBuy);
     }
 
     public void sellFood(){
@@ -53,49 +52,42 @@ public class Store {
 
     }
 
-    public void printDragonMenu(){
+    public ArrayList<String> dragonsPlayerCanBuyMenu(){
         System.out.println("*** DRAGONS ***");
-        int listCount = 1;
-        boolean noMoney = true;
+        ArrayList<String> dragonsAvailable = new ArrayList<>();
         if(visitor != null){
-            for (var key : dragonTypes.keySet()) {
-                System.out.println((visitor.getBalance() <= dragonTypes.get(key).getPrice() ? TextColour.BLACK : "") +
-                        listCount + ". " + key + TextColour.RESET);
-                listCount++;
-                if(visitor.getBalance() >= dragonTypes.get(key).getPrice())
-                    noMoney = false;
+            for (var dragon : dragonTypes.keySet()) {
+                if(visitor.getBalance() >= dragonTypes.get(dragon).getPrice()){
+                    dragonsAvailable.add(dragon);
+                    System.out.println(dragonsAvailable.size() + ". " + dragon);
+                }
             }
         }
-        if(noMoney){
+        if(dragonsAvailable.size() == 0){
             System.out.println(TextColour.RED + "You do not have money to buy more dragons!" + TextColour.RESET);
             game.playerTurn(); // back to action menu
         }
+        return dragonsAvailable;
     }
 
-    private String getDragonByIndex(int index){
-        int i = 1;
-        for(var key: dragonTypes.keySet()){
-            if(i == index) return key;
-            i++;
-        }
-        return null;
-    }
-
-    private void sellDragonAction(String dragonType){
-        System.out.println("You bought a " + dragonType);
-        String name = Menu.askPlayer(true, "Please name the " + dragonType + ": ");
+    private void sellDragonAction(ArrayList<String> dragonsCanBuy){
+        String dragonToBuy = dragonsCanBuy.get(
+                Menu.askPlayerNumber(true,"Which dragon do you want to buy?", dragonsCanBuy.size(),1)-1);
+        System.out.println("You bought a " + dragonToBuy);
+        String name = Menu.askPlayer(true, "Please name the " + dragonToBuy + ": ");
         String gender = (Menu.askPlayerNumber(true, "Choose the gender (1 = male, 2 = female)",
                 2,1) == 1 ? "male": "female");
         Dragon dragonToSell = null;
-        switch(dragonType){
+        switch(dragonToBuy){
             case "Wood dragon" ->{dragonToSell = new WoodDragon(name,gender,visitor);}
             case "Fire dragon" ->{dragonToSell = new FireDragon(name,gender,visitor);}
             case "Water dragon" ->{dragonToSell = new WaterDragon(name,gender,visitor);}
             case "Earth dragon" ->{dragonToSell = new EarthDragon(name,gender,visitor);}
             case "Metal dragon" ->{dragonToSell = new MetalDragon(name,gender,visitor);}
         }
-        visitor.addDragon(dragonToSell);
-        boolean buyMore = (Menu.askPlayerNumber(true, "Do you want to buy more food? (1 = yes, 0 = no", 1, 0) == 1);
+        visitor.addDragon(dragonToSell, true);
+        boolean buyMore = (Menu.askPlayerNumber(true,
+                "Do you want to buy more dragon? (1 = yes, 0 = no)", 1, 0) == 1);
         if(buyMore){
             sellDragon();
         }
@@ -133,7 +125,7 @@ public class Store {
         int amount = Menu.askPlayerNumber(true, "How much do you want to buy? ",
                 visitor.getBalance()/foodTypes.get(foodType).getPrice(),0);
         visitor.buyFood(foodTypes.get(foodType), amount);
-        boolean buyMore = (Menu.askPlayerNumber(true, "Do you want to buy more food? (1 = yes, 0 = no", 1, 0) == 1);
+        boolean buyMore = (Menu.askPlayerNumber(true, "Do you want to buy more food? (1 = yes, 0 = no)", 1, 0) == 1);
         if(buyMore){
             sellFood();
         }

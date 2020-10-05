@@ -13,7 +13,7 @@ public class EarthDragon extends Dragon {
         String name = Menu.askPlayer(true, "Please name the new " + this.getClass().getSimpleName());
         String gender = ((int) (Math.random()*2) == 1 ? "MALE": "FEMALE");
         var newDragon = new EarthDragon(name,gender,owner);
-        owner.addDragon(newDragon);
+        owner.addDragon(newDragon, false);
     }
 
     public String[] getFoodCanEat(){return this.foodCanEat;}

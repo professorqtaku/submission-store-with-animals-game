@@ -4,7 +4,7 @@ public class Main {
 
     public static void main(String[] args) {
         // DEADLINE 21/10 wednesday
-        //new GameMainMenu();
+        new GameMainMenu();
 /*
         Player jag = new Player.PlayerBuilder("Jag").build();
         FireDragon sanna = new FireDragon("Sanna","female", jag);

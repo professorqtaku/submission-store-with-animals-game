@@ -67,13 +67,16 @@ public class Player {
         ownedFood.put(foodType, ownedFood.get(foodType)-consumedQuantity);
     }
 
-    public void addDragon(Dragon dragon){
+    public void addDragon(Dragon dragon, boolean purchase){
         if(dragon != null) {
+            if(purchase){
+                balance -= dragon.getPrice();
+            }
             if (ownedDragons.contains(dragon)) {
                 return;
             }
             ownedDragons.add(dragon);
-            dragon.changeOwner(this);
+            dragon.changeOwner(this, false);
         }
     }
 
@@ -82,7 +85,7 @@ public class Player {
             return;
         }
         ownedDragons.remove(dragon);
-        dragon.changeOwner(null);
+        dragon.changeOwner(null, false);
     }
 
     public boolean feedDragonSuccessful(){
