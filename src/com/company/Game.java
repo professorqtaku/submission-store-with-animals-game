@@ -56,7 +56,10 @@ public class Game {
                     playerTurn();
                 }
                 else{
-                    currentPlayer.feedDragon();
+                    boolean feedSuccessful = currentPlayer.feedDragonSuccessful();
+                    if(!feedSuccessful){
+                        playerTurn();
+                    }
                 }
             }
             case 4 -> {}

@@ -22,9 +22,10 @@ public abstract class Dragon {
         }
     }
 
-    public void eat(Food food, int foodQuantity){
+    public void eat(String foodType, int foodQuantity){
         health += 10*foodQuantity;
-        owner.consumeFood(food, foodQuantity);
+        health = Math.min(health, 100);
+        owner.consumeFood(foodType, foodQuantity);
     }
 
     public void reduceHealth(int healthToLose){

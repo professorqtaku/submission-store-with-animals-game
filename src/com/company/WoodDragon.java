@@ -1,7 +1,7 @@
 package com.company;
 
 public class WoodDragon extends Dragon {
-    private String[] foodCanEat = new String[]{"fruit"};
+    private String[] foodCanEat = new String[]{"Fruit"};
     private int maxAge = 5;
     private int maxBreedTimes = 3;
 
