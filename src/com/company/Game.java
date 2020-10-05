@@ -15,7 +15,7 @@ public class Game {
         this.playedRounds = playedRounds;
         this.roundToPlay = roundToPlay;
         this.players = players;
-        this.store = new Store();
+        this.store = new Store(this);
     }
 
     public void startGame(){

@@ -3,7 +3,7 @@ package com.company;
 public class Main {
 
     public static void main(String[] args) {
-	// DEADLINE 21/10 wednesday
+        // DEADLINE 21/10 wednesday
         //new GameMainMenu();
 /*
         Player jag = new Player.PlayerBuilder("Jag").build();
@@ -11,11 +11,13 @@ public class Main {
         FireDragon laura = new FireDragon("menn","female", jag);
 
             System.out.println(sanna.getClass().getSimpleName() + " " + sanna.name);
-
- */
         Store store = new Store();
         System.out.println(store.foodTypes.keySet().size());
         store.printDragonMenu();
 
+ */
+
+        Dragon mannen = new WoodDragon("Hej", "male", null);
+        System.out.println(mannen.getClass().getSimpleName());
     }
 }

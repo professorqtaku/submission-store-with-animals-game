@@ -11,7 +11,7 @@ public abstract class Dragon {
 
     public Dragon(String name, String gender, Player owner, int price, int health, int age, int breedTimes) {
         this.name = name;
-        this.gender = gender;
+        this.gender = gender.toUpperCase();
         this.owner = owner;
         this.price = price;
         this.health = health;

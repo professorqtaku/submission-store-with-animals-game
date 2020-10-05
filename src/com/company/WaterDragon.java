@@ -12,7 +12,7 @@ public class WaterDragon extends Dragon {
 
     public void makeDragon(Player owner){
         String name = Menu.askPlayer(true, "Please name the new " + this.getClass().getSimpleName());
-        String gender = ((int) (Math.random()*2) == 1 ? "male": "female");
+        String gender = ((int) (Math.random()*2) == 1 ? "MALE": "FEMALE");
         var newDragon = new WaterDragon(name,gender,owner);
         owner.addDragon(newDragon);
     }

@@ -68,11 +68,13 @@ public class Player {
     }
 
     public void addDragon(Dragon dragon){
-        if(ownedDragons.contains(dragon)){
-            return;
+        if(dragon != null) {
+            if (ownedDragons.contains(dragon)) {
+                return;
+            }
+            ownedDragons.add(dragon);
+            dragon.changeOwner(this);
         }
-        ownedDragons.add(dragon);
-        dragon.changeOwner(this);
     }
 
     public void removeDragon(Dragon dragon){
