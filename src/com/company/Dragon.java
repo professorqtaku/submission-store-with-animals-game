@@ -69,4 +69,6 @@ public abstract class Dragon {
     public int getPrice() {
         return price;
     }
+
+    public abstract String[] getFoodCanEat();
 }
