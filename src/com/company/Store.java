@@ -9,6 +9,10 @@ public class Store {
     private HashMap<String, Dragon> dragonTypes;
 
     public Store(){
+        addSortimentsInStore();
+    }
+
+    private void addSortimentsInStore(){
         foodTypes = new HashMap<String, Food>();
         foodTypes.put("Fruit", new Fruit());
         foodTypes.put("Meat", new Meat());
