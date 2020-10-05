@@ -11,10 +11,10 @@ public class Store {
 
     public Store(Game game){
         this.game = game;
-        addItemsInStore();
+        addItemsToStore();
     }
 
-    private void addItemsInStore(){
+    private void addItemsToStore(){
         foodTypes = new LinkedHashMap<String, Food>();
         foodTypes.put("Fruit", new Fruit());
         foodTypes.put("Meat", new Meat());
@@ -56,22 +56,18 @@ public class Store {
     public void printDragonMenu(){
         System.out.println("*** DRAGONS ***");
         int listCount = 1;
-        if(visitor != null) {
+        boolean noMoney = true;
+        if(visitor != null){
             for (var key : dragonTypes.keySet()) {
-                if (visitor.getBalance() >= dragonTypes.get(key).getPrice()) {
-                    System.out.println(listCount + ". " + dragonTypes);
-                    listCount++;
-                }
-            }
-        }
-        else{
-            for (var key : dragonTypes.keySet()) {
-                System.out.println(listCount + ". " + key);
+                System.out.println((visitor.getBalance() <= dragonTypes.get(key).getPrice() ? TextColour.BLACK : "") +
+                        listCount + ". " + key + TextColour.RESET);
                 listCount++;
+                if(visitor.getBalance() >= dragonTypes.get(key).getPrice())
+                    noMoney = false;
             }
         }
-        if(listCount == 1){
-            System.out.println("You do not have money to buy any dragon!");
+        if(noMoney){
+            System.out.println(TextColour.RED + "You do not have money to buy more dragons!" + TextColour.RESET);
             game.playerTurn(); // back to action menu
         }
     }
@@ -107,23 +103,19 @@ public class Store {
 
     public void printFoodMenu(){
         System.out.println("*** Food ***");
+        boolean noMoney = true;
         int listCount = 1;
         if(visitor != null){
             for (var key : foodTypes.keySet()) {
-                if (visitor.getBalance() >= foodTypes.get(key).getPrice()) {
-                    System.out.println(listCount + ". " + key);
-                    listCount++;
-                }
-            }
-        }
-        else{
-            for (var key : foodTypes.keySet()) {
-                System.out.println(listCount + ". " + key);
+                System.out.println((visitor.getBalance() <= foodTypes.get(key).getPrice() ? TextColour.BLACK : "") +
+                        listCount + ". " + key + TextColour.RESET);
                 listCount++;
+                if(visitor.getBalance() >= foodTypes.get(key).getPrice())
+                noMoney = false;
             }
         }
-        if(listCount == 1){
-            System.out.println("You do not have money to buy food!");
+        if(noMoney){
+            System.out.println(TextColour.RED + "You do not have money to buy more food!" + TextColour.RESET);
             game.playerTurn(); // back to action menu
         }
     }
