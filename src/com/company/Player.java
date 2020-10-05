@@ -102,10 +102,12 @@ public class Player {
             feedDragon(dragonToFeed, foodOptions);
             if(Menu.askPlayerNumber(true, "Do you want to feed again? (1 = yes, 0 = no)", 1, 0) == 1){
                 if(foodAvailable()) {
+
                     feedDragonSuccessful();
                 }
-                System.out.println(foodOptions.size() + " " + foodAvailable());
-                System.out.println("You don't have any food.");
+                else {
+                    System.out.println("You don't have any food.");
+                }
             }
             return true;
         }
