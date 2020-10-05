@@ -13,15 +13,16 @@ public class Main {
 
         System.out.println(sanna.getClass().getSimpleName() + " " + sanna.name);
 
-        jag.buyFood(new Fruit(), 10);
+        //jag.buyFood(new Fruit(), 10);
         jag.buyFood(new Metal(), 10);
         jag.buyFood(new Meat(), 10);
         System.out.println(jag.getOwnedFood().get("Fruit"));
 
 
-        Dragon mannen = new WoodDragon("mannen", "male", jag);
+        Dragon mannen = new MetalDragon("mannen", "male", jag);
         jag.feedDragonSuccessful();
         System.out.println(sanna.health);
+        System.out.println("food left" + jag.getOwnedFood().get("Metal"));
 
     }
 }

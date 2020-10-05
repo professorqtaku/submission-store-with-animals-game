@@ -91,40 +91,49 @@ public class Player {
         }
         System.out.println("Choose the dragon you want to feed:");
         int listCounter = 1;
+        System.out.println("Dragon\t (Health)");
         for(var dragon: ownedDragons){
-            System.out.println(listCounter + ". " + dragon.name);
+            System.out.println(listCounter + ". " + dragon.name + " \t(" + dragon.health + ")");
             listCounter++;
         }
         Dragon dragonToFeed = ownedDragons.get(Menu.askPlayerNumber(false,"", ownedDragons.size(),1)-1);
-        ArrayList<String> foodOptions = foodForDragonAvailable(dragonToFeed);
-        if(foodOptions.size()!=0){
+        ArrayList<String> foodOptions = foodOptionsAvailable(dragonToFeed);
+        if(foodOptions != null){
             feedDragon(dragonToFeed, foodOptions);
             if(Menu.askPlayerNumber(true, "Do you want to feed again? (1 = yes, 0 = no)", 1, 0) == 1){
-                feedDragonSuccessful();
+                if(foodAvailable()) {
+                    feedDragonSuccessful();
+                }
+                System.out.println(foodOptions.size() + " " + foodAvailable());
+                System.out.println("You don't have any food.");
             }
             return true;
         }
-        else{
-            System.out.println("You don't have food for the dragon.");
-            return false;
-        }
+        System.out.println("You don't have food for the dragon.");
+        if(foodAvailable())
+            feedDragonSuccessful();
+        return false;
     }
 
     public boolean foodAvailable(){
+        boolean toReturn = false;
         for(var foodType: ownedFood.keySet()){
-            if(ownedFood.get(foodType) == 0)
-                return false;
+            if(ownedFood.get(foodType) != 0)
+                toReturn = true;
         }
-        return true;
+        return toReturn;
     }
 
-    private ArrayList<String> foodForDragonAvailable(Dragon dragon){
+    private ArrayList<String> foodOptionsAvailable(Dragon dragon){
         ArrayList<String> foodDragonCanEat = new ArrayList<>(Arrays.asList(dragon.getFoodCanEat()));
         ArrayList<String> foodToFeed = new ArrayList<>();
         for(var food: ownedFood.keySet()){
             if(foodDragonCanEat.contains(food) && ownedFood.get(food) != 0){
                 foodToFeed.add(food);
             }
+        }
+        if(foodToFeed.size() == 0){
+            return null;
         }
         return foodToFeed;
     }
