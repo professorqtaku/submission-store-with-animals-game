@@ -32,13 +32,13 @@ public class Player {
     private String name;
     private int balance;
     private ArrayList<Dragon> ownedDragons;
-    private HashMap<String, Integer> ownedFood; // key = name of food, value = quantity
+    private LinkedHashMap<String, Integer> ownedFood; // key = name of food, value = quantity
 
     public Player(PlayerBuilder builder){
         this.name = builder.name;
         this.balance = builder.balance;
         this.ownedDragons = new ArrayList<>();
-        this.ownedFood = new HashMap<>();
+        this.ownedFood = new LinkedHashMap<>();
         addFoodToList();
     }
 
@@ -83,6 +83,24 @@ public class Player {
         }
         ownedDragons.remove(dragon);
         dragon.changeOwner(null);
+    }
+
+    public void feedDragon(){
+        System.out.println("Choose the dragon you want to feed:");
+        int listCounter = 1;
+        for(var dragon: ownedDragons){
+            System.out.println(listCounter + ". " + dragon.name);
+        }
+
+    }
+
+    public boolean foodAvailable(){
+        for(var foodType: ownedFood.keySet()){
+            if(ownedFood.get(foodType) == 0){
+                return false;
+            }
+        }
+        return true;
     }
 
     public String getName(){

@@ -50,7 +50,15 @@ public class Game {
     public void playerMenuAction(int action){
         switch(action){
             case 1, 2 -> {store.visit(currentPlayer, action);}
-            case 3 -> {}
+            case 3 -> {
+                if(currentPlayer.getOwnedDragons().size() == 0 || !currentPlayer.foodAvailable()){
+                    print("There is no dragon/food to feed");
+                    playerTurn();
+                }
+                else{
+                    currentPlayer.feedDragon();
+                }
+            }
             case 4 -> {}
             case 5 -> {}
         }
