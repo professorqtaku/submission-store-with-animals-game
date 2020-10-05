@@ -1,6 +1,5 @@
 package com.company;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Store {
@@ -9,10 +8,10 @@ public class Store {
     private HashMap<String, Dragon> dragonTypes;
 
     public Store(){
-        addSortimentsInStore();
+        addItemsInStore();
     }
 
-    private void addSortimentsInStore(){
+    private void addItemsInStore(){
         foodTypes = new HashMap<String, Food>();
         foodTypes.put("Fruit", new Fruit());
         foodTypes.put("Meat", new Meat());
@@ -46,7 +45,7 @@ public class Store {
     }
 
     public void printDragonMenu(){
-        System.out.println("***DRAGONS***");
+        System.out.println("*** DRAGONS ***");
         int listCount = 1;
         if(visitor != null) {
             for (var key : dragonTypes.keySet()) {
@@ -69,10 +68,21 @@ public class Store {
     }
 
     public void printFoodMenu(){
+        System.out.println("*** Food ***");
         int listCount = 1;
-        for(var key: foodTypes.keySet()){
-            System.out.println(listCount + ". " + key);
-            listCount++;
+        if(visitor != null) {
+            for (var key : foodTypes.keySet()) {
+                if (visitor.getBalance() >= foodTypes.get(key).getPrice()) {
+                    System.out.println(listCount + ". " + key);
+                    listCount++;
+                }
+            }
+        }
+        else{
+            for (var key : foodTypes.keySet()) {
+                System.out.println(listCount + ". " + key);
+                listCount++;
+            }
         }
     }
 
