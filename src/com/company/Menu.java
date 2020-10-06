@@ -1,9 +1,6 @@
 package com.company;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Scanner;
+import java.util.*;
 
 public class Menu {
     private static Scanner scanner = new Scanner(System.in);
@@ -18,7 +15,6 @@ public class Menu {
         print("3. How to play");
         print("4. End game");
     }
-
 
     public static String askPlayer(boolean print, String question){
         if(print){
@@ -45,7 +41,7 @@ public class Menu {
                 toReturn = -1;
             }
         }while(toReturn == -1 || toReturn > max || toReturn < min);
-        Menu.sleep(500);
+        Menu.sleep(300);
         return toReturn;
     }
 
@@ -72,6 +68,5 @@ public class Menu {
             System.out.println("Error: " + e);
         }
     }
-
 
 }

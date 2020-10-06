@@ -76,7 +76,7 @@ public class Player {
         if(sell)
             balance += dragon.health * dragon.getPrice();
         ownedDragons.remove(dragon);
-        //dragon.changeOwner(null, false); // gives a
+        //dragon.changeOwner(null, false); // gives a NullPointerException
     }
 
     public boolean feedDragonSuccessful(){

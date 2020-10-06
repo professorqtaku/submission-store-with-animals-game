@@ -31,13 +31,13 @@ public class Game {
                 changePlayer();
             } while(currentPlayer != players.get(0));
             playedRounds++;
-        } while(playedRounds<roundToPlay || gameOver());
+        } while(playedRounds < roundToPlay || gameOver());
     }
 
     public void playerTurn(){
         printPlayerStatus();
         printPlayerMenu();
-        playerMenuAction(Menu.askPlayerNumber(false,"",5,1));
+        playerMenuAction(Menu.askPlayerNumber(false,"",9,0));
     }
 
     public void printPlayerMenu(){
@@ -47,7 +47,7 @@ public class Game {
         print("3. Feed your dragons");
         print("4. Breed dragons");
         print("5. Sell dragons");
-        print("6. Skip round (any other number is fine)");
+        print("0. Skip round (any other number is fine)");
     }
 
     public void playerMenuAction(int action){
@@ -99,9 +99,17 @@ public class Game {
 
     private void newRound(){
         // lower the dragons health points
+        System.out.printf("NEW ROUND! [Round %d]\n", roundToPlay);
         for(var player: players){
-
+            for(var i = player.getOwnedDragons().size()-1; i >= 0; i--){
+                player.getOwnedDragons().get(i).reduceHealth((int)(Math.random()*21)+10);
+                if(!player.getOwnedDragons().get(i).living()){
+                    System.out.println(TextColour.BLUE + "[" + player.getName() + "]: " + player.getOwnedDragons().get(i).name + " is dead." + TextColour.RESET);
+                    player.removeDragon(player.getOwnedDragons().get(i),false);
+                }
+            }
         }
+        Menu.sleep(3000);
     }
 
     private boolean gameOver(){
