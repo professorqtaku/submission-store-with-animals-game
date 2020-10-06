@@ -1,6 +1,7 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 
 public class Store {
@@ -56,45 +57,48 @@ public class Store {
                 }
             }
         }
-        checkListAndWarn(dragonsAvailable);
+        checkListAndWarn(dragonsAvailable.size());
         return dragonsAvailable;
     }
 
-    private void checkListAndWarn(ArrayList<String> listToCheck){
-        if(listToCheck.size() == 0){
-            System.out.println(TextColour.RED + "You do not have money to buy more!" + TextColour.RESET);
-            Menu.sleep(2000);
-            game.playerTurn(); // back to action menu
-        }
-    }
-
     private void sellDragonAction(ArrayList<String> dragonsCanBuy){
-        String dragonToBuy = dragonsCanBuy.get(
-                Menu.askPlayerNumber(true,"Which dragon do you want to buy?", dragonsCanBuy.size(),1)-1);
-        System.out.println("You bought a " + dragonToBuy);
-        String name = Menu.askPlayer(true, "Please name the " + dragonToBuy + ": ");
-        String gender = (Menu.askPlayerNumber(true, "Choose the gender (1 = male, 2 = female)",
-                2,1) == 1 ? "male": "female");
-        Dragon dragonToSell = null;
-        switch(dragonToBuy){
-            case "Wood dragon" ->{dragonToSell = new WoodDragon(name,gender,visitor);}
-            case "Fire dragon" ->{dragonToSell = new FireDragon(name,gender,visitor);}
-            case "Water dragon" ->{dragonToSell = new WaterDragon(name,gender,visitor);}
-            case "Earth dragon" ->{dragonToSell = new EarthDragon(name,gender,visitor);}
-            case "Metal dragon" ->{dragonToSell = new MetalDragon(name,gender,visitor);}
-        }
-        visitor.addDragon(dragonToSell, true);
-        boolean buyMore = (Menu.askPlayerNumber(true,
-                "Do you want to buy more dragon? (1 = yes, 0 = no)", 1, 0) == 1);
-        if(buyMore){
-            sellDragon();
+        int dragonIndex = (Menu.askPlayerNumber(true,"Which dragon do you want to buy?", dragonsCanBuy.size(),0)-1);
+        backToGame(dragonIndex == -1, !game.actionDone);
+        if(dragonIndex >= 0) {
+            String dragonToBuy = dragonsCanBuy.get(dragonIndex);
+            System.out.println("You bought a " + dragonToBuy);
+            String name = Menu.askPlayer(true, "Please name the " + dragonToBuy + ": ");
+            String gender = (Menu.askPlayerNumber(true, "Choose the gender (1 = male, 2 = female)",
+                    2, 1) == 1 ? "male" : "female");
+            Dragon dragonToSell = null;
+            switch (dragonToBuy) {
+                case "Wood dragon" -> {
+                    dragonToSell = new WoodDragon(name, gender, visitor);
+                }
+                case "Fire dragon" -> {
+                    dragonToSell = new FireDragon(name, gender, visitor);
+                }
+                case "Water dragon" -> {
+                    dragonToSell = new WaterDragon(name, gender, visitor);
+                }
+                case "Earth dragon" -> {
+                    dragonToSell = new EarthDragon(name, gender, visitor);
+                }
+                case "Metal dragon" -> {
+                    dragonToSell = new MetalDragon(name, gender, visitor);
+                }
+            }
+            visitor.addDragon(dragonToSell, true);
+            game.actionDone = true;
+            if (askBuyMore("Dragons", true)) {
+                sellDragon();
+            }
         }
     }
 
     public void sellFood(){
         ArrayList<String> foodCanBuy = foodPlayerCanBuyMenu();
         sellFoodMenuAction(foodCanBuy);
-
     }
 
     public ArrayList<String> foodPlayerCanBuyMenu(){
@@ -108,7 +112,7 @@ public class Store {
                 }
             }
         }
-        checkListAndWarn(foodCanBuy);
+        checkListAndWarn(foodCanBuy.size());
         return foodCanBuy;
     }
 
@@ -118,17 +122,51 @@ public class Store {
         int amount = Menu.askPlayerNumber(true, "How much do you want to buy (0-" +
                         visitor.getBalance()/foodTypes.get(foodToBuy).getPrice() + ")? ",
                 visitor.getBalance()/foodTypes.get(foodToBuy).getPrice(),0);
+        backToGame(amount == 0, !game.actionDone);
         visitor.buyFood(foodTypes.get(foodToBuy), amount);
-        boolean buyMore = (Menu.askPlayerNumber(true,
-                "Do you want to buy more food? (1 = yes, 0 = no)", 1, 0) == 1);
-        if(buyMore){
+        game.actionDone = true;
+        if (askBuyMore("Food", true)) {
             sellFood();
         }
     }
 
-    private void buyDragonFromPlayer(){
+    public void buyDragonFromPlayer(){
+        checkListAndWarn(visitor.getOwnedDragons().size());
+        System.out.println("Which dragon do you want to sell?");
+        System.out.println("Dragon (Price)");
         for(var dragon: visitor.getOwnedDragons()){
+            System.out.println((visitor.getOwnedDragons().indexOf(dragon) + 1) + ". " +
+                    dragon.name + " (" + dragon.getPrice()*dragon.health/100 + ")");
+        }
+        int dragonIndex = Menu.askPlayerNumber(false, "", visitor.getOwnedDragons().size(),0)-1;
+        backToGame(dragonIndex == -1, !game.actionDone);
+        visitor.removeDragon(visitor.getOwnedDragons().get(dragonIndex));
+        game.actionDone = true;
+        if(askBuyMore("Dragon", false)){
+            buyDragonFromPlayer();
+        }
+    }
 
+    private void checkListAndWarn(int listToCheckSize){
+        if(listToCheckSize == 0){
+            System.out.println(TextColour.RED + "You do not have enough money/dragons to buy/sell more!" + TextColour.RESET);
+            Menu.sleep(2000);
+            backToGame(!game.actionDone,true);
+        }
+    }
+
+    private boolean askBuyMore(String thing, boolean buy){
+        return (Menu.askPlayerNumber(true,
+                "Do you want to " + (buy ? "buy" : "sell") + " more " +
+                        thing.toLowerCase() + "? (1 = yes, 0 = no)", 1, 0) == 1);
+    }
+
+    private void backToGame(boolean condition1, boolean condition2){
+        //player can choose from player's main menu
+        if(condition1 && condition2){
+            System.out.println("Going back to menu...");
+            Menu.sleep(2000);
+            game.playerTurn();
         }
     }
 

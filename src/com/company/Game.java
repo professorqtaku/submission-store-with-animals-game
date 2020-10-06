@@ -9,6 +9,7 @@ public class Game {
     private ArrayList<Player> players;
     private Player currentPlayer;
     private Store store;
+    public boolean actionDone;
 
 
     public Game(int playedRounds, int roundToPlay, ArrayList<Player> players){
@@ -24,7 +25,8 @@ public class Game {
             newRound();
             do {
                 if(!currentPlayer.losing()){
-                playerTurn();
+                    actionDone = false;
+                    playerTurn();
                 }
                 changePlayer();
             } while(currentPlayer != players.get(0));
@@ -76,7 +78,7 @@ public class Game {
 
     public void printPlayerStatus(){
         print("\n".repeat(50));
-        print("[" + currentPlayer.getName() + "]");
+        print("[" + currentPlayer.getName() + "] Round: " + (playedRounds +1));
         print("Owned dragons: " + currentPlayer.getOwnedDragons().size());
         if(currentPlayer.getOwnedDragons().size() != 0) {
             print("Name \t (Health) \t Type");
