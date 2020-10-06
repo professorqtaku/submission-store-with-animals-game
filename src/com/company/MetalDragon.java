@@ -1,12 +1,10 @@
 package com.company;
 
 public class MetalDragon extends Dragon {
-    private String[] foodCanEat = new String[]{"Metal"};
-    private int maxAge = 20;
-    private int maxBreedTimes = 10;
+    private final String[] foodCanEat = new String[]{"Metal"};
 
     public MetalDragon(String name, String gender, Player owner) {
-        super(name, gender, owner, 2000,100,0,0);
+        super(name, gender, owner, 2000,100,0,0 , 20, 10);
     }
 
     public void makeDragon(Player owner){

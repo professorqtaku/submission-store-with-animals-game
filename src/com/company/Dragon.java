@@ -1,27 +1,43 @@
 package com.company;
 
 public abstract class Dragon {
+    enum Gender{
+        MALE,
+        FEMALE
+    }
+
     protected String name;
-    protected String gender;
+    protected Gender gender;
     protected Player owner;
     private int price;
     protected int health;
     protected int age;
     protected int breedTimes;
+    protected final int maxAge;
+    protected final int maxBreedTimes;
 
-    public Dragon(String name, String gender, Player owner, int price, int health, int age, int breedTimes) {
+    public Dragon(String name, String gender, Player owner, int price, int health, int age, int breedTimes, int maxAge, int maxAgeTimes) {
         this.name = name;
         if(gender != null)
-            this.gender = gender.toUpperCase();
+            setGender(gender);
         else this.gender = null;
         this.owner = owner;
         this.price = price;
         this.health = health;
         this.age = age;
         this.breedTimes = breedTimes;
+        this.maxAge = maxAge;
+        this.maxBreedTimes = maxAgeTimes;
         if(owner != null)
             owner.addDragon(this, false); //make sure owner knows me (Le dragon)
         else this.owner = null;
+    }
+
+    private void setGender(String gender){
+        if(gender.equalsIgnoreCase("male")){
+            this.gender = Gender.MALE;
+        }
+        else this.gender = Gender.FEMALE;
     }
 
     public void eat(String foodType, int foodQuantity){
@@ -39,13 +55,15 @@ public abstract class Dragon {
     }
 
     public void breed(Dragon partner){
-        if(this.getClass().getSimpleName().equals(partner.getClass().getSimpleName())) {
+        if(this.getClass().equals(partner.getClass())) {
             this.breedTimes++;
             partner.breedTimes++;
-            int breedSuccessFul = (int) (Math.random() * 2);
-            if (breedSuccessFul == 1) {
+            if ((int) (Math.random() * 2) == 1) {
                 System.out.printf("Congratulation! %s and %s got a baby dragon!\n", this.name, partner.name);
                 makeDragon(this.owner);
+            }
+            else{
+                System.out.println(TextColour.RED + "Breed unsuccessful" + TextColour.RESET);
             }
         }
         else{
@@ -61,11 +79,11 @@ public abstract class Dragon {
             return;
         }
         this.owner = owner;
-        if(owner == null){
-            owner.removeDragon(this);
+        if(owner != null){
+            owner.addDragon(this, purchase);
         }
         else {
-            owner.addDragon(this, purchase);
+            //owner.removeDragon(this, false); AGH!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         }
     }
 
@@ -74,4 +92,8 @@ public abstract class Dragon {
     }
 
     public abstract String[] getFoodCanEat();
+
+    public boolean canBreed(){
+        return breedTimes < maxBreedTimes;
+    }
 }

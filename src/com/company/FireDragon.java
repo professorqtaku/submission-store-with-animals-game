@@ -1,12 +1,10 @@
 package com.company;
 
 public class FireDragon extends Dragon {
-    private String[] foodCanEat = new String[]{"Fruit", "Meat"};
-    private int maxAge = 15;
-    private int maxBreedTimes = 5;
+    private final String[] foodCanEat = new String[]{"Fruit", "Meat"};
 
     public FireDragon(String name, String gender, Player owner) {
-        super(name, gender, owner, 500,100,0,0);
+        super(name, gender, owner, 500,100,0,0, 15, 5);
     }
 
 

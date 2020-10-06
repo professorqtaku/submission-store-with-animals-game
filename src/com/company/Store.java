@@ -1,10 +1,10 @@
 package com.company;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 
 public class Store {
+
     private Player visitor;
     private Game game;
     public LinkedHashMap<String, Food> foodTypes; // key = name of food, value = instance of food sub class
@@ -37,6 +37,7 @@ public class Store {
         switch(action){
             case 1 -> {sellDragon();}
             case 2 -> {sellFood();}
+            case 4 -> {breedDragon();}
             case 5 -> {buyDragonFromPlayer();}
         }
     }
@@ -103,7 +104,7 @@ public class Store {
 
     public ArrayList<String> foodPlayerCanBuyMenu(){
         System.out.println("*** Food ***");
-        ArrayList<String> foodCanBuy = new ArrayList<>();
+        ArrayList<String> foodCanBuy = new ArrayList<String>();
         if(visitor != null){
             for (var key : foodTypes.keySet()) {
                 if(visitor.getBalance() >= foodTypes.get(key).getPrice()){
@@ -140,16 +141,55 @@ public class Store {
         }
         int dragonIndex = Menu.askPlayerNumber(false, "", visitor.getOwnedDragons().size(),0)-1;
         backToGame(dragonIndex == -1, !game.actionDone);
-        visitor.removeDragon(visitor.getOwnedDragons().get(dragonIndex));
+        visitor.removeDragon(visitor.getOwnedDragons().get(dragonIndex),true);
         game.actionDone = true;
         if(askBuyMore("Dragon", false)){
             buyDragonFromPlayer();
         }
     }
 
+    public void breedDragon(){
+        ArrayList<Dragon> breedDragons = new ArrayList<>();
+        for(var dragon: visitor.getOwnedDragons()){
+            if(dragon.canBreed()) {
+                breedDragons.add(dragon);
+                System.out.println(breedDragons.size() + ". " + dragon.name + " " + dragon.gender);
+            }
+        }
+        checkListAndWarn(breedDragons.size());
+        int dragonToBreedIndex = (Menu.askPlayerNumber(true,
+                "Choose the dragon you want to breed.",visitor.getOwnedDragons().size(),0)-1);
+        backToGame(dragonToBreedIndex == -1, !game.actionDone);
+        if(dragonToBreedIndex >= 0) {
+            Dragon dragonToBreed = breedDragons.get(dragonToBreedIndex);
+            Dragon partner = chooseDragonPartner(dragonToBreed);
+            if (partner != null) {
+                dragonToBreed.breed(partner);
+                game.actionDone = true;
+            }
+        }
+    }
+
+    private Dragon chooseDragonPartner(Dragon dragon){
+        ArrayList<Dragon> potentialDragons = new ArrayList<>();
+        for(var partner: visitor.getOwnedDragons()){
+            if(dragon.gender != partner.gender && dragon.getClass().equals(partner.getClass()) && partner.canBreed()){
+                potentialDragons.add(partner);
+                System.out.println(potentialDragons.size() + ". " + partner.name);
+            }
+        }
+        checkListAndWarn(potentialDragons.size());
+        if(potentialDragons.size() > 0) {
+            int partnerDragonIndex = (Menu.askPlayerNumber(true, "Choose partner", potentialDragons.size(), 0) - 1);
+            backToGame(!game.actionDone, partnerDragonIndex == -1);
+            return potentialDragons.get(partnerDragonIndex);
+        }
+        return null;
+    }
+
     private void checkListAndWarn(int listToCheckSize){
         if(listToCheckSize == 0){
-            System.out.println(TextColour.RED + "You do not have enough money/dragons to buy/sell more!" + TextColour.RESET);
+            System.out.println(TextColour.RED + "You do not have enough money/dragons to buy/sell/breed more!" + TextColour.RESET);
             Menu.sleep(2000);
             backToGame(!game.actionDone,true);
         }
@@ -169,5 +209,4 @@ public class Store {
             game.playerTurn();
         }
     }
-
 }

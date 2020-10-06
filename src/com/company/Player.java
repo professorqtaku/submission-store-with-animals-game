@@ -48,12 +48,6 @@ public class Player {
         this.ownedFood.put("Metal", 0);
     }
 
-    public ArrayList<Dragon> getOwnedDragons() {
-        return ownedDragons;
-    }
-
-    public HashMap<String, Integer> getOwnedFood(){ return ownedFood;}
-
     public boolean losing(){
         return (balance <= 0 && ownedDragons.size() == 0);
     }
@@ -69,29 +63,22 @@ public class Player {
 
     public void addDragon(Dragon dragon, boolean purchase){
         if(dragon != null) {
-            if(purchase){
-                balance -= dragon.getPrice();
-            }
-            if (ownedDragons.contains(dragon)) {
-                return;
-            }
+            if(purchase) balance -= dragon.getPrice();
+            if (ownedDragons.contains(dragon)) return;
             ownedDragons.add(dragon);
             dragon.changeOwner(this, false);
         }
     }
 
-    public void removeDragon(Dragon dragon){
-        if(!ownedDragons.contains(dragon)){
-            return;
-        }
+    public void removeDragon(Dragon dragon, boolean sell){
+        if(!ownedDragons.contains(dragon)) return;
+        if(sell) balance += dragon.health * dragon.getPrice();
         ownedDragons.remove(dragon);
         dragon.changeOwner(null, false);
     }
 
     public boolean feedDragonSuccessful(){
-        if(ownedDragons.size() == 0){
-            return false;
-        }
+        if(ownedDragons.size() == 0) return false;
         System.out.println("Choose the dragon you want to feed:");
         int listCounter = 1;
         System.out.println("Dragon\t (Health)");
@@ -104,13 +91,8 @@ public class Player {
         if(foodOptions != null){
             feedDragon(dragonToFeed, foodOptions);
             if(Menu.askPlayerNumber(true, "Do you want to feed again? (1 = yes, 0 = no)", 1, 0) == 1){
-                if(foodAvailable()) {
-
-                    feedDragonSuccessful();
-                }
-                else {
-                    System.out.println("You don't have any food.");
-                }
+                if(foodAvailable()) feedDragonSuccessful();
+                else System.out.println("You don't have any food.");
             }
             return true;
         }
@@ -121,25 +103,22 @@ public class Player {
     }
 
     public boolean foodAvailable(){
-        boolean toReturn = false;
         for(var foodType: ownedFood.keySet()){
             if(ownedFood.get(foodType) != 0)
-                toReturn = true;
+                return true;
         }
-        return toReturn;
+        return false;
     }
 
     private ArrayList<String> foodOptionsAvailable(Dragon dragon){
         ArrayList<String> foodDragonCanEat = new ArrayList<>(Arrays.asList(dragon.getFoodCanEat()));
         ArrayList<String> foodToFeed = new ArrayList<>();
         for(var food: ownedFood.keySet()){
-            if(foodDragonCanEat.contains(food) && ownedFood.get(food) != 0){
+            if(foodDragonCanEat.contains(food) && ownedFood.get(food) != 0)
                 foodToFeed.add(food);
-            }
         }
-        if(foodToFeed.size() == 0){
+        if(foodToFeed.size() == 0)
             return null;
-        }
         return foodToFeed;
     }
 
@@ -158,6 +137,12 @@ public class Player {
     public String getName(){
         return this.name;
     }
+
+    public ArrayList<Dragon> getOwnedDragons() {
+        return ownedDragons;
+    }
+
+    public HashMap<String, Integer> getOwnedFood(){ return ownedFood;}
 
     public int getBalance(){ return this.balance; }
 

@@ -52,7 +52,7 @@ public class Game {
 
     public void playerMenuAction(int action){
         switch(action){
-            case 1, 2, 5-> {store.visit(currentPlayer, action);}
+            case 1, 2, 4, 5-> {store.visit(currentPlayer, action);}
             case 3 -> {
                 if(currentPlayer.getOwnedDragons().size() == 0 || !currentPlayer.foodAvailable()){
                     print("There is no dragon/food to feed");
@@ -65,20 +65,13 @@ public class Game {
                     }
                 }
             }
-            case 4 -> {
-                if(currentPlayer.getOwnedDragons().size()>2){
-                }
-                else{
-                    System.out.println(TextColour.RED + "Not enough dragons!" + TextColour.RESET);
-                    playerTurn();
-                }
-            }
         }
     }
 
     public void printPlayerStatus(){
         print("\n".repeat(50));
         print("[" + currentPlayer.getName() + "] Round: " + (playedRounds +1));
+        print("Balance: " + currentPlayer.getBalance());
         print("Owned dragons: " + currentPlayer.getOwnedDragons().size());
         if(currentPlayer.getOwnedDragons().size() != 0) {
             print("Name \t (Health) \t Type");
