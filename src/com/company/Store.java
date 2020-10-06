@@ -47,7 +47,7 @@ public class Store {
 
     public ArrayList<String> dragonsPlayerCanBuyMenu(){
         System.out.println("*** DRAGONS ***");
-        ArrayList<String> dragonsAvailable = new ArrayList<>();
+        ArrayList<String> dragonsAvailable = new ArrayList<String>();
         if(visitor != null){
             for (var dragon : dragonTypes.keySet()) {
                 if(visitor.getBalance() >= dragonTypes.get(dragon).getPrice()){
@@ -56,12 +56,16 @@ public class Store {
                 }
             }
         }
-        if(dragonsAvailable.size() == 0){
-            System.out.println(TextColour.RED + "You do not have money to buy more dragons!" + TextColour.RESET);
+        checkListAndWarn(dragonsAvailable);
+        return dragonsAvailable;
+    }
+
+    private void checkListAndWarn(ArrayList<String> listToCheck){
+        if(listToCheck.size() == 0){
+            System.out.println(TextColour.RED + "You do not have money to buy more!" + TextColour.RESET);
             Menu.sleep(2000);
             game.playerTurn(); // back to action menu
         }
-        return dragonsAvailable;
     }
 
     private void sellDragonAction(ArrayList<String> dragonsCanBuy){
@@ -95,21 +99,17 @@ public class Store {
 
     public ArrayList<String> foodPlayerCanBuyMenu(){
         System.out.println("*** Food ***");
-        ArrayList<String> foodsCanBuy = new ArrayList<>();
+        ArrayList<String> foodCanBuy = new ArrayList<>();
         if(visitor != null){
             for (var key : foodTypes.keySet()) {
                 if(visitor.getBalance() >= foodTypes.get(key).getPrice()){
-                    foodsCanBuy.add(key);
-                    System.out.println(foodsCanBuy.size() + ". " + key);
+                    foodCanBuy.add(key);
+                    System.out.println(foodCanBuy.size() + ". " + key);
                 }
             }
         }
-        if(foodsCanBuy.size() == 0){
-            System.out.println(TextColour.RED + "You do not have money to buy more food!" + TextColour.RESET);
-            Menu.sleep(2000);
-            game.playerTurn(); // back to action menu
-        }
-        return foodsCanBuy;
+        checkListAndWarn(foodCanBuy);
+        return foodCanBuy;
     }
 
     private void sellFoodMenuAction(ArrayList<String> foodCanBuy){
