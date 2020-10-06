@@ -100,7 +100,7 @@ public class Game {
 
     private void newRound(){
         // lower the dragons health points
-        System.out.printf("NEW ROUND! [Round %d]\n", roundToPlay);
+        System.out.printf("NEW ROUND! [Round %d]\n", playedRounds);
         for(var player: players){
             for(var i = player.getOwnedDragons().size()-1; i >= 0; i--){
                 player.getOwnedDragons().get(i).reduceHealth((int)(Math.random()*21)+10);
@@ -110,6 +110,8 @@ public class Game {
                 }
             }
         }
+        boolean gameContinue = (Menu.askPlayerNumber(true,
+                "Do you want to continue or save? (1 = yes, 0 = no)",1,0) == 1);
         Menu.sleep(3000);
     }
 
@@ -124,19 +126,16 @@ public class Game {
 
     private void endGame(){
         System.out.println("Thanks for playing! Result:");
-        int highestScore = players.get(0).getBalance();
         for(var player: players){
             for(var dragon: player.getOwnedDragons()){
                 player.removeDragon(dragon, true);
-            }
-            if(highestScore<player.getBalance()){
-                highestScore = player.getBalance();
             }
         }
         printWinnerList();
     }
     
     private void printWinnerList(){
+        // More info: https://stackoverflow.com/questions/16425127/how-to-use-collections-sort-in-java
         players.sort(new Comparator<Player>() {
             @Override
             public int compare(Player p1, Player p2) {
