@@ -32,6 +32,7 @@ public class Game {
             } while(currentPlayer != players.get(0));
             playedRounds++;
         } while(playedRounds < roundToPlay || gameOver());
+        endGame();
     }
 
     public void playerTurn(){
@@ -119,6 +120,33 @@ public class Game {
             }
         }
         return true;
+    }
+
+    private void endGame(){
+        System.out.println("Thanks for playing! Result:");
+        int highestScore = players.get(0).getBalance();
+        for(var player: players){
+            for(var dragon: player.getOwnedDragons()){
+                player.removeDragon(dragon, true);
+            }
+            if(highestScore<player.getBalance()){
+                highestScore = player.getBalance();
+            }
+        }
+        printWinnerList();
+    }
+    
+    private void printWinnerList(){
+        players.sort(new Comparator<Player>() {
+            @Override
+            public int compare(Player p1, Player p2) {
+                return Integer.compare(p2.getBalance(), p1.getBalance());
+            }
+        });
+        for(int i = 0; i < players.size(); i++){
+            if(i==0) System.out.println(TextColour.YELLOW);
+            System.out.println((i+1) + ". " + players.get(i).getName() + TextColour.RESET);
+        }
     }
 
     private static void print(String x){
