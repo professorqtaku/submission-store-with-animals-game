@@ -45,7 +45,7 @@ public class Menu {
                 toReturn = -1;
             }
         }while(toReturn == -1 || toReturn > max || toReturn < min);
-        Menu.sleep(300);
+        Menu.sleep(500);
         return toReturn;
     }
 

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 public class Store {
-
     private Player visitor;
     private Game game;
     public LinkedHashMap<String, Food> foodTypes; // key = name of food, value = instance of food sub class

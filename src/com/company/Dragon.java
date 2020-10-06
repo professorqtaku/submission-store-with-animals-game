@@ -83,7 +83,7 @@ public abstract class Dragon {
             owner.addDragon(this, purchase);
         }
         else {
-            //owner.removeDragon(this, false); AGH!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            owner.removeDragon(this, false);
         }
     }
 

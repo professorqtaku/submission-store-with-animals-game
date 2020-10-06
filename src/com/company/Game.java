@@ -56,6 +56,7 @@ public class Game {
             case 3 -> {
                 if(currentPlayer.getOwnedDragons().size() == 0 || !currentPlayer.foodAvailable()){
                     print("There is no dragon/food to feed");
+                    Menu.sleep(1000);
                     playerTurn();
                 }
                 else{

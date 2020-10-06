@@ -71,10 +71,12 @@ public class Player {
     }
 
     public void removeDragon(Dragon dragon, boolean sell){
-        if(!ownedDragons.contains(dragon)) return;
-        if(sell) balance += dragon.health * dragon.getPrice();
+        if(!ownedDragons.contains(dragon))
+            return;
+        if(sell)
+            balance += dragon.health * dragon.getPrice();
         ownedDragons.remove(dragon);
-        dragon.changeOwner(null, false);
+        //dragon.changeOwner(null, false); // gives a
     }
 
     public boolean feedDragonSuccessful(){
