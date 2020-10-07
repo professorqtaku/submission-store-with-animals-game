@@ -19,13 +19,13 @@ public class GameMainMenu {
                 newGame();
             }
             case 2 -> {
-                //loadGame();
+                loadGame();
             }
             case 3 -> {
                 //howToPlay();
             }
             case 4 -> {
-                //endGame();
+                endGame();
             }
         }
     }
@@ -47,7 +47,9 @@ public class GameMainMenu {
     }
 
     public void loadGame() {
-
+        String fileToSave = getSaveFileName();
+        currentGame = (Game) Serializer.deserialize(fileToSave);
+        currentGame.startGame();
     }
 
     public void saveGame() {
@@ -57,14 +59,34 @@ public class GameMainMenu {
         switch(userChoice){
             case 1 ->{ //new save
                 String saveName = Menu.askPlayer(true,"Please ENTER the name of your save");
+                TextFileHandler.saveWithAdd(saveName);
+                Serializer.serialize(saveName, currentGame);
             }
-            case 2 ->{
+            case 2 ->{ //overwrite old save
+                String fileToSave = getSaveFileName();
+                Serializer.serialize(fileToSave,currentGame);
             }
+        }
+        switch(Menu.askPlayerWithOptions(true, "What do you want to do?",
+                "Continue game", "End game")){
+            case 1 ->{currentGame.startGame();}
+            case 2 ->{endGame();}
         }
 
     }
 
+    private String getSaveFileName(){
+        ArrayList<String> saveFileNames = TextFileHandler.readAsArrayList();
+        for(int i = 0; i < saveFileNames.size(); i++){
+            System.out.println((i+1) + ". " + saveFileNames.get(i));
+        }
+        return saveFileNames.get((Menu.askPlayerNumber(true, "Choose a file",
+                saveFileNames.size(),1)-1));
+    }
+
     public void endGame() {
+        System.out.println("Thank you for playing!");
+        System.out.println("The game will end now...");
     }
 }
 

@@ -1,6 +1,8 @@
 package com.company;
 
-public abstract class Dragon {
+import java.io.Serializable;
+
+public abstract class Dragon implements Serializable {
     enum Gender{
         MALE,
         FEMALE

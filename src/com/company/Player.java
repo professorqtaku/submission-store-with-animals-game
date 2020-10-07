@@ -1,8 +1,9 @@
 package com.company;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Player {
+public class Player implements Serializable {
     public static class PlayerBuilder {
         private String name;
         private int balance = 0;

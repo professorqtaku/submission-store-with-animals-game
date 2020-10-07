@@ -1,8 +1,9 @@
 package com.company;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Game {
+public class Game implements Serializable {
     Scanner scanner = new Scanner(System.in);
     private GameMainMenu mainMenu;
     private int playedRounds;
@@ -112,11 +113,10 @@ public class Game {
                 }
             }
         }
-        boolean gameContinue = (Menu.askPlayerNumber(true,
-                TextColour.YELLOW + "Do you want to continue (1) or save (0)?" + TextColour.RESET,
-                1,0) == 1);
+        boolean save = (Menu.askPlayer(true,
+                "Do you want to save? (ENTER \"save\" to save, enter a number to continue)")).equalsIgnoreCase("save");
         Menu.sleep(3000);
-        if(!gameContinue){
+        if(save){
             mainMenu.saveGame();
         }
     }
