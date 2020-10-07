@@ -103,7 +103,7 @@ public class Game implements Serializable {
 
     private void newRound(){
         // lower the dragons health points
-        System.out.printf("NEW ROUND! [Round %d]\n", playedRounds);
+        System.out.printf("NEW ROUND! [Round %d]\n", playedRounds+1);
         for(var player: players){
             for(var i = player.getOwnedDragons().size()-1; i >= 0; i--){
                 player.getOwnedDragons().get(i).reduceHealth((int)(Math.random()*21)+10);

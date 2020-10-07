@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class TextFileHandler {
-    public static Path file = Paths.get("save-file-list");
+    public static Path file = Paths.get("save-file-list.txt");
 
     public static void save(ArrayList<String> object){
         try {

@@ -1,8 +1,11 @@
 package com.company;
 
+import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
-public class GameMainMenu {
+public class GameMainMenu implements Serializable {
     private Game currentGame;
     public GameMainMenu() {
         mainMenu();
@@ -15,18 +18,10 @@ public class GameMainMenu {
 
     public void mainMenuAction(int action) {
         switch (action) {
-            case 1 -> {
-                newGame();
-            }
-            case 2 -> {
-                loadGame();
-            }
-            case 3 -> {
-                //howToPlay();
-            }
-            case 4 -> {
-                endGame();
-            }
+            case 1 -> newGame();
+            case 2 -> loadGame();
+            case 3 ->{}//howToPlay();
+            case 4 -> endGame();
         }
     }
 
@@ -48,8 +43,27 @@ public class GameMainMenu {
 
     public void loadGame() {
         String fileToSave = getSaveFileName();
-        currentGame = (Game) Serializer.deserialize(fileToSave);
-        currentGame.startGame();
+        if(fileToSave == null){
+            System.out.println("There are no saves!");
+            System.out.println("Back to main menu...");
+            Menu.sleep(1000);
+            mainMenu();
+        }
+        else if(Files.exists(Paths.get(fileToSave + ".ser"))) {
+            try {
+                var save = (Game) GameSerializer.deserialize(fileToSave);
+                if(save != null) {
+                    currentGame = save;
+                    currentGame.startGame();
+                }
+                else{
+                    System.out.println(TextColour.RED + "Loading fail" + TextColour.RESET);
+                }
+            }
+            catch(Exception e){
+                System.out.println("Error: " + e);
+            }
+        }
     }
 
     public void saveGame() {
@@ -60,11 +74,11 @@ public class GameMainMenu {
             case 1 ->{ //new save
                 String saveName = Menu.askPlayer(true,"Please ENTER the name of your save");
                 TextFileHandler.saveWithAdd(saveName);
-                Serializer.serialize(saveName, currentGame);
+                GameSerializer.serialize(saveName + ".ser", currentGame);
             }
             case 2 ->{ //overwrite old save
                 String fileToSave = getSaveFileName();
-                Serializer.serialize(fileToSave,currentGame);
+                GameSerializer.serialize(fileToSave + ".ser",currentGame);
             }
         }
         switch(Menu.askPlayerWithOptions(true, "What do you want to do?",
@@ -77,16 +91,21 @@ public class GameMainMenu {
 
     private String getSaveFileName(){
         ArrayList<String> saveFileNames = TextFileHandler.readAsArrayList();
-        for(int i = 0; i < saveFileNames.size(); i++){
-            System.out.println((i+1) + ". " + saveFileNames.get(i));
+        if(saveFileNames.size() != 0) {
+            for (int i = 0; i < saveFileNames.size(); i++) {
+                System.out.println((i + 1) + ". " + saveFileNames.get(i));
+            }
+            return saveFileNames.get((Menu.askPlayerNumber(true, "Choose a file",
+                    saveFileNames.size(), 1) - 1));
         }
-        return saveFileNames.get((Menu.askPlayerNumber(true, "Choose a file",
-                saveFileNames.size(),1)-1));
+        return null;
     }
 
     public void endGame() {
         System.out.println("Thank you for playing!");
         System.out.println("The game will end now...");
+        Menu.sleep(2000);
+        System.exit(0);
     }
 }
 

@@ -2,8 +2,9 @@ package com.company;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.io.Serializable;
 
-public class Store {
+public class Store implements Serializable {
     private Player visitor;
     private Game game;
     public LinkedHashMap<String, Food> foodTypes; // key = name of food, value = instance of food sub class

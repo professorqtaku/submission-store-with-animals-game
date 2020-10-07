@@ -1,23 +1,21 @@
 package com.company;
 
 import java.io.*; // serialization/deserialization
-import java.util.ArrayList;
+
 
 // A helper class to serialize and deserialize data structure
 // (objects, array list of objects etc)
-public class Serializer {
+public class GameSerializer {
 
-    static public boolean serialize(String filePath, Object data) {
+    static public void serialize(String filePath, Object data) {
         try {
             var file = new FileOutputStream(filePath);
             var out = new ObjectOutputStream(file);
             out.writeObject(data);
             out.close();
             file.close();
-            return true; // everything went fine
         }
-        catch(Exception error){
-            return false; // we couldn't complete the serialization
+        catch(Exception ignored){
         }
     }
 
@@ -31,7 +29,7 @@ public class Serializer {
             return data;
         }
         catch(Exception error){
-            return false; // we couldn't complete deserialization
+            return null;// we couldn't complete deserialization
         }
     }
 
