@@ -4,6 +4,7 @@ import java.util.*;
 
 public class Game {
     Scanner scanner = new Scanner(System.in);
+    private GameMainMenu mainMenu;
     private int playedRounds;
     private int roundToPlay;
     private ArrayList<Player> players;
@@ -12,7 +13,8 @@ public class Game {
     public boolean actionDone;
 
 
-    public Game(int playedRounds, int roundToPlay, ArrayList<Player> players){
+    public Game(GameMainMenu mainMenu, int playedRounds, int roundToPlay, ArrayList<Player> players){
+        this.mainMenu = mainMenu;
         this.playedRounds = playedRounds;
         this.roundToPlay = roundToPlay;
         this.players = players;
@@ -111,8 +113,12 @@ public class Game {
             }
         }
         boolean gameContinue = (Menu.askPlayerNumber(true,
-                "Do you want to continue or save? (1 = yes, 0 = no)",1,0) == 1);
+                TextColour.YELLOW + "Do you want to continue (1) or save (0)?" + TextColour.RESET,
+                1,0) == 1);
         Menu.sleep(3000);
+        if(!gameContinue){
+            mainMenu.saveGame();
+        }
     }
 
     private boolean gameOver(){

@@ -47,7 +47,7 @@ public class Store {
     }
 
     public ArrayList<String> dragonsPlayerCanBuyMenu(){
-        System.out.println("*** DRAGONS ***");
+        System.out.println("< Store: DRAGONS >");
         ArrayList<String> dragonsAvailable = new ArrayList<String>();
         if(visitor != null){
             for (var dragon : dragonTypes.keySet()) {
@@ -102,7 +102,7 @@ public class Store {
     }
 
     public ArrayList<String> foodPlayerCanBuyMenu(){
-        System.out.println("*** Food ***");
+        System.out.println("< Store: FOOD >");
         ArrayList<String> foodCanBuy = new ArrayList<String>();
         if(visitor != null){
             for (var key : foodTypes.keySet()) {

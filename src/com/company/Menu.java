@@ -45,11 +45,11 @@ public class Menu {
         return toReturn;
     }
 
-    public int askPlayerWithOptions(boolean print, String question, String ...choices){
+    public static int askPlayerWithOptions(boolean print, String question, String ...choices){
         if(print){
             System.out.println(question);
-            for (int i = 1; i <= choices.length; i++) {
-                print(i + " " + choices[i]);
+            for (int i = 0; i < choices.length; i++) {
+                print((i+1) + ". " + choices[i]);
             }
         }
         return askPlayerNumber(false, "", choices.length, 1);

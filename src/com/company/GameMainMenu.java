@@ -42,7 +42,7 @@ public class GameMainMenu {
                     .balance(balanceStart)
                     .build());
         }
-        currentGame = new Game(0, roundToPlay, players);
+        currentGame = new Game(this,0, roundToPlay, players);
         currentGame.startGame();
     }
 
@@ -51,6 +51,16 @@ public class GameMainMenu {
     }
 
     public void saveGame() {
+        int userChoice = Menu.askPlayerWithOptions(true, "Save new file or rewrite existing saves?",
+                "New save", "Show saves");
+
+        switch(userChoice){
+            case 1 ->{ //new save
+                String saveName = Menu.askPlayer(true,"Please ENTER the name of your save");
+            }
+            case 2 ->{
+            }
+        }
 
     }
 
