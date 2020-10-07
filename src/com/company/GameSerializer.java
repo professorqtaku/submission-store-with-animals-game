@@ -32,7 +32,7 @@ public class GameSerializer {
             return data;
         }
         catch(Exception error){
-            System.out.println("Load fail");
+            System.out.println("Load fail:" + error);
             return null;// we couldn't complete deserialization
         }
     }

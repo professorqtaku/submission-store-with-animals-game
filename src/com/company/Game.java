@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.*;
 
 public class Game implements Serializable {
-    Scanner scanner = new Scanner(System.in);
     private GameMainMenu mainMenu;
     private int playedRounds;
     private int roundToPlay;

@@ -43,7 +43,7 @@ public class GameMainMenu implements Serializable {
 
     public void loadGame() {
         String fileToSave = getSaveFileName() + ".ser";
-        if(fileToSave == ".ser"){
+        if(fileToSave.equals(".ser")){
             System.out.println("There are no saves!");
             System.out.println("Back to main menu...");
             Menu.sleep(1000);
@@ -54,12 +54,9 @@ public class GameMainMenu implements Serializable {
                 var save = GameSerializer.deserialize(fileToSave);
                 if(save != null) {
                     System.out.println("Load successful");
-                }
-                /*
-                    currentGame = (Game)save;
+                    currentGame = (Game) save;
                     currentGame.startGame();
-
-                 */
+                }
 
                 else{
                     System.out.println(TextColour.RED + "Loading fail" + TextColour.RESET);
