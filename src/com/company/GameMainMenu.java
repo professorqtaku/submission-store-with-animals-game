@@ -42,20 +42,25 @@ public class GameMainMenu implements Serializable {
     }
 
     public void loadGame() {
-        String fileToSave = getSaveFileName();
-        if(fileToSave == null){
+        String fileToSave = getSaveFileName() + ".ser";
+        if(fileToSave == ".ser"){
             System.out.println("There are no saves!");
             System.out.println("Back to main menu...");
             Menu.sleep(1000);
             mainMenu();
         }
-        else if(Files.exists(Paths.get(fileToSave + ".ser"))) {
+        else if(Files.exists(Paths.get(fileToSave))) {
             try {
-                var save = (Game) GameSerializer.deserialize(fileToSave);
+                var save = GameSerializer.deserialize(fileToSave);
                 if(save != null) {
-                    currentGame = save;
-                    currentGame.startGame();
+                    System.out.println("Load successful");
                 }
+                /*
+                    currentGame = (Game)save;
+                    currentGame.startGame();
+
+                 */
+
                 else{
                     System.out.println(TextColour.RED + "Loading fail" + TextColour.RESET);
                 }
@@ -104,7 +109,6 @@ public class GameMainMenu implements Serializable {
     public void endGame() {
         System.out.println("Thank you for playing!");
         System.out.println("The game will end now...");
-        Menu.sleep(2000);
         System.exit(0);
     }
 }

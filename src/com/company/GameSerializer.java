@@ -1,6 +1,8 @@
 package com.company;
 
 import java.io.*; // serialization/deserialization
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 
 // A helper class to serialize and deserialize data structure
@@ -21,6 +23,7 @@ public class GameSerializer {
 
     static public Object deserialize(String filePath){
         try {
+            System.out.println("file exist: " + Files.exists(Paths.get(filePath)));
             var file = new FileInputStream(filePath);
             var in = new ObjectInputStream(file);
             var data = in.readObject();
@@ -29,6 +32,7 @@ public class GameSerializer {
             return data;
         }
         catch(Exception error){
+            System.out.println("Load fail");
             return null;// we couldn't complete deserialization
         }
     }
