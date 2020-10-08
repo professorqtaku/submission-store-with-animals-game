@@ -16,9 +16,9 @@ public abstract class Dragon implements Serializable {
     protected int age;
     protected int breedTimes;
     protected final int maxAge;
-    protected final int maxBreedTimes;
+    protected final int maxChildrenPerBreed;
 
-    public Dragon(String name, String gender, Player owner, int price, int health, int age, int breedTimes, int maxAge, int maxAgeTimes) {
+    public Dragon(String name, String gender, Player owner, int price, int health, int age, int breedTimes, int maxAge, int maxChildrenPerBreed) {
         this.name = name;
         if(gender != null)
             setGender(gender);
@@ -29,7 +29,7 @@ public abstract class Dragon implements Serializable {
         this.age = age;
         this.breedTimes = breedTimes;
         this.maxAge = maxAge;
-        this.maxBreedTimes = maxAgeTimes;
+        this.maxChildrenPerBreed = maxChildrenPerBreed;
         if(owner != null)
             owner.addDragon(this, false); //make sure owner knows me (Le dragon)
         else this.owner = null;
@@ -57,7 +57,7 @@ public abstract class Dragon implements Serializable {
     }
 
     public boolean canBreed(){
-        return breedTimes < maxBreedTimes;
+        return breedTimes < maxChildrenPerBreed;
     }
 
     public void breed(Dragon partner){

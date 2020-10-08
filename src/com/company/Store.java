@@ -1,5 +1,7 @@
 package com.company;
 
+import com.company.DragonSubClasses.*;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.io.Serializable;

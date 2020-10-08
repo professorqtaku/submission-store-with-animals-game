@@ -1,4 +1,6 @@
-package com.company;
+package com.company.DragonSubClasses;
+
+import com.company.*;
 
 public class EarthDragon extends Dragon {
     private final String[] foodCanEat = new String[]{"Fruit", "Meat", "Metal"};
