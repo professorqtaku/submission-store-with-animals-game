@@ -60,16 +60,9 @@ public class Game implements Serializable {
         switch(action){
             case 1, 2, 5-> {store.visit(currentPlayer, action);}
             case 3 -> {
-                if(currentPlayer.getOwnedDragons().size() == 0 || !currentPlayer.foodAvailable()){
-                    print("There is no dragon/food to feed");
+                if(!currentPlayer.feedDragonSuccessful()){
                     Printer.sleep(1000);
                     playerTurn();
-                }
-                else{
-                    boolean feedSuccessful = currentPlayer.feedDragonSuccessful();
-                    if(!feedSuccessful){
-                        playerTurn();
-                    }
                 }
             }
             case 4 -> currentPlayer.breedDragon();

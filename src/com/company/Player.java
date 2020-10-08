@@ -81,32 +81,7 @@ public class Player implements Serializable {
         //dragon.changeOwner(null, false); // gives a NullPointerException
     }
 
-    public boolean feedDragonSuccessful(){
-        if(ownedDragons.size() == 0) return false;
-        System.out.println("Choose the dragon you want to feed:");
-        int listCounter = 1;
-        System.out.println("Dragon\t (Health)");
-        for(var dragon: ownedDragons){
-            System.out.println(listCounter + ". " + dragon.name + " \t(" + dragon.health + ")");
-            listCounter++;
-        }
-        Dragon dragonToFeed = ownedDragons.get(Printer.askPlayerNumber(false,"", ownedDragons.size(),1)-1);
-        ArrayList<String> foodOptions = foodOptionsAvailable(dragonToFeed);
-        if(foodOptions != null){
-            feedDragon(dragonToFeed, foodOptions);
-            if(Printer.askPlayerNumber(true, "Do you want to feed again? (1 = yes, 0 = no)", 1, 0) == 1){
-                if(foodAvailable()) feedDragonSuccessful();
-                else System.out.println("You don't have any food.");
-            }
-            return true;
-        }
-        System.out.println("You don't have food for the dragon.");
-        if(foodAvailable())
-            feedDragonSuccessful();
-        return false;
-    }
-
-    public boolean foodAvailable(){
+    public boolean haveFood(){
         for(var foodType: ownedFood.keySet()){
             if(ownedFood.get(foodType) != 0)
                 return true;
@@ -114,7 +89,33 @@ public class Player implements Serializable {
         return false;
     }
 
-    private ArrayList<String> foodOptionsAvailable(Dragon dragon){
+    public boolean feedDragonSuccessful(){
+        if(ownedDragons.size() == 0 || !haveFood()){
+            System.out.println("There are no food/dragon!");
+            return false;
+        }
+        System.out.println("Choose the dragon you want to feed:");
+        System.out.println("Dragon\t (Health)");
+        for(int i = 0; i < ownedDragons.size(); i++){
+            System.out.println((i+1) + ". " + ownedDragons.get(0) + " \t(" + ownedDragons.get(0).health + ")");
+        }
+        Dragon dragonToFeed = ownedDragons.get(Printer.askPlayerNumber(false,"", ownedDragons.size(),1)-1);
+        ArrayList<String> foodOptions = foodOptions(dragonToFeed);
+        if(foodOptions != null){
+            feedDragon(dragonToFeed, foodOptions);
+            if(Printer.askPlayerNumber(true, "Do you want to feed again? (1 = yes, 0 = no)", 1, 0) == 1){
+                if(haveFood()) feedDragonSuccessful();
+                else System.out.println("You don't have any food.");
+            }
+            return true;
+        }
+        System.out.println("You don't have food for the dragon.");
+        if(haveFood())
+            feedDragonSuccessful();
+        return false;
+    }
+
+    private ArrayList<String> foodOptions(Dragon dragon){
         ArrayList<String> foodDragonCanEat = new ArrayList<>(Arrays.asList(dragon.getFoodCanEat()));
         ArrayList<String> foodToFeed = new ArrayList<>();
         for(var food: ownedFood.keySet()){
@@ -139,10 +140,8 @@ public class Player implements Serializable {
     }
 
     public void breedDragon(){
-        int counter = 1;
-        for(var dragon: ownedDragons){
-            System.out.println(counter + ". " + dragon.name + " " + dragon.gender);
-            counter++;
+        for(int i = 0; i < ownedDragons.size(); i++){
+            System.out.println((i+1) + ". " + ownedDragons.get(i).name + " " + ownedDragons.get(i).gender);
         }
         int dragonToBreedIndex = (Printer.askPlayerNumber(true,
                 "Choose the dragon you want to breed.",ownedDragons.size(),0)-1);
