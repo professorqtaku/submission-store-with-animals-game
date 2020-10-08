@@ -96,7 +96,7 @@ public class Game implements Serializable {
 
     private void changePlayer(){
         print("[" + currentPlayer.getName() + "] your turn has end. Please turn the computer to next player.");
-        Menu.askPlayerNumber(true,"ENTER a number when newt player is ready",10,0);
+        Menu.askPlayerNumber(true,"ENTER a number when next player is ready",9,0);
         if(players.indexOf(currentPlayer) == players.size()-1) {
             currentPlayer = players.get(0); //start over
         }

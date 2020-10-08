@@ -21,7 +21,7 @@ public class Menu {
             print(question);
         }
         System.out.print(TextColour.GREEN + "Your choice: " + TextColour.RESET);
-        return scanner.next();
+        return scanner.nextLine();
     }
 
     public static int askPlayerNumber(boolean print, String question, int max, int min){
@@ -32,7 +32,7 @@ public class Menu {
         int toReturn;
         do{
             try {
-                toReturn = Integer.parseInt(scanner.next());
+                toReturn = Integer.parseInt(scanner.nextLine());
                 if(toReturn > max || toReturn < min){
                     System.out.println("Please enter a number between " + min + "-" + max);
                 }

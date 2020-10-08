@@ -179,7 +179,7 @@ public class Player implements Serializable {
 
     private void checkListAndWarn(int listToCheckSize){
         if(listToCheckSize == 0){
-            System.out.println(TextColour.RED + "You do not have enough money/dragons to buy/sell/breed more!" + TextColour.RESET);
+            System.out.println(TextColour.RED + "You do not have any dragon to breed!" + TextColour.RESET);
             Menu.sleep(2000);
             backToGame(!game.actionDone,true);
         }
