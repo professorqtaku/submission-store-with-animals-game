@@ -83,13 +83,15 @@ public class Game implements Serializable {
         print("Owned dragons: " + currentPlayer.getOwnedDragons().size());
         if(currentPlayer.getOwnedDragons().size() != 0) {
             print("Name \t (Health) \t Type");
+            print("------------------------------");
             for (var dragon : currentPlayer.getOwnedDragons()) {
                 print(dragon.name + " \t (" + dragon.health + ") \t " + dragon.getClass().getSimpleName());
             }
+            print("------------------------------");
         }
         print("Owned food: ");
         for(var foodType: currentPlayer.getOwnedFood().keySet()){
-            System.out.print(foodType + ": " + currentPlayer.getOwnedFood().get(foodType) + "\t");
+            System.out.print(foodType + ": " + currentPlayer.getOwnedFood().get(foodType) + " \t ");
         }
         print("\n");
     }

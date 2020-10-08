@@ -9,7 +9,7 @@ public class MetalDragon extends Dragon {
         foodCanEat = new String[]{"Metal"};
         price = 2000;
         maxAge = 20;
-        maxChildrenPerBreed = 5;
+        maxChildrenPerBreed = 10;
     }
 
     public void makeDragon(Player owner){

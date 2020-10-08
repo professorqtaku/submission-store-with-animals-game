@@ -69,4 +69,12 @@ public class Printer {
         }
     }
 
+    public static void printArrayList(ArrayList<String> listToPrint){
+        int counter = 1;
+        for(var x: listToPrint){
+            print(counter + ". " + x);
+            counter++;
+        }
+    }
+
 }

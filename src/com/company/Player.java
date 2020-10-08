@@ -139,9 +139,10 @@ public class Player implements Serializable {
     }
 
     public void breedDragon(){
-        ArrayList<Dragon> breedDragons = new ArrayList<>();
+        int counter = 1;
         for(var dragon: ownedDragons){
-            System.out.println(breedDragons.size() + ". " + dragon.name + " " + dragon.gender);
+            System.out.println(counter + ". " + dragon.name + " " + dragon.gender);
+            counter++;
         }
         int dragonToBreedIndex = (Printer.askPlayerNumber(true,
                 "Choose the dragon you want to breed.",ownedDragons.size(),0)-1);
