@@ -92,14 +92,17 @@ public class GameMainMenu implements Serializable {
     }
 
     private String getSaveFileName(){
-        ArrayList<String> saveFileNames = TextFileHandler.readAsArrayList();
-        if(saveFileNames.size() != 0) {
-            for (int i = 0; i < saveFileNames.size(); i++) {
-                System.out.println((i + 1) + ". " + saveFileNames.get(i));
+        if(TextFileHandler.fileExist()){
+            ArrayList<String> saveFileNames = TextFileHandler.readAsArrayList();
+            if (saveFileNames.size() != 0) {
+                for (int i = 0; i < saveFileNames.size(); i++) {
+                    System.out.println((i + 1) + ". " + saveFileNames.get(i));
+                }
+                return saveFileNames.get((Menu.askPlayerNumber(true, "Choose a file",
+                        saveFileNames.size(), 1) - 1));
             }
-            return saveFileNames.get((Menu.askPlayerNumber(true, "Choose a file",
-                    saveFileNames.size(), 1) - 1));
         }
+        System.out.println("There are no saves!");
         return null;
     }
 

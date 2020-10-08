@@ -53,7 +53,11 @@ public abstract class Dragon implements Serializable {
     }
 
     public boolean living(){
-        return health > 0;
+        return (health > 0 && age <= maxAge);
+    }
+
+    public boolean canBreed(){
+        return breedTimes < maxBreedTimes;
     }
 
     public void breed(Dragon partner){
@@ -94,8 +98,4 @@ public abstract class Dragon implements Serializable {
     }
 
     public abstract String[] getFoodCanEat();
-
-    public boolean canBreed(){
-        return breedTimes < maxBreedTimes;
-    }
 }

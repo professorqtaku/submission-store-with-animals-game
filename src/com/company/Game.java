@@ -22,6 +22,9 @@ public class Game implements Serializable {
     }
 
     public void startGame(){
+        for(var player: players){
+            player.game = this;
+        }
         currentPlayer = players.get(0);
         do{
             newRound();
@@ -55,7 +58,7 @@ public class Game implements Serializable {
 
     public void playerMenuAction(int action){
         switch(action){
-            case 1, 2, 4, 5-> {store.visit(currentPlayer, action);}
+            case 1, 2, 5-> {store.visit(currentPlayer, action);}
             case 3 -> {
                 if(currentPlayer.getOwnedDragons().size() == 0 || !currentPlayer.foodAvailable()){
                     print("There is no dragon/food to feed");
@@ -69,6 +72,7 @@ public class Game implements Serializable {
                     }
                 }
             }
+            case 4 -> currentPlayer.breedDragon();
         }
     }
 

@@ -30,14 +30,9 @@ public class Store implements Serializable {
 
     public void visit(Player visitor, int action){
         this.visitor = visitor;
-        storeMenu(action);
-    }
-
-    private void storeMenu(int action){
         switch(action){
             case 1 -> {sellDragon();}
             case 2 -> {sellFood();}
-            case 4 -> {breedDragon();}
             case 5 -> {buyDragonFromPlayer();}
         }
     }
@@ -146,45 +141,6 @@ public class Store implements Serializable {
         if(askBuyMore("Dragon", false)){
             buyDragonFromPlayer();
         }
-    }
-
-    public void breedDragon(){
-        ArrayList<Dragon> breedDragons = new ArrayList<>();
-        for(var dragon: visitor.getOwnedDragons()){
-            if(dragon.canBreed()) {
-                breedDragons.add(dragon);
-                System.out.println(breedDragons.size() + ". " + dragon.name + " " + dragon.gender);
-            }
-        }
-        checkListAndWarn(breedDragons.size());
-        int dragonToBreedIndex = (Menu.askPlayerNumber(true,
-                "Choose the dragon you want to breed.",visitor.getOwnedDragons().size(),0)-1);
-        backToGame(dragonToBreedIndex == -1, !game.actionDone);
-        if(dragonToBreedIndex >= 0) {
-            Dragon dragonToBreed = breedDragons.get(dragonToBreedIndex);
-            Dragon partner = chooseDragonPartner(dragonToBreed);
-            if (partner != null) {
-                dragonToBreed.breed(partner);
-                game.actionDone = true;
-            }
-        }
-    }
-
-    private Dragon chooseDragonPartner(Dragon dragon){
-        ArrayList<Dragon> potentialDragons = new ArrayList<>();
-        for(var partner: visitor.getOwnedDragons()){
-            if(dragon.gender != partner.gender && dragon.getClass().equals(partner.getClass()) && partner.canBreed()){
-                potentialDragons.add(partner);
-                System.out.println(potentialDragons.size() + ". " + partner.name);
-            }
-        }
-        checkListAndWarn(potentialDragons.size());
-        if(potentialDragons.size() > 0) {
-            int partnerDragonIndex = (Menu.askPlayerNumber(true, "Choose partner", potentialDragons.size(), 0) - 1);
-            backToGame(!game.actionDone, partnerDragonIndex == -1);
-            return potentialDragons.get(partnerDragonIndex);
-        }
-        return null;
     }
 
     private void checkListAndWarn(int listToCheckSize){

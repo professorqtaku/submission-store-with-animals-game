@@ -58,4 +58,8 @@ public class TextFileHandler {
         }
 
     }
+
+    public static boolean fileExist(){
+        return Files.exists(file);
+    }
 }
