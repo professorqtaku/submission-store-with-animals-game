@@ -3,10 +3,9 @@ package com.company;
 import java.io.Serializable;
 
 public abstract class Food implements Serializable {
-    private int price;
+    protected int price = 0;
 
-    public Food(int price){
-        this.price = price;
+    public Food(){
     }
 
     public int getPrice() {

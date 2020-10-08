@@ -3,10 +3,13 @@ package com.company.DragonSubClasses;
 import com.company.*;
 
 public class EarthDragon extends Dragon {
-    private final String[] foodCanEat = new String[]{"Fruit", "Meat", "Metal"};
 
     public EarthDragon(String name, String gender, Player owner){
-        super(name, gender, owner,1000, 100,0,0, 20, 5);
+        super(name, gender, owner);
+        foodCanEat = new String[]{"Fruit", "Meat", "Metal"};
+        price = 1000;
+        maxAge = 20;
+        maxChildrenPerBreed = 5;
     }
 
     public void makeDragon(Player owner){

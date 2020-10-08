@@ -11,25 +11,19 @@ public abstract class Dragon implements Serializable {
     protected String name;
     protected Gender gender;
     protected Player owner;
-    private int price;
-    protected int health;
-    protected int age;
-    protected int breedTimes;
-    protected final int maxAge;
-    protected final int maxChildrenPerBreed;
+    protected int health = 100;
+    protected int age = 0;
+    protected String[] foodCanEat;
+    protected int price;
+    protected int maxAge;
+    protected int maxChildrenPerBreed;
 
-    public Dragon(String name, String gender, Player owner, int price, int health, int age, int breedTimes, int maxAge, int maxChildrenPerBreed) {
+    public Dragon(String name, String gender, Player owner) {
         this.name = name;
         if(gender != null)
             setGender(gender);
         else this.gender = null;
         this.owner = owner;
-        this.price = price;
-        this.health = health;
-        this.age = age;
-        this.breedTimes = breedTimes;
-        this.maxAge = maxAge;
-        this.maxChildrenPerBreed = maxChildrenPerBreed;
         if(owner != null)
             owner.addDragon(this, false); //make sure owner knows me (Le dragon)
         else this.owner = null;
@@ -56,17 +50,15 @@ public abstract class Dragon implements Serializable {
         return (health > 0 && age <= maxAge);
     }
 
-    public boolean canBreed(){
-        return breedTimes < maxChildrenPerBreed;
-    }
-
     public void breed(Dragon partner){
         if(this.getClass().equals(partner.getClass())) {
-            this.breedTimes++;
-            partner.breedTimes++;
             if ((int) (Math.random() * 2) == 1) {
-                System.out.printf("Congratulation! %s and %s got a baby dragon!\n", this.name, partner.name);
-                makeDragon(this.owner);
+                int amountBabies = (int) (Math.random() * this.maxChildrenPerBreed) + 1;
+                System.out.printf("Congratulation, breed successful! %s and %s got %d dragon(s)!\n",
+                        this.name, partner.name, amountBabies);
+                for(int i = 0; i< amountBabies; i++) {
+                    makeDragon(this.owner);
+                }
             }
             else{
                 System.out.println(TextColour.RED + "Breed unsuccessful" + TextColour.RESET);

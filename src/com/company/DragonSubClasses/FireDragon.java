@@ -3,10 +3,13 @@ package com.company.DragonSubClasses;
 import com.company.*;
 
 public class FireDragon extends Dragon {
-    private final String[] foodCanEat = new String[]{"Fruit", "Meat"};
 
-    public FireDragon(String name, String gender, Player owner) {
-        super(name, gender, owner, 500,100,0,0, 15, 5);
+    public FireDragon(String name, String gender, Player owner){
+        super(name, gender, owner);
+        foodCanEat = new String[]{"Fruit", "Meat"};
+        price = 500;
+        maxAge = 15;
+        maxChildrenPerBreed = 5;
     }
 
 

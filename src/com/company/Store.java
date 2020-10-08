@@ -1,9 +1,11 @@
 package com.company;
 
 import com.company.DragonSubClasses.*;
+import com.company.FoodSubClasses.Fruit;
+import com.company.FoodSubClasses.Meat;
+import com.company.FoodSubClasses.Metal;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.*;
 import java.io.Serializable;
 
 public class Store implements Serializable {

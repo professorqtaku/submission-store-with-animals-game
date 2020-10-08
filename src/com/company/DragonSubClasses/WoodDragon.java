@@ -3,10 +3,12 @@ package com.company.DragonSubClasses;
 import com.company.*;
 
 public class WoodDragon extends Dragon {
-    private final String[] foodCanEat = new String[]{"Fruit"};
-
-    public WoodDragon(String name, String gender, Player owner) {
-        super(name, gender, owner,100, 100,0,0, 5, 3);
+    public WoodDragon(String name, String gender, Player owner){
+        super(name, gender, owner);
+        foodCanEat = new String[]{"Fruit"};
+        price = 100;
+        maxAge = 5;
+        maxChildrenPerBreed = 1;
     }
 
     public void makeDragon(Player owner){
