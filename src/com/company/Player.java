@@ -89,7 +89,7 @@ public class Player implements Serializable {
         return false;
     }
 
-    public boolean feedDragonSuccessful(){
+    public boolean feed(){
         if(ownedDragons.size() == 0 || !haveFood()){
             System.out.println("There are no food/dragon!");
             return false;
@@ -104,14 +104,16 @@ public class Player implements Serializable {
         if(foodOptions != null){
             feedDragon(dragonToFeed, foodOptions);
             if(Printer.askPlayerNumber(true, "Do you want to feed again? (1 = yes, 0 = no)", 1, 0) == 1){
-                if(haveFood()) feedDragonSuccessful();
-                else System.out.println("You don't have any food.");
+                if(haveFood())
+                    feed();
+                else
+                    System.out.println("You don't have any food.");
             }
             return true;
         }
         System.out.println("You don't have food for the dragon.");
         if(haveFood())
-            feedDragonSuccessful();
+            feed();
         return false;
     }
 

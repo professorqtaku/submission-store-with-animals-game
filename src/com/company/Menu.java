@@ -5,9 +5,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-public class MainMenu implements Serializable {
+public class Menu implements Serializable {
     private Game currentGame;
-    public MainMenu() {
+    public Menu() {
         mainMenu();
     }
 

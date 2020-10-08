@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.*;
 
 public class Game implements Serializable {
-    private MainMenu mainMenu;
+    private Menu mainMenu;
     private int playedRounds;
     private int roundToPlay;
     private ArrayList<Player> players;
@@ -13,7 +13,7 @@ public class Game implements Serializable {
     public boolean actionDone;
 
 
-    public Game(MainMenu mainMenu, int playedRounds, int roundToPlay, ArrayList<Player> players){
+    public Game(Menu mainMenu, int playedRounds, int roundToPlay, ArrayList<Player> players){
         this.mainMenu = mainMenu;
         this.playedRounds = playedRounds;
         this.roundToPlay = roundToPlay;
@@ -60,7 +60,7 @@ public class Game implements Serializable {
         switch(action){
             case 1, 2, 5-> {store.visit(currentPlayer, action);}
             case 3 -> {
-                if(!currentPlayer.feedDragonSuccessful()){
+                if(!currentPlayer.feed()){
                     Printer.sleep(1000);
                     playerTurn();
                 }

@@ -57,6 +57,8 @@ public abstract class Dragon implements Serializable {
                 System.out.printf("Congratulation, breed successful! %s and %s got %d dragon(s)!\n",
                         this.name, partner.name, amountBabies);
                 for(int i = 0; i< amountBabies; i++) {
+                    System.out.println((i+1) + (i+1 == 1 ? "st" : (i+1 == 2 ? "nd" : (i+1 == 3 ? "rd" : "th"))) +
+                            " dragon baby");
                     makeDragon(this.owner);
                 }
             }
