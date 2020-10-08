@@ -76,7 +76,7 @@ public class Player implements Serializable {
         if(!ownedDragons.contains(dragon))
             return;
         if(sell)
-            balance += dragon.health * dragon.getPrice();
+            balance += dragon.getPriceNow();
         ownedDragons.remove(dragon);
         //dragon.changeOwner(null, false); // gives a NullPointerException
     }

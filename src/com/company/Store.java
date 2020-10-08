@@ -48,17 +48,17 @@ public class Store implements Serializable {
 
     private ArrayList<String> dragonsPlayerCanBuyMenu(){
         System.out.println("< Store: DRAGONS >");
-        ArrayList<String> dragonsAvailable = new ArrayList<String>();
+        ArrayList<String> dragonsPlayerCanBuy = new ArrayList<String>();
         if(visitor != null){
             for (var dragon : dragonTypes.keySet()) {
                 if(visitor.getBalance() >= dragonTypes.get(dragon).getPrice()){
-                    dragonsAvailable.add(dragon);
-                    System.out.println(dragonsAvailable.size() + ". " + dragon);
+                    dragonsPlayerCanBuy.add(dragon);
+                    System.out.println(dragonsPlayerCanBuy.size() + ". " + dragon);
                 }
             }
         }
-        checkListAndWarn(dragonsAvailable.size());
-        return dragonsAvailable;
+        checkListAndWarn(dragonsPlayerCanBuy.size());
+        return dragonsPlayerCanBuy;
     }
 
     private void sellDragonAction(ArrayList<String> dragonsCanBuy){
@@ -136,7 +136,7 @@ public class Store implements Serializable {
         System.out.println("Dragon (Price)");
         for(var dragon: visitor.getOwnedDragons()){
             System.out.println((visitor.getOwnedDragons().indexOf(dragon) + 1) + ". " +
-                    dragon.name + " (" + dragon.getPrice()*dragon.health/100 + ")");
+                    dragon.name + " (" + dragon.getPriceNow() + ")");
         }
         int dragonIndex = Printer.askPlayerNumber(false, "", visitor.getOwnedDragons().size(),0)-1;
         backToGame(dragonIndex == -1, !game.actionDone);

@@ -92,4 +92,8 @@ public abstract class Dragon implements Serializable {
     public String[] getFoodCanEat(){
         return foodCanEat;
     }
+
+    public int getPriceNow(){
+        return (int) Math.round(price * health/100.0);
+    }
 }
