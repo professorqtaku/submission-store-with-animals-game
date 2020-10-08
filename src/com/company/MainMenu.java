@@ -51,7 +51,7 @@ public class MainMenu implements Serializable {
         }
         else if(Files.exists(Paths.get(fileToSave))) {
             try {
-                var save = GameSerializer.deserialize(fileToSave);
+                var save = Serializer.deserialize(fileToSave);
                 if(save != null) {
                     System.out.println("Load successful");
                     currentGame = (Game) save;
@@ -76,11 +76,11 @@ public class MainMenu implements Serializable {
             case 1 ->{ //new save
                 String saveName = Printer.askPlayer(true,"Please ENTER the name of your save");
                 TextFileHandler.saveWithAdd(saveName);
-                GameSerializer.serialize(saveName + ".ser", currentGame);
+                Serializer.serialize(saveName + ".ser", currentGame);
             }
             case 2 ->{ //overwrite old save
                 String fileToSave = getSaveFileName();
-                GameSerializer.serialize(fileToSave + ".ser",currentGame);
+                Serializer.serialize(fileToSave + ".ser",currentGame);
             }
         }
         switch(Printer.askPlayerWithOptions(true, "What do you want to do?",

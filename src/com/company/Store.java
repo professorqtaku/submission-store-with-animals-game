@@ -41,12 +41,12 @@ public class Store implements Serializable {
         }
     }
 
-    public void sellDragon(){
+    private void sellDragon(){
         ArrayList<String> dragonsCanBuy = dragonsPlayerCanBuyMenu();
         sellDragonAction(dragonsCanBuy);
     }
 
-    public ArrayList<String> dragonsPlayerCanBuyMenu(){
+    private ArrayList<String> dragonsPlayerCanBuyMenu(){
         System.out.println("< Store: DRAGONS >");
         ArrayList<String> dragonsAvailable = new ArrayList<String>();
         if(visitor != null){
@@ -96,12 +96,12 @@ public class Store implements Serializable {
         }
     }
 
-    public void sellFood(){
+    private void sellFood(){
         ArrayList<String> foodCanBuy = foodPlayerCanBuyMenu();
         sellFoodMenuAction(foodCanBuy);
     }
 
-    public ArrayList<String> foodPlayerCanBuyMenu(){
+    private ArrayList<String> foodPlayerCanBuyMenu(){
         System.out.println("< Store: FOOD >");
         ArrayList<String> foodCanBuy = new ArrayList<String>();
         if(visitor != null){
@@ -130,7 +130,7 @@ public class Store implements Serializable {
         }
     }
 
-    public void buyDragonFromPlayer(){
+    private void buyDragonFromPlayer(){
         checkListAndWarn(visitor.getOwnedDragons().size());
         System.out.println("Which dragon do you want to sell?");
         System.out.println("Dragon (Price)");

@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 
 // A helper class to serialize and deserialize data structure
 // (objects, array list of objects etc)
-public class GameSerializer {
+public class Serializer {
 
     static public void serialize(String filePath, Object data) {
         try {
