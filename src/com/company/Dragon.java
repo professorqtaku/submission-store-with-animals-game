@@ -85,10 +85,6 @@ public abstract class Dragon implements Serializable {
         }
     }
 
-    public int getPrice() {
-        return price;
-    }
-
     public String[] getFoodCanEat(){
         return foodCanEat;
     }

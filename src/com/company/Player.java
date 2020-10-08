@@ -65,7 +65,7 @@ public class Player implements Serializable {
 
     public void addDragon(Dragon dragon, boolean purchase){
         if(dragon != null) {
-            if(purchase) balance -= dragon.getPrice();
+            if(purchase) balance -= dragon.getPriceNow();
             if (ownedDragons.contains(dragon)) return;
             ownedDragons.add(dragon);
             dragon.changeOwner(this, false);
