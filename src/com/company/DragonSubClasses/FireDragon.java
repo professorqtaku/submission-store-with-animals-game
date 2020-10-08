@@ -19,6 +19,4 @@ public class FireDragon extends Dragon {
         var newDragon = new FireDragon(name,gender,owner);
         owner.addDragon(newDragon, false);
     }
-    public String[] getFoodCanEat(){return this.foodCanEat;}
-
 }

@@ -18,7 +18,4 @@ public class MetalDragon extends Dragon {
         var newDragon = new MetalDragon(name,gender,owner);
         owner.addDragon(newDragon, false);
     }
-
-    public String[] getFoodCanEat(){return this.foodCanEat;}
-
 }

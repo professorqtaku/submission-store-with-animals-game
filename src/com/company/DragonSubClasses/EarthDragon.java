@@ -18,6 +18,4 @@ public class EarthDragon extends Dragon {
         var newDragon = new EarthDragon(name,gender,owner);
         owner.addDragon(newDragon, false);
     }
-
-    public String[] getFoodCanEat(){return this.foodCanEat;}
 }

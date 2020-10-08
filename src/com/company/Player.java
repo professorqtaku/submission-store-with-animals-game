@@ -141,17 +141,13 @@ public class Player implements Serializable {
     public void breedDragon(){
         ArrayList<Dragon> breedDragons = new ArrayList<>();
         for(var dragon: ownedDragons){
-            if(dragon.canBreed()) {
-                breedDragons.add(dragon);
-                System.out.println(breedDragons.size() + ". " + dragon.name + " " + dragon.gender);
-            }
+            System.out.println(breedDragons.size() + ". " + dragon.name + " " + dragon.gender);
         }
-        checkListAndWarn(breedDragons.size());
         int dragonToBreedIndex = (Printer.askPlayerNumber(true,
                 "Choose the dragon you want to breed.",ownedDragons.size(),0)-1);
         backToGame(dragonToBreedIndex == -1, !game.actionDone);
         if(dragonToBreedIndex >= 0) {
-            Dragon dragonToBreed = breedDragons.get(dragonToBreedIndex);
+            Dragon dragonToBreed = ownedDragons.get(dragonToBreedIndex);
             Dragon partner = chooseDragonPartner(dragonToBreed);
             if (partner != null) {
                 dragonToBreed.breed(partner);
@@ -163,7 +159,7 @@ public class Player implements Serializable {
     private Dragon chooseDragonPartner(Dragon dragon){
         ArrayList<Dragon> potentialDragons = new ArrayList<>();
         for(var partner: ownedDragons){
-            if(dragon.gender != partner.gender && dragon.getClass().equals(partner.getClass()) && partner.canBreed()){
+            if(dragon.gender != partner.gender && dragon.getClass().equals(partner.getClass())){
                 potentialDragons.add(partner);
                 System.out.println(potentialDragons.size() + ". " + partner.name);
             }

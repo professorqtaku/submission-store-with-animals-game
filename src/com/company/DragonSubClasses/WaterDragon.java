@@ -18,6 +18,4 @@ public class WaterDragon extends Dragon {
         var newDragon = new WaterDragon(name,gender,owner);
         owner.addDragon(newDragon, false);
     }
-    public String[] getFoodCanEat(){return this.foodCanEat;}
-
 }
