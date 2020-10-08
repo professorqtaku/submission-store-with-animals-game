@@ -12,11 +12,16 @@ public class Menu implements Serializable {
     }
 
     public void mainMenu() {
-        Printer.printMainMenu();
+        System.out.println("*-*-*-* Welcome to <<DRAGON BREEDER>> *-*-*-*");
+        System.out.println("< Main menu >");
+        System.out.println("1. New game");
+        System.out.println("2. Load game");
+        System.out.println("3. How to play");
+        System.out.println("4. End game");
         mainMenuAction(Printer.askPlayerNumber(false, "", 4, 1));
     }
 
-    public void mainMenuAction(int action) {
+    private void mainMenuAction(int action) {
         switch (action) {
             case 1 -> newGame();
             case 2 -> loadGame();

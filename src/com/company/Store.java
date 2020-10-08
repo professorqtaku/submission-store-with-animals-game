@@ -1,9 +1,7 @@
 package com.company;
 
 import com.company.DragonSubClasses.*;
-import com.company.FoodSubClasses.Fruit;
-import com.company.FoodSubClasses.Meat;
-import com.company.FoodSubClasses.Metal;
+import com.company.FoodSubClasses.*;
 
 import java.util.*;
 import java.io.Serializable;
@@ -143,7 +141,7 @@ public class Store implements Serializable {
         backToGame(dragonIndex == -1, !game.actionDone);
         visitor.removeDragon(visitor.getOwnedDragons().get(dragonIndex),true);
         game.actionDone = true;
-        if(askBuyMore("Dragon", false)){
+        if(askBuyMore("dragons", false)){
             buyDragonFromPlayer();
         }
     }

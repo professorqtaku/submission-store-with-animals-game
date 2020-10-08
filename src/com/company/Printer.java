@@ -7,15 +7,6 @@ public class Printer {
 
     public Printer(){}
 
-    public static void printMainMenu(){
-        print("*-*-*-* Welcome to <<DRAGON BREEDER>> *-*-*-*");
-        print("< Main menu >");
-        print("1. New game");
-        print("2. Load game");
-        print("3. How to play");
-        print("4. End game");
-    }
-
     public static String askPlayer(boolean print, String question){
         if(print){
             print(question);
