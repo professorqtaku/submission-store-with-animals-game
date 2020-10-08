@@ -5,15 +5,15 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-public class GameMainMenu implements Serializable {
+public class MainMenu implements Serializable {
     private Game currentGame;
-    public GameMainMenu() {
+    public MainMenu() {
         mainMenu();
     }
 
     public void mainMenu() {
-        Menu.printMainMenu();
-        mainMenuAction(Menu.askPlayerNumber(false, "", 4, 1));
+        Printer.printMainMenu();
+        mainMenuAction(Printer.askPlayerNumber(false, "", 4, 1));
     }
 
     public void mainMenuAction(int action) {
@@ -27,11 +27,11 @@ public class GameMainMenu implements Serializable {
 
     public void newGame() {
         ArrayList<Player> players = new ArrayList<>();
-        int roundToPlay = Menu.askPlayerNumber(true, "How many rounds (5-30)?", 30, 5);
-        int playerQuantity = Menu.askPlayerNumber(true, "How many players (1-4)?", 4, 1);
-        int balanceStart = Menu.askPlayerNumber(true, "What is the start balance(10-10000)?", 10000, 10);
+        int roundToPlay = Printer.askPlayerNumber(true, "How many rounds (5-30)?", 30, 5);
+        int playerQuantity = Printer.askPlayerNumber(true, "How many players (1-4)?", 4, 1);
+        int balanceStart = Printer.askPlayerNumber(true, "What is the start balance(10-10000)?", 10000, 10);
         while(players.size() < playerQuantity){
-            String name = Menu.askPlayer(true,
+            String name = Printer.askPlayer(true,
                     "Name of player " + (players.size()+1));
             players.add(new Player.PlayerBuilder(name)
                     .balance(balanceStart)
@@ -43,10 +43,10 @@ public class GameMainMenu implements Serializable {
 
     public void loadGame() {
         String fileToSave = getSaveFileName() + ".ser";
-        if(fileToSave.equals(".ser")){
+        if(fileToSave.equals(".ser") && TextFileHandler.fileExist()){
             System.out.println("There are no saves!");
             System.out.println("Back to main menu...");
-            Menu.sleep(1000);
+            Printer.sleep(1000);
             mainMenu();
         }
         else if(Files.exists(Paths.get(fileToSave))) {
@@ -69,12 +69,12 @@ public class GameMainMenu implements Serializable {
     }
 
     public void saveGame() {
-        int userChoice = Menu.askPlayerWithOptions(true, "Save new file or rewrite existing saves?",
+        int userChoice = Printer.askPlayerWithOptions(true, "Save new file or rewrite existing saves?",
                 "New save", "Show saves");
 
         switch(userChoice){
             case 1 ->{ //new save
-                String saveName = Menu.askPlayer(true,"Please ENTER the name of your save");
+                String saveName = Printer.askPlayer(true,"Please ENTER the name of your save");
                 TextFileHandler.saveWithAdd(saveName);
                 GameSerializer.serialize(saveName + ".ser", currentGame);
             }
@@ -83,7 +83,7 @@ public class GameMainMenu implements Serializable {
                 GameSerializer.serialize(fileToSave + ".ser",currentGame);
             }
         }
-        switch(Menu.askPlayerWithOptions(true, "What do you want to do?",
+        switch(Printer.askPlayerWithOptions(true, "What do you want to do?",
                 "Continue game", "End game")){
             case 1 ->{currentGame.startGame();}
             case 2 ->{endGame();}
@@ -98,12 +98,12 @@ public class GameMainMenu implements Serializable {
                 for (int i = 0; i < saveFileNames.size(); i++) {
                     System.out.println((i + 1) + ". " + saveFileNames.get(i));
                 }
-                return saveFileNames.get((Menu.askPlayerNumber(true, "Choose a file",
+                return saveFileNames.get((Printer.askPlayerNumber(true, "Choose a file",
                         saveFileNames.size(), 1) - 1));
             }
         }
-        System.out.println("There are no saves!");
-        return null;
+        System.out.println(TextColour.RED + "There are no save file!" + TextColour.RESET);
+        return "";
     }
 
     public void endGame() {

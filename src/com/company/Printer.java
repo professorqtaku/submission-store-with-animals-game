@@ -2,10 +2,10 @@ package com.company;
 
 import java.util.*;
 
-public class Menu {
+public class Printer {
     private static Scanner scanner = new Scanner(System.in);
 
-    public Menu(){}
+    public Printer(){}
 
     public static void printMainMenu(){
         print("*-*-*-* Welcome to <<DRAGON BREEDER>> *-*-*-*");
@@ -41,7 +41,7 @@ public class Menu {
                 toReturn = -1;
             }
         }while(toReturn == -1 || toReturn > max || toReturn < min);
-        Menu.sleep(300);
+        Printer.sleep(300);
         return toReturn;
     }
 

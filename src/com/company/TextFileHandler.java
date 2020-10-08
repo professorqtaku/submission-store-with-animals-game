@@ -28,7 +28,7 @@ public class TextFileHandler {
 
     public static String read(){
         try {
-            if (!Files.exists(file)) {
+            if (!fileExist()) {
                 return null;
             } else {
                 return Files.readString(file, StandardCharsets.UTF_8);
@@ -42,7 +42,7 @@ public class TextFileHandler {
 
     public static ArrayList<String> readAsArrayList(){
         try {
-            if (!Files.exists(file)) {
+            if (!fileExist()) {
                 return new ArrayList<>();
             } else {
                 return new ArrayList<String>(

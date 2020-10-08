@@ -1,12 +1,10 @@
 package com.company;
 
-import java.util.*;
-
 public class Main {
 
     public static void main(String[] args) {
         // DEADLINE 21/10 wednesday
-        new GameMainMenu();
+        new MainMenu();
 /*
         ArrayList<Player> players = new ArrayList<>();
         Player hej = new Player.PlayerBuilder("4").balance(4).build();

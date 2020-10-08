@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.*;
 
 public class Game implements Serializable {
-    private GameMainMenu mainMenu;
+    private MainMenu mainMenu;
     private int playedRounds;
     private int roundToPlay;
     private ArrayList<Player> players;
@@ -13,7 +13,7 @@ public class Game implements Serializable {
     public boolean actionDone;
 
 
-    public Game(GameMainMenu mainMenu, int playedRounds, int roundToPlay, ArrayList<Player> players){
+    public Game(MainMenu mainMenu, int playedRounds, int roundToPlay, ArrayList<Player> players){
         this.mainMenu = mainMenu;
         this.playedRounds = playedRounds;
         this.roundToPlay = roundToPlay;
@@ -43,7 +43,7 @@ public class Game implements Serializable {
     public void playerTurn(){
         printPlayerStatus();
         printPlayerMenu();
-        playerMenuAction(Menu.askPlayerNumber(false,"",9,0));
+        playerMenuAction(Printer.askPlayerNumber(false,"",9,0));
     }
 
     public void printPlayerMenu(){
@@ -62,7 +62,7 @@ public class Game implements Serializable {
             case 3 -> {
                 if(currentPlayer.getOwnedDragons().size() == 0 || !currentPlayer.foodAvailable()){
                     print("There is no dragon/food to feed");
-                    Menu.sleep(1000);
+                    Printer.sleep(1000);
                     playerTurn();
                 }
                 else{
@@ -96,7 +96,7 @@ public class Game implements Serializable {
 
     private void changePlayer(){
         print("[" + currentPlayer.getName() + "] your turn has end. Please turn the computer to next player.");
-        Menu.askPlayerNumber(true,"ENTER a number when next player is ready",9,0);
+        Printer.askPlayerNumber(true,"ENTER a number when next player is ready",9,0);
         if(players.indexOf(currentPlayer) == players.size()-1) {
             currentPlayer = players.get(0); //start over
         }
@@ -105,20 +105,25 @@ public class Game implements Serializable {
     }
 
     private void newRound(){
-        // lower the dragons health points
         System.out.printf("NEW ROUND! [Round %d]\n", playedRounds+1);
         for(var player: players){
+            if(player.losing()){
+                continue;
+            }
             for(var i = player.getOwnedDragons().size()-1; i >= 0; i--){
                 player.getOwnedDragons().get(i).reduceHealth((int)(Math.random()*21)+10);
                 if(!player.getOwnedDragons().get(i).living()){
                     System.out.println(TextColour.BLUE + "[" + player.getName() + "]: " + player.getOwnedDragons().get(i).name + " is dead." + TextColour.RESET);
                     player.removeDragon(player.getOwnedDragons().get(i),false);
+                    if(player.losing()){
+                        System.out.println(TextColour.YELLOW + player.getName() + " have lost!" + TextColour.RESET);
+                    }
                 }
             }
         }
-        boolean save = (Menu.askPlayer(true,
+        boolean save = (Printer.askPlayer(true,
                 "Do you want to save? (ENTER \"save\" to save, enter a number to continue)")).equalsIgnoreCase("save");
-        Menu.sleep(3000);
+        Printer.sleep(3000);
         if(save){
             mainMenu.saveGame();
         }

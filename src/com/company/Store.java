@@ -58,13 +58,13 @@ public class Store implements Serializable {
     }
 
     private void sellDragonAction(ArrayList<String> dragonsCanBuy){
-        int dragonIndex = (Menu.askPlayerNumber(true,"Which dragon do you want to buy?", dragonsCanBuy.size(),0)-1);
+        int dragonIndex = (Printer.askPlayerNumber(true,"Which dragon do you want to buy?", dragonsCanBuy.size(),0)-1);
         backToGame(dragonIndex == -1, !game.actionDone);
         if(dragonIndex >= 0) {
             String dragonToBuy = dragonsCanBuy.get(dragonIndex);
             System.out.println("You bought a " + dragonToBuy);
-            String name = Menu.askPlayer(true, "Please name the " + dragonToBuy + ": ");
-            String gender = (Menu.askPlayerNumber(true, "Choose the gender (1 = male, 2 = female)",
+            String name = Printer.askPlayer(true, "Please name the " + dragonToBuy + ": ");
+            String gender = (Printer.askPlayerNumber(true, "Choose the gender (1 = male, 2 = female)",
                     2, 1) == 1 ? "male" : "female");
             Dragon dragonToSell = null;
             switch (dragonToBuy) {
@@ -114,8 +114,8 @@ public class Store implements Serializable {
 
     private void sellFoodMenuAction(ArrayList<String> foodCanBuy){
         String foodToBuy = foodCanBuy.get(
-                Menu.askPlayerNumber(true, "What food do you want to buy?",foodCanBuy.size(),1)-1);
-        int amount = Menu.askPlayerNumber(true, "How much do you want to buy (0-" +
+                Printer.askPlayerNumber(true, "What food do you want to buy?",foodCanBuy.size(),1)-1);
+        int amount = Printer.askPlayerNumber(true, "How much do you want to buy (0-" +
                         visitor.getBalance()/foodTypes.get(foodToBuy).getPrice() + ")? ",
                 visitor.getBalance()/foodTypes.get(foodToBuy).getPrice(),0);
         backToGame(amount == 0, !game.actionDone);
@@ -134,7 +134,7 @@ public class Store implements Serializable {
             System.out.println((visitor.getOwnedDragons().indexOf(dragon) + 1) + ". " +
                     dragon.name + " (" + dragon.getPrice()*dragon.health/100 + ")");
         }
-        int dragonIndex = Menu.askPlayerNumber(false, "", visitor.getOwnedDragons().size(),0)-1;
+        int dragonIndex = Printer.askPlayerNumber(false, "", visitor.getOwnedDragons().size(),0)-1;
         backToGame(dragonIndex == -1, !game.actionDone);
         visitor.removeDragon(visitor.getOwnedDragons().get(dragonIndex),true);
         game.actionDone = true;
@@ -146,13 +146,13 @@ public class Store implements Serializable {
     private void checkListAndWarn(int listToCheckSize){
         if(listToCheckSize == 0){
             System.out.println(TextColour.RED + "You do not have enough money/dragons to buy/sell/breed more!" + TextColour.RESET);
-            Menu.sleep(2000);
+            Printer.sleep(2000);
             backToGame(!game.actionDone,true);
         }
     }
 
     private boolean askBuyMore(String thing, boolean buy){
-        return (Menu.askPlayerNumber(true,
+        return (Printer.askPlayerNumber(true,
                 "Do you want to " + (buy ? "buy" : "sell") + " more " +
                         thing.toLowerCase() + "? (1 = yes, 0 = no)", 1, 0) == 1);
     }
@@ -161,7 +161,7 @@ public class Store implements Serializable {
         //player can choose from player's main menu
         if(condition1 && condition2){
             System.out.println("Going back to menu...");
-            Menu.sleep(2000);
+            Printer.sleep(2000);
             game.playerTurn();
         }
     }

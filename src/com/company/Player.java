@@ -90,11 +90,11 @@ public class Player implements Serializable {
             System.out.println(listCounter + ". " + dragon.name + " \t(" + dragon.health + ")");
             listCounter++;
         }
-        Dragon dragonToFeed = ownedDragons.get(Menu.askPlayerNumber(false,"", ownedDragons.size(),1)-1);
+        Dragon dragonToFeed = ownedDragons.get(Printer.askPlayerNumber(false,"", ownedDragons.size(),1)-1);
         ArrayList<String> foodOptions = foodOptionsAvailable(dragonToFeed);
         if(foodOptions != null){
             feedDragon(dragonToFeed, foodOptions);
-            if(Menu.askPlayerNumber(true, "Do you want to feed again? (1 = yes, 0 = no)", 1, 0) == 1){
+            if(Printer.askPlayerNumber(true, "Do you want to feed again? (1 = yes, 0 = no)", 1, 0) == 1){
                 if(foodAvailable()) feedDragonSuccessful();
                 else System.out.println("You don't have any food.");
             }
@@ -133,8 +133,8 @@ public class Player implements Serializable {
             System.out.println(listCounter + ". " + foodType + " " + ownedFood.get(foodType) + " kg");
             listCounter++;
         }
-        String foodToFeed = food.get(Menu.askPlayerNumber(false, "", food.size(), 1)-1);
-        int amount = Menu.askPlayerNumber(true, "How many kg do you wan to feed?", ownedFood.get(foodToFeed),0);
+        String foodToFeed = food.get(Printer.askPlayerNumber(false, "", food.size(), 1)-1);
+        int amount = Printer.askPlayerNumber(true, "How many kg do you wan to feed?", ownedFood.get(foodToFeed),0);
         dragon.eat(foodToFeed, amount);
     }
 
@@ -147,7 +147,7 @@ public class Player implements Serializable {
             }
         }
         checkListAndWarn(breedDragons.size());
-        int dragonToBreedIndex = (Menu.askPlayerNumber(true,
+        int dragonToBreedIndex = (Printer.askPlayerNumber(true,
                 "Choose the dragon you want to breed.",ownedDragons.size(),0)-1);
         backToGame(dragonToBreedIndex == -1, !game.actionDone);
         if(dragonToBreedIndex >= 0) {
@@ -170,7 +170,7 @@ public class Player implements Serializable {
         }
         checkListAndWarn(potentialDragons.size());
         if(potentialDragons.size() > 0) {
-            int partnerDragonIndex = (Menu.askPlayerNumber(true, "Choose partner", potentialDragons.size(), 0) - 1);
+            int partnerDragonIndex = (Printer.askPlayerNumber(true, "Choose partner", potentialDragons.size(), 0) - 1);
             backToGame(!game.actionDone, partnerDragonIndex == -1);
             return potentialDragons.get(partnerDragonIndex);
         }
@@ -180,7 +180,7 @@ public class Player implements Serializable {
     private void checkListAndWarn(int listToCheckSize){
         if(listToCheckSize == 0){
             System.out.println(TextColour.RED + "You do not have any dragon to breed!" + TextColour.RESET);
-            Menu.sleep(2000);
+            Printer.sleep(2000);
             backToGame(!game.actionDone,true);
         }
     }
@@ -189,7 +189,7 @@ public class Player implements Serializable {
         //player can choose from player's main menu
         if(condition1 && condition2){
             System.out.println("Going back to menu...");
-            Menu.sleep(2000);
+            Printer.sleep(2000);
             game.playerTurn();
         }
     }
