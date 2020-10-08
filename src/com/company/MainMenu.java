@@ -92,13 +92,13 @@ public class MainMenu implements Serializable {
     }
 
     public void howToPlay(){
-        System.out.println("*** HOW TO PLAY ***\n" +
+        System.out.println(TextColour.YELLOW + "*** HOW TO PLAY ***\n" +
                 "You are dragon breeders. \n" +
                 "Buy dragons, food or sell dragon at the shop\n" +
-                "Dragon's selling price = buying price*health %\n" +
+                "Dragon's selling price = buying price * health%\n" +
                 "Breed dragons of same element to get more dragons (can be done once/round)\n" +
                 "When the game is over, all dragons will be sold in the shop.\n" +
-                "The breeder with most money wins.\n");
+                "The breeder with most money wins.\n" + TextColour.RESET);
         Printer.sleep(1000);
         mainMenu();
     }
