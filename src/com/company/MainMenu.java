@@ -20,7 +20,7 @@ public class MainMenu implements Serializable {
         switch (action) {
             case 1 -> newGame();
             case 2 -> loadGame();
-            case 3 ->{}//howToPlay();
+            case 3 -> howToPlay();
             case 4 -> endGame();
         }
     }
@@ -91,6 +91,18 @@ public class MainMenu implements Serializable {
 
     }
 
+    public void howToPlay(){
+        System.out.println("*** HOW TO PLAY ***\n" +
+                "You are dragon breeders. \n" +
+                "Buy dragons, food or sell dragon at the shop\n" +
+                "Dragon's selling price = buying price*health %\n" +
+                "Breed dragons of same element to get more dragons (can be done once/round)\n" +
+                "When the game is over, all dragons will be sold in the shop.\n" +
+                "The breeder with most money wins.\n");
+        Printer.sleep(1000);
+        mainMenu();
+    }
+
     private String getSaveFileName(){
         if(TextFileHandler.fileExist()){
             ArrayList<String> saveFileNames = TextFileHandler.readAsArrayList();
@@ -103,6 +115,8 @@ public class MainMenu implements Serializable {
             }
         }
         System.out.println(TextColour.RED + "There are no save file!" + TextColour.RESET);
+        Printer.sleep(1000);
+        mainMenu();
         return "";
     }
 

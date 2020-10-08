@@ -56,7 +56,6 @@ public class TextFileHandler {
             System.out.println("Error: " + e);
             return new ArrayList<>();
         }
-
     }
 
     public static boolean fileExist(){
