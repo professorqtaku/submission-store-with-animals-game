@@ -10,10 +10,15 @@ public class TextFileHandler {
 
     public static void save(ArrayList<String> object){
         try {
+            Files.write(file, object, StandardCharsets.UTF_8);
+            //object.removeIf(filePath -> !Files.exists(Paths.get(filePath)));
+            /*
             switch(object.size()) {
                 case 0 -> Files.delete(file); // deletes the text file if the list is empty
                 default -> Files.write(file, object, StandardCharsets.UTF_8);
             }
+
+             */
         }
         catch (Exception e){
             System.out.println("Error " + e);
@@ -48,11 +53,14 @@ public class TextFileHandler {
             if (!fileExist()) {
                 return new ArrayList<>();
             } else {
-                return new ArrayList<String>(
+                ArrayList<String> toReturn = new ArrayList<String>(
                         Arrays.asList(Files.readString(file, StandardCharsets.UTF_8)
                                 .replace("\r", "")
                                 .split("\n"))
                 );
+                toReturn.removeIf(filePath -> !Files.exists(Paths.get(filePath))); //updates the list
+                save(toReturn);
+                return toReturn;
             }
         }
         catch(Exception e){

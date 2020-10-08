@@ -1,8 +1,9 @@
 package com.company;
 
+import org.w3c.dom.Text;
+
 import java.io.Serializable;
 import java.nio.file.*;
-import java.io.*;
 import java.util.ArrayList;
 
 public class Menu implements Serializable {
@@ -26,7 +27,7 @@ public class Menu implements Serializable {
             case 1 -> newGame();
             case 2 -> loadGame();
             case 3 -> howToPlay();
-            case 4 -> endGame();
+            case 4 -> exitGame();
         }
     }
 
@@ -47,8 +48,8 @@ public class Menu implements Serializable {
     }
 
     public void loadGame() {
-        String fileToSave = getSaveFileName() + ".ser";
-        if(fileToSave.equals(".ser") || TextFileHandler.fileExist()){
+        String fileToSave = getSaveFileName();
+        if(fileToSave.equals("")){
             System.out.println("There are no saves!");
             System.out.println("Back to main menu...");
             Printer.sleep(1000);
@@ -58,7 +59,7 @@ public class Menu implements Serializable {
             try {
                 var save = Serializer.deserialize(fileToSave);
                 if(save != null) {
-                    System.out.println("Load successful");
+                    System.out.println(TextColour.GREEN + "Load successful" + TextColour.RESET);
                     currentGame = (Game) save;
                     currentGame.startGame();
                 }
@@ -83,8 +84,10 @@ public class Menu implements Serializable {
                     saveGame();
                 }
                 try{
-                    Files.deleteIfExists(Paths.get(fileToDelete));
-                    TextFileHandler.saveWithChange(fileToDelete);
+                    if(Files.deleteIfExists(Paths.get(fileToDelete)))
+                        TextFileHandler.saveWithChange(fileToDelete);
+                    else
+                        System.out.println("There is no such file");
                 }
                 catch (Exception e){
                     System.out.println("Delete fail. Error: " + e);
@@ -92,17 +95,16 @@ public class Menu implements Serializable {
         }
         newSaveGame();
         switch(Printer.askPlayerWithOptions(true, "What do you want to do?",
-                "Continue game","Load game", "End game")){
-            case 1 ->{currentGame.startGame();}
-            case 2 -> loadGame();
-            case 3 ->{endGame();}
+                "Continue game","Exit game")){
+            case 1 -> { currentGame.startGame(); }
+            case 2 -> { exitGame(); }
         }
     }
 
     private void newSaveGame(){
-        String fileToSave = Printer.askPlayer(true,"Please ENTER the name of your save");
+        String fileToSave = Printer.askPlayer(true,"Please ENTER the name of your save") + ".ser";
+        Serializer.serialize(fileToSave, currentGame);
         TextFileHandler.saveWithChange(fileToSave);
-        Serializer.serialize(fileToSave + ".ser", currentGame);
     }
 
     public void howToPlay(){
@@ -122,7 +124,7 @@ public class Menu implements Serializable {
             ArrayList<String> saveFileNames = TextFileHandler.readAsArrayList();
             if (saveFileNames.size() != 0) {
                 for (int i = 0; i < saveFileNames.size(); i++) {
-                    System.out.println((i + 1) + ". " + saveFileNames.get(i));
+                    System.out.println((i + 1) + ". " + saveFileNames.get(i).replace(".ser", ""));
                 }
                 return saveFileNames.get((Printer.askPlayerNumber(true, "Choose a file",
                         saveFileNames.size(), 1) - 1));
@@ -133,9 +135,9 @@ public class Menu implements Serializable {
         return "";
     }
 
-    public void endGame() {
+    public void exitGame() {
         System.out.println("Thank you for playing!");
-        System.out.println("The game will end now...");
+        System.out.println("Exiting the game now...");
         System.exit(0);
     }
 }
