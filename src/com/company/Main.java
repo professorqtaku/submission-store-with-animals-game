@@ -8,7 +8,8 @@ public class Main {
 
     public static void main(String[] args) {
         // DEADLINE 21/10 wednesday
-        //new MainMenu();
+        new Menu();
+        /*
         ArrayList<Player> players = new ArrayList<>();
         Player hej = new Player.PlayerBuilder("4").balance(4).build();
         Player lol = new Player.PlayerBuilder("5").balance(5).build();
@@ -23,6 +24,8 @@ public class Main {
         sanna.reduceHealth(90);
         FireDragon laura = new FireDragon("menn","male", jag);
         Dragon mannen = new MetalDragon("mannen", "male", jag);
+
+         */
 
     }
 }

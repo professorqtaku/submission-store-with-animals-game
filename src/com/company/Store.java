@@ -62,7 +62,7 @@ public class Store implements Serializable {
     private void sellDragonAction(ArrayList<String> dragonsCanBuy){
         int dragonIndex = (Printer.askPlayerNumber(true,
                 "Which dragon do you want to buy?", dragonsCanBuy.size(),0)-1);
-        backToGame(dragonIndex == -1, !game.actionDone);
+        returnToGame(dragonIndex == -1, !game.actionDone);
         if(dragonIndex >= 0) {
             String dragonToBuy = dragonsCanBuy.get(dragonIndex);
             System.out.println("You bought a " + dragonToBuy);
@@ -121,7 +121,7 @@ public class Store implements Serializable {
         int amount = Printer.askPlayerNumber(true, "How much do you want to buy (0-" +
                         visitor.getBalance()/foodTypes.get(foodToBuy).getPrice() + ")? ",
                 visitor.getBalance()/foodTypes.get(foodToBuy).getPrice(),0);
-        backToGame(amount == 0, !game.actionDone);
+        returnToGame(amount == 0, !game.actionDone);
         visitor.buyFood(foodTypes.get(foodToBuy), amount);
         game.actionDone = true;
         if (askBuyMore("Food", true)) {
@@ -138,7 +138,7 @@ public class Store implements Serializable {
                     dragon.name + " (" + dragon.getPriceNow() + ")");
         }
         int dragonIndex = Printer.askPlayerNumber(false, "", visitor.getOwnedDragons().size(),0)-1;
-        backToGame(dragonIndex == -1, !game.actionDone);
+        returnToGame(dragonIndex == -1, !game.actionDone);
         visitor.removeDragon(visitor.getOwnedDragons().get(dragonIndex),true);
         game.actionDone = true;
         if(askBuyMore("dragons", false)){
@@ -150,7 +150,7 @@ public class Store implements Serializable {
         if(listToCheckSize == 0){
             System.out.println(TextColour.RED + "You do not have enough money/dragons to buy/sell/breed more!" + TextColour.RESET);
             Printer.sleep(2000);
-            backToGame(!game.actionDone,true);
+            returnToGame(!game.actionDone,true);
         }
     }
 
@@ -160,7 +160,7 @@ public class Store implements Serializable {
                         thing.toLowerCase() + "? (1 = yes, 0 = no)", 1, 0) == 1);
     }
 
-    private void backToGame(boolean condition1, boolean condition2){
+    private void returnToGame(boolean condition1, boolean condition2){
         //player can choose from player's main menu
         if(condition1 && condition2){
             System.out.println("Going back to menu...");

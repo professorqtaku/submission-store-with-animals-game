@@ -20,9 +20,12 @@ public class TextFileHandler {
         }
     }
 
-    public static void saveWithAdd(String newTextLine){
+    public static void saveWithChange(String newTextLine){
         ArrayList<String> object = readAsArrayList();
-        object.add(newTextLine);
+        if(object.contains(newTextLine))
+            object.remove(newTextLine);
+        else
+            object.add(newTextLine);
         save(object);
     }
 

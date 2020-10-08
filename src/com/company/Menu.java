@@ -1,8 +1,8 @@
 package com.company;
 
 import java.io.Serializable;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.*;
+import java.io.*;
 import java.util.ArrayList;
 
 public class Menu implements Serializable {
@@ -48,7 +48,7 @@ public class Menu implements Serializable {
 
     public void loadGame() {
         String fileToSave = getSaveFileName() + ".ser";
-        if(fileToSave.equals(".ser") && TextFileHandler.fileExist()){
+        if(fileToSave.equals(".ser") || TextFileHandler.fileExist()){
             System.out.println("There are no saves!");
             System.out.println("Back to main menu...");
             Printer.sleep(1000);
@@ -76,24 +76,33 @@ public class Menu implements Serializable {
     public void saveGame() {
         int userChoice = Printer.askPlayerWithOptions(true, "Save new file or rewrite existing saves?",
                 "New save", "Show saves");
-
-        switch(userChoice){
-            case 1 ->{ //new save
-                String saveName = Printer.askPlayer(true,"Please ENTER the name of your save");
-                TextFileHandler.saveWithAdd(saveName);
-                Serializer.serialize(saveName + ".ser", currentGame);
-            }
-            case 2 ->{ //overwrite old save
-                String fileToSave = getSaveFileName();
-                Serializer.serialize(fileToSave + ".ser",currentGame);
-            }
+        if(userChoice == 2){
+                String fileToDelete = getSaveFileName();
+                if(fileToDelete.equals("")){
+                    Printer.sleep(500);
+                    saveGame();
+                }
+                try{
+                    Files.deleteIfExists(Paths.get(fileToDelete));
+                    TextFileHandler.saveWithChange(fileToDelete);
+                }
+                catch (Exception e){
+                    System.out.println("Delete fail. Error: " + e);
+                }
         }
+        newSaveGame();
         switch(Printer.askPlayerWithOptions(true, "What do you want to do?",
-                "Continue game", "End game")){
+                "Continue game","Load game", "End game")){
             case 1 ->{currentGame.startGame();}
-            case 2 ->{endGame();}
+            case 2 -> loadGame();
+            case 3 ->{endGame();}
         }
+    }
 
+    private void newSaveGame(){
+        String fileToSave = Printer.askPlayer(true,"Please ENTER the name of your save");
+        TextFileHandler.saveWithChange(fileToSave);
+        Serializer.serialize(fileToSave + ".ser", currentGame);
     }
 
     public void howToPlay(){
@@ -120,8 +129,7 @@ public class Menu implements Serializable {
             }
         }
         System.out.println(TextColour.RED + "There are no save file!" + TextColour.RESET);
-        Printer.sleep(1000);
-        mainMenu();
+        Printer.sleep(500);
         return "";
     }
 
