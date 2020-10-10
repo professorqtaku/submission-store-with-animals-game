@@ -142,20 +142,23 @@ public class Player implements Serializable {
     }
 
     public void breedDragon(){
-        for(int i = 0; i < ownedDragons.size(); i++){
-            System.out.println((i+1) + ". " + ownedDragons.get(i).name + " " + ownedDragons.get(i).gender);
-        }
-        int dragonToBreedIndex = (Printer.askPlayerNumber(true,
-                "Choose the dragon you want to breed.",ownedDragons.size(),0)-1);
-        backToGame(dragonToBreedIndex == -1, !game.actionDone);
-        if(dragonToBreedIndex >= 0) {
-            Dragon dragonToBreed = ownedDragons.get(dragonToBreedIndex);
-            Dragon partner = chooseDragonPartner(dragonToBreed);
-            if (partner != null) {
-                dragonToBreed.breed(partner);
-                game.actionDone = true;
+        if(ownedDragons.size() > 0) {
+            for (int i = 0; i < ownedDragons.size(); i++) {
+                System.out.println((i + 1) + ". " + ownedDragons.get(i).name + " " + ownedDragons.get(i).gender);
+            }
+            int dragonToBreedIndex = (Printer.askPlayerNumber(true,
+                    "Choose the dragon you want to breed.", ownedDragons.size(), 0) - 1);
+            backToGame(dragonToBreedIndex == -1, !game.actionDone);
+            if (dragonToBreedIndex >= 0) {
+                Dragon dragonToBreed = ownedDragons.get(dragonToBreedIndex);
+                Dragon partner = chooseDragonPartner(dragonToBreed);
+                if (partner != null) {
+                    dragonToBreed.breed(partner);
+                    game.actionDone = true;
+                }
             }
         }
+        backToGame(true,!game.actionDone);
     }
 
     private Dragon chooseDragonPartner(Dragon dragon){

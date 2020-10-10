@@ -60,6 +60,9 @@ public class Store implements Serializable {
     }
 
     private void sellDragonAction(ArrayList<String> dragonsCanBuy){
+        if(dragonsCanBuy.size() < 1){
+            return;
+        }
         int dragonIndex = (Printer.askPlayerNumber(true,
                 "Which dragon do you want to buy?", dragonsCanBuy.size(),0)-1);
         returnToGame(dragonIndex == -1, !game.actionDone);
@@ -116,6 +119,9 @@ public class Store implements Serializable {
     }
 
     private void sellFoodMenuAction(ArrayList<String> foodCanBuy){
+        if(foodCanBuy.size() < 1){
+            return;
+        }
         String foodToBuy = foodCanBuy.get(
                 Printer.askPlayerNumber(true, "What food do you want to buy?",foodCanBuy.size(),1)-1);
         int amount = Printer.askPlayerNumber(true, "How much do you want to buy (0-" +
