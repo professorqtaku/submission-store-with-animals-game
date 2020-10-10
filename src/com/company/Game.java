@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.*;
 
 public class Game implements Serializable {
-    public String fileName;
+    public String fileName = "";
     private Menu mainMenu;
     private int playedRounds;
     private int roundToPlay;
@@ -27,7 +27,8 @@ public class Game implements Serializable {
             player.game = this;
         }
         currentPlayer = players.get(0);
-        do{
+        while(playedRounds < roundToPlay && !gameOver()){
+            System.out.println(gameOver());
             newRound();
             do {
                 if(!currentPlayer.losing()){
@@ -37,7 +38,7 @@ public class Game implements Serializable {
                 changePlayer();
             } while(currentPlayer != players.get(0));
             playedRounds++;
-        } while(playedRounds < roundToPlay || gameOver());
+        }
         endGame();
     }
 
@@ -91,8 +92,10 @@ public class Game implements Serializable {
     }
 
     private void changePlayer(){
-        print("[" + currentPlayer.getName() + "] your turn has end. Please turn the computer to next player.");
-        Printer.askPlayerNumber(true,"ENTER a number when next player is ready",9,0);
+        if(!currentPlayer.losing()) {
+            print("[" + currentPlayer.getName() + "] your turn has end. Please turn the computer to next player.");
+            Printer.askPlayerNumber(true, "ENTER a number when next player is ready", 9, 0);
+        }
         if(players.indexOf(currentPlayer) == players.size()-1) {
             currentPlayer = players.get(0); //start over
         }
@@ -118,12 +121,7 @@ public class Game implements Serializable {
                 }
             }
         }
-        boolean save = (Printer.askPlayer(true,
-                "Do you want to save? (ENTER \"save\" to save, enter a number to continue)")).equalsIgnoreCase("save");
-        Printer.sleep(2000);
-        if(save){
-            mainMenu.saveGame();
-        }
+        saveGame();
     }
 
     private boolean gameOver(){
@@ -135,6 +133,15 @@ public class Game implements Serializable {
         return true;
     }
 
+    private void saveGame(){
+        boolean save = (Printer.askPlayer(true,
+                "Do you want to save? (ENTER \"save\" to save, enter a number to continue)")).equalsIgnoreCase("save");
+        Printer.sleep(2000);
+        if(save){
+            mainMenu.saveGame();
+        }
+    }
+
     private void endGame(){
         System.out.println("Thanks for playing! Result:");
         for(var player: players){
@@ -143,7 +150,7 @@ public class Game implements Serializable {
             }
         }
         printWinnerList();
-        mainMenu.deleteSave(fileName);
+        mainMenu.saveGame();
     }
     
     private void printWinnerList(){
@@ -155,7 +162,7 @@ public class Game implements Serializable {
             }
         });
         for(int i = 0; i < players.size(); i++){
-            if(i==0) System.out.println(TextColour.YELLOW);
+            if(i==0) System.out.print(TextColour.YELLOW);
             System.out.println((i+1) + ". " + players.get(i).getName() + TextColour.RESET);
         }
     }

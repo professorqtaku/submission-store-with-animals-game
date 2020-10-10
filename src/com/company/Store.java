@@ -145,10 +145,12 @@ public class Store implements Serializable {
         }
         int dragonIndex = Printer.askPlayerNumber(false, "", visitor.getOwnedDragons().size(),0)-1;
         returnToGame(dragonIndex == -1, !game.actionDone);
-        visitor.removeDragon(visitor.getOwnedDragons().get(dragonIndex),true);
-        game.actionDone = true;
-        if(askBuyMore("dragons", false)){
-            buyDragonFromPlayer();
+        if(dragonIndex > 0) {
+            visitor.removeDragon(visitor.getOwnedDragons().get(dragonIndex), true);
+            game.actionDone = true;
+            if (askBuyMore("dragons", false)) {
+                buyDragonFromPlayer();
+            }
         }
     }
 
