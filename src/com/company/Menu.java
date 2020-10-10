@@ -83,15 +83,7 @@ public class Menu implements Serializable {
                     Printer.sleep(500);
                     saveGame();
                 }
-                try{
-                    if(Files.deleteIfExists(Paths.get(fileToDelete)))
-                        TextFileHandler.saveWithChange(fileToDelete);
-                    else
-                        System.out.println("There is no such file");
-                }
-                catch (Exception e){
-                    System.out.println("Delete fail. Error: " + e);
-                }
+                deleteSave(fileToDelete);
         }
         newSaveGame();
         switch(Printer.askPlayerWithOptions(true, "What do you want to do?",
@@ -105,6 +97,19 @@ public class Menu implements Serializable {
         String fileToSave = Printer.askPlayer(true,"Please ENTER the name of your save") + ".ser";
         Serializer.serialize(fileToSave, currentGame);
         TextFileHandler.saveWithChange(fileToSave);
+        currentGame.fileName = fileToSave;
+    }
+
+    public void deleteSave(String fileToDelete){
+        try{
+            if(Files.deleteIfExists(Paths.get(fileToDelete)))
+                TextFileHandler.saveWithChange(fileToDelete);
+            else
+                System.out.println("There is no such file");
+        }
+        catch (Exception e){
+            System.out.println("Delete fail. Error: " + e);
+        }
     }
 
     public void howToPlay(){

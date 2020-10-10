@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.*;
 
 public class Game implements Serializable {
+    public String fileName;
     private Menu mainMenu;
     private int playedRounds;
     private int roundToPlay;
@@ -107,6 +108,7 @@ public class Game implements Serializable {
             }
             for(var i = player.getOwnedDragons().size()-1; i >= 0; i--){
                 player.getOwnedDragons().get(i).reduceHealth((int)(Math.random()*21)+10);
+                player.getOwnedDragons().get(i).age += 1;
                 if(!player.getOwnedDragons().get(i).living()){
                     System.out.println(TextColour.BLUE + "[" + player.getName() + "]: " + player.getOwnedDragons().get(i).name + " is dead." + TextColour.RESET);
                     player.removeDragon(player.getOwnedDragons().get(i),false);
@@ -118,7 +120,7 @@ public class Game implements Serializable {
         }
         boolean save = (Printer.askPlayer(true,
                 "Do you want to save? (ENTER \"save\" to save, enter a number to continue)")).equalsIgnoreCase("save");
-        Printer.sleep(3000);
+        Printer.sleep(2000);
         if(save){
             mainMenu.saveGame();
         }
@@ -141,6 +143,7 @@ public class Game implements Serializable {
             }
         }
         printWinnerList();
+        mainMenu.deleteSave(fileName);
     }
     
     private void printWinnerList(){

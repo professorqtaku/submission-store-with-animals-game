@@ -41,6 +41,7 @@ public class Store implements Serializable {
 
     private void sellDragon(){
         ArrayList<String> dragonsCanBuy = dragonsPlayerCanBuyMenu();
+        checkListAndWarn(dragonsCanBuy.size());
         sellDragonAction(dragonsCanBuy);
     }
 
@@ -55,7 +56,6 @@ public class Store implements Serializable {
                 }
             }
         }
-        checkListAndWarn(dragonsPlayerCanBuy.size());
         return dragonsPlayerCanBuy;
     }
 
@@ -97,6 +97,7 @@ public class Store implements Serializable {
 
     private void sellFood(){
         ArrayList<String> foodCanBuy = foodPlayerCanBuyMenu();
+        checkListAndWarn(foodCanBuy.size());
         sellFoodMenuAction(foodCanBuy);
     }
 
@@ -111,7 +112,6 @@ public class Store implements Serializable {
                 }
             }
         }
-        checkListAndWarn(foodCanBuy.size());
         return foodCanBuy;
     }
 
