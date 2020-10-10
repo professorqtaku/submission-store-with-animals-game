@@ -23,7 +23,6 @@ public class Serializer {
 
     static public Object deserialize(String filePath){
         try {
-            //System.out.println("file exist: " + Files.exists(Paths.get(filePath)));
             var file = new FileInputStream(filePath);
             var in = new ObjectInputStream(file);
             var data = in.readObject();

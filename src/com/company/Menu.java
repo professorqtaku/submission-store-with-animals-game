@@ -18,7 +18,7 @@ public class Menu implements Serializable {
         System.out.println("1. New game");
         System.out.println("2. Load game");
         System.out.println("3. How to play");
-        System.out.println("4. End game");
+        System.out.println("4. Exit game");
         mainMenuAction(Printer.askPlayerNumber(false, "", 4, 1));
     }
 
@@ -94,7 +94,11 @@ public class Menu implements Serializable {
     }
 
     private void newSaveGame(){
-        String fileToSave = Printer.askPlayer(true,"Please ENTER the name of your save") + ".ser";
+        ArrayList<String> saveFileNames = TextFileHandler.readAsArrayList();
+        String fileToSave;
+        do {
+            fileToSave = Printer.askPlayer(true, "Please ENTER the name of your save") + ".ser";
+        }while (saveFileNames.contains(fileToSave));
         Serializer.serialize(fileToSave, currentGame);
         TextFileHandler.saveWithChange(fileToSave);
         currentGame.fileName = fileToSave;

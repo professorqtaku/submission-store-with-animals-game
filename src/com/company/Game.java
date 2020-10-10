@@ -28,7 +28,6 @@ public class Game implements Serializable {
         }
         currentPlayer = players.get(0);
         while(playedRounds < roundToPlay && !gameOver()){
-            System.out.println(gameOver());
             newRound();
             do {
                 if(!currentPlayer.losing()){
@@ -134,11 +133,20 @@ public class Game implements Serializable {
     }
 
     private void saveGame(){
-        boolean save = (Printer.askPlayer(true,
-                "Do you want to save? (ENTER \"save\" to save, enter a number to continue)")).equalsIgnoreCase("save");
+        String userAnswer = (Printer.askPlayer(true,
+                "Do you want to save?\n" +
+                        "(ENTER \"save\" to save, " +
+                        (gameOver() ? "ENTER  anything else to go back to Main menu)" :
+                                "ENTER \"menu\" to go back to Main menu or enter a number to continue)")   ));
         Printer.sleep(2000);
-        if(save){
+        if(userAnswer.equalsIgnoreCase("save")){
             mainMenu.saveGame();
+        }
+        else if(userAnswer.equalsIgnoreCase("menu") && !gameOver()){
+            mainMenu.mainMenu();
+        }
+        else if(gameOver()){
+            mainMenu.mainMenu();
         }
     }
 
@@ -150,7 +158,7 @@ public class Game implements Serializable {
             }
         }
         printWinnerList();
-        mainMenu.saveGame();
+        saveGame();
     }
     
     private void printWinnerList(){

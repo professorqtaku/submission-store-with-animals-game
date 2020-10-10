@@ -27,10 +27,14 @@ public class TextFileHandler {
 
     public static void saveWithChange(String newTextLine){
         ArrayList<String> object = readAsArrayList();
-        if(object.contains(newTextLine))
+        if(object.contains(newTextLine)) {
             object.remove(newTextLine);
-        else
+            System.out.println(TextColour.BLUE + "File Removed" + TextColour.RESET);
+        }
+        else {
             object.add(newTextLine);
+            System.out.println(TextColour.BLUE + "File added" + TextColour.RESET);
+        }
         save(object);
     }
 
