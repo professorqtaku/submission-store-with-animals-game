@@ -103,7 +103,8 @@ public class Game implements Serializable {
     }
 
     private void newRound(){
-        System.out.printf("NEW ROUND! [Round %d]\n", playedRounds+1);
+        System.out.println("-".repeat(50));
+        System.out.printf(TextColour.BLUE + "NEW ROUND! [Round %d]\n" + TextColour.RESET, playedRounds+1);
         for(var player: players){
             if(player.losing()){
                 continue;

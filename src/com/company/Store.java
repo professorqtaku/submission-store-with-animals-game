@@ -63,6 +63,7 @@ public class Store implements Serializable {
         if(dragonsCanBuy.size() < 1){
             return;
         }
+        System.out.println("ENTER 0 for NOT selling");
         int dragonIndex = (Printer.askPlayerNumber(true,
                 "Which dragon do you want to buy?", dragonsCanBuy.size(),0)-1);
         returnToGame(dragonIndex == -1, !game.actionDone);
@@ -136,21 +137,26 @@ public class Store implements Serializable {
     }
 
     private void buyDragonFromPlayer(){
-        checkListAndWarn(visitor.getOwnedDragons().size());
-        System.out.println("Which dragon do you want to sell?");
-        System.out.println("Dragon (Price)");
-        for(var dragon: visitor.getOwnedDragons()){
-            System.out.println((visitor.getOwnedDragons().indexOf(dragon) + 1) + ". " +
-                    dragon.name + " (" + dragon.getPriceNow() + ")");
-        }
-        int dragonIndex = Printer.askPlayerNumber(false, "", visitor.getOwnedDragons().size(),0)-1;
-        returnToGame(dragonIndex == -1, !game.actionDone);
-        if(dragonIndex > 0) {
-            visitor.removeDragon(visitor.getOwnedDragons().get(dragonIndex), true);
-            game.actionDone = true;
-            if (askBuyMore("dragons", false)) {
-                buyDragonFromPlayer();
+        if(visitor.getOwnedDragons().size() > 0) {
+            System.out.println("Which dragon do you want to sell?");
+            System.out.println("ENTER 0 for NOT selling");
+            System.out.println("Dragon (Price)");
+            for (var dragon : visitor.getOwnedDragons()) {
+                System.out.println((visitor.getOwnedDragons().indexOf(dragon) + 1) + ". " +
+                        dragon.name + " (" + dragon.getPriceNow() + ")");
             }
+            int dragonIndex = Printer.askPlayerNumber(false, "", visitor.getOwnedDragons().size(), 0) - 1;
+            returnToGame(dragonIndex == -1, !game.actionDone);
+            if (dragonIndex > 0) {
+                visitor.removeDragon(visitor.getOwnedDragons().get(dragonIndex), true);
+                game.actionDone = true;
+                if (askBuyMore("dragons", false)) {
+                    buyDragonFromPlayer();
+                }
+            }
+        }
+        else{
+            checkListAndWarn(visitor.getOwnedDragons().size());
         }
     }
 

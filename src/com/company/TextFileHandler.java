@@ -29,11 +29,9 @@ public class TextFileHandler {
         ArrayList<String> object = readAsArrayList();
         if(object.contains(newTextLine)) {
             object.remove(newTextLine);
-            System.out.println(TextColour.BLUE + "File Removed" + TextColour.RESET);
         }
         else {
             object.add(newTextLine);
-            System.out.println(TextColour.BLUE + "File added" + TextColour.RESET);
         }
         save(object);
     }
