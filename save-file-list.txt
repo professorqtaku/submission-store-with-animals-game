@@ -1,4 +1,4 @@
-1000.ser
-saved.ser
-222.ser
 manne.ser
+2players.ser
+2players2.ser
+2players3.ser

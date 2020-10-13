@@ -45,21 +45,24 @@ public class Game implements Serializable {
 
     public void playerTurn(){
         printPlayerStatus();
-        printPlayerMenu();
-        playerMenuAction(Printer.askPlayerNumber(false,"",9,0));
+        int maxNumberOfChoice = printPlayerMenu();
+        playerMenuAction(Printer.askPlayerNumber(false,"",maxNumberOfChoice,0));
     }
 
-    public void printPlayerMenu(){
+    public int printPlayerMenu(){
         print("<Choose menu>");
         print("1. Buy dragon");
         print("2. Buy food");
         print("3. Feed your dragons");
         print("4. Breed dragons");
-        print("5. Sell dragons\n");
+        print("5. Sell dragons");
+        int toReturn = 5;
         if(currentPlayer.getOwnedDragons().size()>0){
             print("6. Heal sick dragons");
+            toReturn = 6;
         }
-        print("0. Skip round (any other number is fine)");
+        print("\n0. Skip round");
+        return toReturn;
     }
 
     public void playerMenuAction(int action){
@@ -72,7 +75,7 @@ public class Game implements Serializable {
                 }
             }
             case 4 -> currentPlayer.breedDragon();
-            case 6 ->
+            case 6 -> hospital.visit(currentPlayer);
         }
     }
 
@@ -86,7 +89,7 @@ public class Game implements Serializable {
             print("------------------------------");
             for (var dragon : currentPlayer.getOwnedDragons()) {
                 print(dragon.name + " \t (" + dragon.health + ") \t " + dragon.getClass().getSimpleName() +
-                        (dragon.sick ? TextColour.CYAN + "SICK" + TextColour.RESET : ""));
+                        (dragon.sick ? TextColour.CYAN + " SICK" + TextColour.RESET : ""));
             }
             print("------------------------------");
         }
@@ -112,6 +115,7 @@ public class Game implements Serializable {
     private void newRound(){
         System.out.println("-".repeat(50));
         System.out.printf(TextColour.BLUE + "NEW ROUND! [Round %d]\n" + TextColour.RESET, playedRounds+1);
+        saveGame();
         for(var player: players){
             if(player.losing()){
                 continue;
@@ -119,8 +123,10 @@ public class Game implements Serializable {
             for(var i = player.getOwnedDragons().size()-1; i >= 0; i--){
                 player.getOwnedDragons().get(i).reduceHealth((int)(Math.random()*21)+10);
                 player.getOwnedDragons().get(i).age += 1;
-                if(!player.getOwnedDragons().get(i).living()){ // if dead, next round if dragon still sick, then dead
-                    System.out.println(TextColour.BLUE + "[" + player.getName() + "]: " + player.getOwnedDragons().get(i).name + " is dead." + TextColour.RESET);
+                if(!player.getOwnedDragons().get(i).living() || player.getOwnedDragons().get(i).sick){ // check if dead or sick, then die
+                    System.out.println(TextColour.BLUE + "[" + player.getName() + "]: " + player.getOwnedDragons().get(i).name + " is dead. Cause: "
+                            + (player.getOwnedDragons().get(i).sick ? "Sickness" : "Aging or 0 health")
+                            + TextColour.RESET);
                     player.removeDragon(player.getOwnedDragons().get(i),false);
                 }
                 else if(player.getOwnedDragons().get(i).gettingSick()){ // if sick
@@ -131,7 +137,8 @@ public class Game implements Serializable {
                 }
             }
         }
-        saveGame();
+        Printer.askPlayerNumber(true, "ENTER a number to start ROUND " + (playedRounds+1), 100000,0);
+        Printer.sleep(2000);
     }
 
     private boolean gameOver(){

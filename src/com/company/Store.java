@@ -63,7 +63,7 @@ public class Store implements Serializable {
         if(dragonsCanBuy.size() < 1){
             return;
         }
-        System.out.println("ENTER 0 for NOT selling");
+        System.out.println("ENTER 0 for NOT buying any dragon");
         int dragonIndex = (Printer.askPlayerNumber(true,
                 "Which dragon do you want to buy?", dragonsCanBuy.size(),0)-1);
         returnToGame(dragonIndex == -1, !game.actionDone);
@@ -93,7 +93,7 @@ public class Store implements Serializable {
             }
             visitor.addDragon(dragonToSell, true);
             game.actionDone = true;
-            if (askBuyMore("Dragons", true)) {
+            if (askBuyMore("Dragons", "buy")) {
                 sellDragon();
             }
         }
@@ -131,7 +131,7 @@ public class Store implements Serializable {
         returnToGame(amount == 0, !game.actionDone);
         visitor.buyFood(foodTypes.get(foodToBuy), amount);
         game.actionDone = true;
-        if (askBuyMore("Food", true)) {
+        if (askBuyMore("Food", "buy")) {
             sellFood();
         }
     }
@@ -150,7 +150,7 @@ public class Store implements Serializable {
             if (dragonIndex > 0) {
                 visitor.removeDragon(visitor.getOwnedDragons().get(dragonIndex), true);
                 game.actionDone = true;
-                if (askBuyMore("dragons", false)) {
+                if (askBuyMore("dragons", "sell")) {
                     buyDragonFromPlayer();
                 }
             }
@@ -160,7 +160,7 @@ public class Store implements Serializable {
         }
     }
 
-    private void checkListAndWarn(int listToCheckSize){
+    protected void checkListAndWarn(int listToCheckSize){
         if(listToCheckSize == 0){
             System.out.println(TextColour.RED + "You do not have enough money/dragons to buy/sell/breed more!" + TextColour.RESET);
             Printer.sleep(2000);
@@ -168,13 +168,13 @@ public class Store implements Serializable {
         }
     }
 
-    private boolean askBuyMore(String thing, boolean buy){
+    protected boolean askBuyMore(String thing, String action){
         return (Printer.askPlayerNumber(true,
-                "Do you want to " + (buy ? "buy" : "sell") + " more " +
+                "Do you want to " + action + " more " +
                         thing.toLowerCase() + "? (1 = yes, 0 = no)", 1, 0) == 1);
     }
 
-    private void returnToGame(boolean condition1, boolean condition2){
+    protected void returnToGame(boolean condition1, boolean condition2){
         //player can choose from player's main menu
         if(condition1 && condition2){
             System.out.println("Going back to menu...");

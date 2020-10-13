@@ -9,7 +9,7 @@ public class Printer {
 
     public static String askPlayer(boolean print, String question){
         if(print){
-            print(question);
+            print("\n" + question);
         }
         System.out.print(TextColour.GREEN + "Your choice: " + TextColour.RESET);
         return scanner.nextLine();
@@ -17,7 +17,7 @@ public class Printer {
 
     public static int askPlayerNumber(boolean print, String question, int max, int min){
         if(print) {
-            print(question);
+            print("\n" + question);
         }
         print(TextColour.GREEN + "Your choice: " + TextColour.RESET);
         int toReturn;
@@ -38,7 +38,7 @@ public class Printer {
 
     public static int askPlayerWithOptions(boolean print, String question, String ...choices){
         if(print){
-            System.out.println(question);
+            System.out.println("\n" + question);
             for (int i = 0; i < choices.length; i++) {
                 print((i+1) + ". " + choices[i]);
             }

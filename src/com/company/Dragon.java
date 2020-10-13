@@ -48,7 +48,7 @@ public abstract class Dragon implements Serializable {
     }
 
     public boolean living(){
-        return ((health > 0 && age <= maxAge )|| sick);
+        return (health > 0 && age <= maxAge );
     }
 
     public void mate(Dragon partner){
