@@ -17,7 +17,6 @@ public class TextFileHandler {
                 case 0 -> Files.delete(file); // deletes the text file if the list is empty
                 default -> Files.write(file, object, StandardCharsets.UTF_8);
             }
-
              */
         }
         catch (Exception e){

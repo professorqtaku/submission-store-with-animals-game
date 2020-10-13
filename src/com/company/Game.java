@@ -11,6 +11,7 @@ public class Game implements Serializable {
     private ArrayList<Player> players;
     private Player currentPlayer;
     private Store store;
+    private Hospital hospital;
     public boolean actionDone;
 
 
@@ -20,6 +21,7 @@ public class Game implements Serializable {
         this.roundToPlay = roundToPlay;
         this.players = players;
         this.store = new Store(this);
+        this.hospital = new Hospital(this);
     }
 
     public void startGame(){
@@ -54,6 +56,9 @@ public class Game implements Serializable {
         print("3. Feed your dragons");
         print("4. Breed dragons");
         print("5. Sell dragons\n");
+        if(currentPlayer.getOwnedDragons().size()>0){
+            print("6. Heal sick dragons");
+        }
         print("0. Skip round (any other number is fine)");
     }
 
@@ -67,6 +72,7 @@ public class Game implements Serializable {
                 }
             }
             case 4 -> currentPlayer.breedDragon();
+            case 6 ->
         }
     }
 
@@ -79,7 +85,8 @@ public class Game implements Serializable {
             print("Name \t (Health) \t Type");
             print("------------------------------");
             for (var dragon : currentPlayer.getOwnedDragons()) {
-                print(dragon.name + " \t (" + dragon.health + ") \t " + dragon.getClass().getSimpleName());
+                print(dragon.name + " \t (" + dragon.health + ") \t " + dragon.getClass().getSimpleName() +
+                        (dragon.sick ? TextColour.CYAN + "SICK" + TextColour.RESET : ""));
             }
             print("------------------------------");
         }
@@ -112,12 +119,15 @@ public class Game implements Serializable {
             for(var i = player.getOwnedDragons().size()-1; i >= 0; i--){
                 player.getOwnedDragons().get(i).reduceHealth((int)(Math.random()*21)+10);
                 player.getOwnedDragons().get(i).age += 1;
-                if(!player.getOwnedDragons().get(i).living()){
+                if(!player.getOwnedDragons().get(i).living()){ // if dead, next round if dragon still sick, then dead
                     System.out.println(TextColour.BLUE + "[" + player.getName() + "]: " + player.getOwnedDragons().get(i).name + " is dead." + TextColour.RESET);
                     player.removeDragon(player.getOwnedDragons().get(i),false);
-                    if(player.losing()){
-                        System.out.println(TextColour.YELLOW + player.getName() + " have lost!" + TextColour.RESET);
-                    }
+                }
+                else if(player.getOwnedDragons().get(i).gettingSick()){ // if sick
+                    System.out.println(TextColour.CYAN + "[" + player.getName() + "]: " + player.getOwnedDragons().get(i).name + " is sick." + TextColour.RESET);
+                }
+                if(player.losing()){
+                    System.out.println(TextColour.YELLOW + player.getName() + " have lost!" + TextColour.RESET);
                 }
             }
         }

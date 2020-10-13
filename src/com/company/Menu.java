@@ -65,7 +65,9 @@ public class Menu implements Serializable {
                 }
 
                 else{
-                    System.out.println(TextColour.RED + "Loading fail" + TextColour.RESET);
+                    System.out.println(TextColour.RED + "Loading fail \n" + TextColour.RESET);
+                    Printer.sleep(1000);
+                    mainMenu();
                 }
             }
             catch(Exception e){

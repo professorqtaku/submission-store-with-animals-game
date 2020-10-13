@@ -7,9 +7,9 @@ import java.util.*;
 import java.io.Serializable;
 
 public class Store implements Serializable {
-    private Player visitor;
-    private Game game;
-    public LinkedHashMap<String, Food> foodTypes; // key = name of food, value = instance of food sub class
+    protected Player visitor;
+    protected Game game;
+    private LinkedHashMap<String, Food> foodTypes; // key = name of food, value = instance of food sub class
     private LinkedHashMap<String, Dragon> dragonTypes;
 
     public Store(Game game){

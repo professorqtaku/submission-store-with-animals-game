@@ -17,6 +17,7 @@ public abstract class Dragon implements Serializable {
     protected int price;
     protected int maxAge;
     protected int maxChildrenPerBreed;
+    protected boolean sick = false;
 
     public Dragon(String name, String gender, Player owner) {
         this.name = name;
@@ -47,7 +48,7 @@ public abstract class Dragon implements Serializable {
     }
 
     public boolean living(){
-        return (health > 0 && age <= maxAge);
+        return ((health > 0 && age <= maxAge )|| sick);
     }
 
     public void mate(Dragon partner){
@@ -85,6 +86,11 @@ public abstract class Dragon implements Serializable {
         else {
             owner.removeDragon(this, false);
         }
+    }
+
+    public boolean gettingSick(){
+        sick = ((int) (Math.random() * 5) + 1 == 1);
+        return sick;
     }
 
     public String[] getFoodCanEat(){
