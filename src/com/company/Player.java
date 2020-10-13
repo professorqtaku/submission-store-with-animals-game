@@ -153,7 +153,7 @@ public class Player implements Serializable {
                 Dragon dragonToBreed = ownedDragons.get(dragonToBreedIndex);
                 Dragon partner = chooseDragonPartner(dragonToBreed);
                 if (partner != null) {
-                    dragonToBreed.breed(partner);
+                    dragonToBreed.mate(partner);
                     game.actionDone = true;
                 }
             }

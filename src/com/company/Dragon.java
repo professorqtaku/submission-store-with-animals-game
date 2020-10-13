@@ -50,7 +50,7 @@ public abstract class Dragon implements Serializable {
         return (health > 0 && age <= maxAge);
     }
 
-    public void breed(Dragon partner){
+    public void mate(Dragon partner){
         if(this.getClass().equals(partner.getClass())) {
             if ((int) (Math.random() * 2) == 1) {
                 int amountBabies = (int) (Math.random() * this.maxChildrenPerBreed) + 1;

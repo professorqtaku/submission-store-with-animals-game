@@ -53,7 +53,7 @@ public class Game implements Serializable {
         print("2. Buy food");
         print("3. Feed your dragons");
         print("4. Breed dragons");
-        print("5. Sell dragons");
+        print("5. Sell dragons\n");
         print("0. Skip round (any other number is fine)");
     }
 

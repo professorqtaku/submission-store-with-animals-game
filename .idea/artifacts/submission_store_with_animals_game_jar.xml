@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="submission-store-with-animals-game:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/submission_store_with_animals_game_jar</output-path>
+    <root id="archive" name="submission-store-with-animals-game.jar">
+      <element id="module-output" name="submission-store-with-animals-game" />
+    </root>
+  </artifact>
+</component>
