@@ -123,16 +123,21 @@ public class Store implements Serializable {
         if(foodCanBuy.size() < 1){
             return;
         }
-        String foodToBuy = foodCanBuy.get(
-                Printer.askPlayerNumber(true, "What food do you want to buy?",foodCanBuy.size(),1)-1);
-        int amount = Printer.askPlayerNumber(true, "How much do you want to buy (0-" +
-                        visitor.getBalance()/foodTypes.get(foodToBuy).getPrice() + ")? ",
-                visitor.getBalance()/foodTypes.get(foodToBuy).getPrice(),0);
-        returnToGame(amount == 0, !game.actionDone);
-        visitor.buyFood(foodTypes.get(foodToBuy), amount);
-        game.actionDone = true;
-        if (askBuyMore("Food", "buy")) {
-            sellFood();
+        int foodIndex = Printer.askPlayerNumber(true, "What food do you want to buy?",foodCanBuy.size(),0) -1;
+        if(foodIndex < 0) {
+            returnToGame(true, !game.actionDone);
+        }
+        else {
+            String foodToBuy = foodCanBuy.get(foodIndex);
+            int amount = Printer.askPlayerNumber(true, "How much do you want to buy (0-" +
+                            visitor.getBalance() / foodTypes.get(foodToBuy).getPrice() + ")? ",
+                    visitor.getBalance() / foodTypes.get(foodToBuy).getPrice(), 0);
+            returnToGame(amount == 0, !game.actionDone);
+            visitor.buyFood(foodTypes.get(foodToBuy), amount);
+            game.actionDone = true;
+            if (askBuyMore("Food", "buy")) {
+                sellFood();
+            }
         }
     }
 
@@ -162,7 +167,7 @@ public class Store implements Serializable {
 
     protected void checkListAndWarn(int listToCheckSize){
         if(listToCheckSize == 0){
-            System.out.println(TextColour.RED + "You do not have enough money/dragons to buy/sell/breed more!" + TextColour.RESET);
+            System.out.println(TextColour.RED + "You do not have enough money/dragons to buy/sell/breed/heal more!" + TextColour.RESET);
             Printer.sleep(2000);
             returnToGame(!game.actionDone,true);
         }

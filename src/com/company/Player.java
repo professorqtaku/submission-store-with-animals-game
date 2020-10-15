@@ -97,7 +97,7 @@ public class Player implements Serializable {
         System.out.println("Choose the dragon you want to feed:");
         System.out.println("Dragon\t (Health)");
         for(int i = 0; i < ownedDragons.size(); i++){
-            System.out.println((i+1) + ". " + ownedDragons.get(0) + " \t(" + ownedDragons.get(0).health + ")");
+            System.out.println((i+1) + ". " + ownedDragons.get(i).name + " \t(" + ownedDragons.get(i).health + ")");
         }
         Dragon dragonToFeed = ownedDragons.get(Printer.askPlayerNumber(false,"", ownedDragons.size(),1)-1);
         ArrayList<String> foodOptions = foodOptions(dragonToFeed);
@@ -137,7 +137,7 @@ public class Player implements Serializable {
             listCounter++;
         }
         String foodToFeed = food.get(Printer.askPlayerNumber(false, "", food.size(), 1)-1);
-        int amount = Printer.askPlayerNumber(true, "How many kg do you wan to feed?", ownedFood.get(foodToFeed),0);
+        int amount = Printer.askPlayerNumber(true, "How many kg do you want to feed?", ownedFood.get(foodToFeed),0);
         dragon.eat(foodToFeed, amount);
     }
 
