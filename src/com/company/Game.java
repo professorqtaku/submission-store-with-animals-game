@@ -171,8 +171,8 @@ public class Game implements Serializable {
     private void endGame(){
         System.out.println("Thanks for playing! Result:");
         for(var player: players){
-            for(var dragon: player.getOwnedDragons()){
-                player.removeDragon(dragon, true);
+            for(int i = player.getOwnedDragons().size()-1; i >= 0; i--){
+                player.removeDragon(player.getOwnedDragons().get(i), true);
             }
         }
         printWinnerList();
