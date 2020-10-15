@@ -53,10 +53,8 @@ public class Hospital extends Store{
             else{
                 dragonToHeal.sick = true;
                 System.out.println(dragonToHeal.name + " couldn't be healed and is dead now...");
-                if(!dragonToHeal.living()){
-                    System.out.println("living" + dragonToHeal.living());
-                    visitor.removeDragon(dragonToHeal,false, 0);
-                }
+                visitor.removeDragon(dragonToHeal,false, 0);
+                //sickDragons.remove(dragonToHeal);
             }
             game.actionDone = true;
             if (askBuyMore("Dragons", "heal")) {

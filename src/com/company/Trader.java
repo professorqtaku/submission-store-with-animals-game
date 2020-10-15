@@ -36,6 +36,7 @@ public class Trader extends Store{
                     TextColour.BLUE + seller.getName() + TextColour.RESET + " for " +
                     dragonToBuy.name + " the " + dragonToBuy.getClass().getSimpleName() + "?", visitor.getBalance(),-1);
             returnToGame(offer < 0,!game.actionDone);
+            game.actionDone = true;
             System.out.println(TextColour.GREEN + "Turn the computer to [" + seller.getName() + "]");
 
             switch (Printer.askPlayerWithOptions(true, "Do you accept the offer?", "Yes", "No")){
@@ -49,6 +50,9 @@ public class Trader extends Store{
                 }
             }
             System.out.println(TextColour.GREEN + "Turn the computer to [" + visitor.getName() + "]");
+            if(askBuyMore("dragons", "trade")){
+                trade();
+            }
         }
 
     }
@@ -62,6 +66,7 @@ public class Trader extends Store{
                 System.out.println(potentialSellers.size() + ". " + player.getName());
             }
         }
+        checkListAndWarn(potentialSellers.size());
         int playerIndex = Printer.askPlayerNumber(true,
                 "Choose a player you want to buy dragons from.",potentialSellers.size(), 0) -1;
         returnToGame(playerIndex < 0 , !game.actionDone);
@@ -83,6 +88,14 @@ public class Trader extends Store{
             }
         }
         return null;
+    }
+
+    protected void checkListAndWarn(int listToCheckSize){
+        if(listToCheckSize == 0){
+            System.out.println(TextColour.RED + "There are no player you can trade with!" + TextColour.RESET);
+            Printer.sleep(2000);
+            returnToGame(!game.actionDone,true);
+        }
     }
 
     private void sellToPlayer(){}

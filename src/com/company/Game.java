@@ -12,7 +12,7 @@ public class Game implements Serializable {
     private Player currentPlayer;
     private Store store;
     private Hospital hospital;
-    private Trader trader;
+    //private Trader trader;
     public boolean actionDone;
 
 
@@ -23,7 +23,7 @@ public class Game implements Serializable {
         this.players = players;
         this.store = new Store(this);
         this.hospital = new Hospital(this);
-        this.trader = new Trader(this, this.players);
+        //this.trader = new Trader(this, this.players);
     }
 
     public void startGame(){
@@ -60,13 +60,15 @@ public class Game implements Serializable {
         print("5. Sell dragons");
         int toReturn = 5;
         if(currentPlayer.getOwnedDragons().size()>0){
-            print("6. Heal sick dragons");
-            toReturn = 6;
-            if(players.size() > 1){
-                print("7. Trade");
-                toReturn = 7;
-            }
+            toReturn += 1;
+            print(toReturn + ". Heal sick dragons");
         }
+        /*
+        if(players.size() > 1){
+            toReturn += 1;
+            print(toReturn + ". Trade");
+        }
+         */
         print("\n0. Skip round");
         return toReturn;
     }
@@ -81,8 +83,13 @@ public class Game implements Serializable {
                 }
             }
             case 4 -> currentPlayer.breedDragon();
-            case 6 -> hospital.visit(currentPlayer);
-            case 7 -> trader.visit(currentPlayer);
+            case 6 -> {
+                if(currentPlayer.getOwnedDragons().size()>0){
+                    hospital.visit(currentPlayer);
+                }
+                //else trader.visit(currentPlayer);
+            }
+            //case 7 -> trader.visit(currentPlayer);
         }
     }
 
@@ -110,7 +117,8 @@ public class Game implements Serializable {
 
     private void changePlayer(){
         if(!currentPlayer.losing()) {
-            print("[" + currentPlayer.getName() + "] your turn has end. Please turn the computer to next player.");
+            print(TextColour.YELLOW + "[" + currentPlayer.getName() + "]" + TextColour.RESET +
+                    " your turn has ended. Please turn the computer to next player.");
             Printer.askPlayerNumber(true, "ENTER a number when next player is ready", 9, 0);
         }
         if(players.indexOf(currentPlayer) == players.size()-1) {

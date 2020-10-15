@@ -160,6 +160,9 @@ public class Player implements Serializable {
                 }
             }
         }
+        else {
+            System.out.println(TextColour.RED + "You do not have any dragons!" + TextColour.RESET);
+        }
         backToGame(true,!game.actionDone);
     }
 
