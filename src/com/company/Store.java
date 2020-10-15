@@ -91,7 +91,7 @@ public class Store implements Serializable {
                     dragonToSell = new MetalDragon(name, gender, visitor);
                 }
             }
-            visitor.addDragon(dragonToSell, true);
+            visitor.addDragon(dragonToSell, true, dragonToSell.getPriceNow());
             game.actionDone = true;
             if (askBuyMore("Dragons", "buy")) {
                 sellDragon();
@@ -153,7 +153,7 @@ public class Store implements Serializable {
             int dragonIndex = Printer.askPlayerNumber(false, "", visitor.getOwnedDragons().size(), 0) - 1;
             returnToGame(dragonIndex == -1, !game.actionDone);
             if (dragonIndex > 0) {
-                visitor.removeDragon(visitor.getOwnedDragons().get(dragonIndex), true);
+                visitor.removeDragon(visitor.getOwnedDragons().get(dragonIndex), true, visitor.getOwnedDragons().get(dragonIndex).getPriceNow());
                 game.actionDone = true;
                 if (askBuyMore("dragons", "sell")) {
                     buyDragonFromPlayer();

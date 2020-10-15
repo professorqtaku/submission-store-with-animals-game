@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 public class Menu implements Serializable {
     private Game currentGame;
+
     public Menu() {
         mainMenu();
     }

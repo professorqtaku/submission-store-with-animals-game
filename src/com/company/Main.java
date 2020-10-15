@@ -14,7 +14,6 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         // DEADLINE 21/10 wednesday
-            new Menu();
-
+        new Menu();
     }
 }

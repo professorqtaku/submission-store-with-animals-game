@@ -26,7 +26,7 @@ public abstract class Dragon implements Serializable {
         else this.gender = null;
         this.owner = owner;
         if(owner != null)
-            owner.addDragon(this, false); //make sure owner knows me (Le dragon)
+            owner.addDragon(this, false,0); //make sure owner knows me (Le dragon)
         else this.owner = null;
     }
 
@@ -81,10 +81,10 @@ public abstract class Dragon implements Serializable {
         }
         this.owner = owner;
         if(owner != null){
-            owner.addDragon(this, purchase);
+            owner.addDragon(this, purchase,(purchase ? getPriceNow() : 0));
         }
         else {
-            owner.removeDragon(this, false);
+            owner.removeDragon(this, false, 0);
         }
     }
 

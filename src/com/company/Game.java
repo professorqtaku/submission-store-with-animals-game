@@ -12,6 +12,7 @@ public class Game implements Serializable {
     private Player currentPlayer;
     private Store store;
     private Hospital hospital;
+    private Trader trader;
     public boolean actionDone;
 
 
@@ -22,6 +23,7 @@ public class Game implements Serializable {
         this.players = players;
         this.store = new Store(this);
         this.hospital = new Hospital(this);
+        this.trader = new Trader(this, this.players);
     }
 
     public void startGame(){
@@ -60,6 +62,10 @@ public class Game implements Serializable {
         if(currentPlayer.getOwnedDragons().size()>0){
             print("6. Heal sick dragons");
             toReturn = 6;
+            if(players.size() > 1){
+                print("7. Trade");
+                toReturn = 7;
+            }
         }
         print("\n0. Skip round");
         return toReturn;
@@ -76,6 +82,7 @@ public class Game implements Serializable {
             }
             case 4 -> currentPlayer.breedDragon();
             case 6 -> hospital.visit(currentPlayer);
+            case 7 -> trader.visit(currentPlayer);
         }
     }
 
@@ -128,7 +135,7 @@ public class Game implements Serializable {
                     System.out.println(TextColour.BLUE + "[" + player.getName() + "]: " + player.getOwnedDragons().get(i).name + " is dead. Cause: "
                             + (player.getOwnedDragons().get(i).sick ? "Sickness" : "Aging or 0 health")
                             + TextColour.RESET);
-                    player.removeDragon(player.getOwnedDragons().get(i),false);
+                    player.removeDragon(player.getOwnedDragons().get(i),false, 0);
                 }
                 else if(player.getOwnedDragons().get(i).gettingSick()){ // if sick
                     System.out.println(TextColour.CYAN + "[" + player.getName() + "]: " + player.getOwnedDragons().get(i).name + " is sick." + TextColour.RESET);
@@ -178,7 +185,7 @@ public class Game implements Serializable {
         System.out.println("< RESULT >");
         for(var player: players){
             for(int i = player.getOwnedDragons().size()-1; i >= 0; i--){
-                player.removeDragon(player.getOwnedDragons().get(i), true);
+                player.removeDragon(player.getOwnedDragons().get(i), true, player.getOwnedDragons().get(i).getPriceNow());
             }
         }
         printWinnerList();

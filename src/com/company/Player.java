@@ -63,20 +63,22 @@ public class Player implements Serializable {
         ownedFood.put(foodType, ownedFood.get(foodType)-consumedQuantity);
     }
 
-    public void addDragon(Dragon dragon, boolean purchase){
+    public void addDragon(Dragon dragon, boolean purchase, int price){
         if(dragon != null) {
-            if(purchase) balance -= dragon.getPriceNow();
+            if(purchase){
+                    balance -= price;
+            }
             if (ownedDragons.contains(dragon)) return;
             ownedDragons.add(dragon);
             dragon.changeOwner(this, false);
         }
     }
 
-    public void removeDragon(Dragon dragon, boolean sell){
+    public void removeDragon(Dragon dragon, boolean sell, int price){
         if(!ownedDragons.contains(dragon))
             return;
         if(sell)
-            balance += dragon.getPriceNow();
+            balance += price;
         ownedDragons.remove(dragon);
         //dragon.changeOwner(null, false); // gives a NullPointerException
     }
@@ -192,6 +194,14 @@ public class Player implements Serializable {
             System.out.println("Going back to menu...");
             Printer.sleep(2000);
             game.playerTurn();
+        }
+    }
+
+    public void printAllOwnedDragons(){
+        int counter = 1;
+        for(var x: ownedDragons){
+            System.out.println(counter + ". " + x);
+            counter++;
         }
     }
 
