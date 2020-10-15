@@ -81,7 +81,8 @@ public class Game implements Serializable {
 
     public void printPlayerStatus(){
         print("\n".repeat(50));
-        print("[" + currentPlayer.getName() + "] Round: " + (playedRounds +1));
+        print(TextColour.YELLOW + "[" + currentPlayer.getName() + "]" + TextColour.RESET
+                + " Round: " + (playedRounds +1));
         print("Balance: " + currentPlayer.getBalance());
         print("Owned dragons: " + currentPlayer.getOwnedDragons().size());
         if(currentPlayer.getOwnedDragons().size() != 0) {

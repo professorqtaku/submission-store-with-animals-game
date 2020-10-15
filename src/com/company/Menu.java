@@ -13,7 +13,7 @@ public class Menu implements Serializable {
     }
 
     public void mainMenu() {
-        System.out.println("*-*-*-* Welcome to <<DRAGON BREEDER>> *-*-*-*");
+        System.out.println("\n*-*-*-* Welcome to DRAGON BREEDER *-*-*-*");
         System.out.println("< Main menu >");
         System.out.println("1. New game");
         System.out.println("2. Load game");

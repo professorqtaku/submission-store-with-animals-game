@@ -9,6 +9,12 @@ public class TextFileHandler {
     public static Path file = Paths.get("save-file-list.txt");
 
     public static void save(ArrayList<String> object){
+        // remove blank lines
+        for(var i = object.size() - 1; i >= 0; i--){
+            if(object.get(i).equals("")){
+                object.remove(i);
+            }
+        }
         try {
             Files.write(file, object, StandardCharsets.UTF_8);
             //object.removeIf(filePath -> !Files.exists(Paths.get(filePath)));
