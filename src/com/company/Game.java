@@ -142,6 +142,9 @@ public class Game implements Serializable {
     }
 
     private boolean gameOver(){
+        if(playedRounds >= roundToPlay){
+            return true;
+        }
         for(var player: players){
             if(!player.losing()){
                 return false;
@@ -169,7 +172,9 @@ public class Game implements Serializable {
     }
 
     private void endGame(){
-        System.out.println("Thanks for playing! Result:");
+        System.out.println("Thanks for playing!");
+        System.out.println("-".repeat(50));
+        System.out.println("< RESULT >");
         for(var player: players){
             for(int i = player.getOwnedDragons().size()-1; i >= 0; i--){
                 player.removeDragon(player.getOwnedDragons().get(i), true);
@@ -187,9 +192,11 @@ public class Game implements Serializable {
                 return Integer.compare(p2.getBalance(), p1.getBalance());
             }
         });
+        System.out.println("Name (Balance)");
         for(int i = 0; i < players.size(); i++){
             if(i==0) System.out.print(TextColour.YELLOW);
-            System.out.println((i+1) + ". " + players.get(i).getName() + TextColour.RESET);
+            System.out.println((i+1) + ". " + players.get(i).getName() +
+                    " (" + players.get(i).getBalance() + ")" + TextColour.RESET);
         }
     }
 

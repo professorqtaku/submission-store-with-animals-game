@@ -1,4 +1,0 @@
-manne.ser
-2players.ser
-2players2.ser
-2players3.ser

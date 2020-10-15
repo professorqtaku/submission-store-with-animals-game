@@ -18,8 +18,11 @@ public class Menu implements Serializable {
         System.out.println("1. New game");
         System.out.println("2. Load game");
         System.out.println("3. How to play");
-        System.out.println("4. Exit game");
-        mainMenuAction(Printer.askPlayerNumber(false, "", 4, 1));
+        if(savesExist()) {
+            System.out.println("\n9. Delete save");
+        }
+        System.out.println("\n0. Exit game");
+        mainMenuAction(Printer.askPlayerNumber(false, "", 9, 0));
     }
 
     private void mainMenuAction(int action) {
@@ -27,7 +30,9 @@ public class Menu implements Serializable {
             case 1 -> newGame();
             case 2 -> loadGame();
             case 3 -> howToPlay();
-            case 4 -> exitGame();
+            case 9 -> deleteFile();
+            case 0 -> exitGame();
+            default -> mainMenu();
         }
     }
 
@@ -104,6 +109,17 @@ public class Menu implements Serializable {
         Serializer.serialize(fileToSave, currentGame);
         TextFileHandler.saveWithChange(fileToSave);
         currentGame.fileName = fileToSave;
+    }
+
+    private void deleteFile(){
+        String saveToDelete = getSaveFileName();
+        System.out.println(saveToDelete);
+        deleteSave(saveToDelete);
+        mainMenu();
+    }
+
+    private boolean savesExist(){
+        return TextFileHandler.fileExist() && TextFileHandler.readAsArrayList().size() > 0;
     }
 
     public void deleteSave(String fileToDelete){
