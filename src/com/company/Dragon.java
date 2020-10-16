@@ -98,6 +98,6 @@ public abstract class Dragon implements Serializable {
     }
 
     public int getPriceNow(){
-        return (int) Math.round(price * health/100.0 * (age == 0 ? 1.0 : (1.0 - (double)age/maxAge)));
+        return (int) Math.round(price * health/100.0 * (age == 0 ? 1.0 : (1.0 - (double)age/maxAge)) * (sick ? 0.5 : 1));
     }
 }

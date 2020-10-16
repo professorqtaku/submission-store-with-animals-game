@@ -38,9 +38,11 @@ public class Trader extends Store{
                     visitor.getBalance(),-1);
             returnToGame(offer < 0,!game.actionDone);
             game.actionDone = true;
-            System.out.println(TextColour.GREEN + "Turn the computer to [" + seller.getName() + "]");
+            System.out.println(TextColour.GREEN + "Turn the computer to [" + seller.getName() + "]" + TextColour.RESET);
 
-            switch (Printer.askPlayerWithOptions(true, "Do you accept the offer?", "Yes", "No")){
+            switch (Printer.askPlayerWithOptions(true,
+                    "Do you accept the offer (" + offer + ") for " + dragonToBuy.name+"?",
+                    "Yes", "No")){
                 case 1 -> {
                     seller.removeDragon(dragonToBuy,true, offer);
                     visitor.addDragon(dragonToBuy,true,offer);
@@ -50,7 +52,7 @@ public class Trader extends Store{
                     System.out.println(TextColour.BLUE + "Trade unsuccessful" + TextColour.RESET);
                 }
             }
-            System.out.println(TextColour.GREEN + "Turn the computer to [" + visitor.getName() + "]");
+            System.out.println(TextColour.GREEN + "Turn the computer to [" + visitor.getName() + "]" + TextColour.RESET);
             if(askBuyMore("dragons", "trade")){
                 trade();
             }
@@ -62,14 +64,17 @@ public class Trader extends Store{
         if(dragonToSell != null) {
             System.out.println("ENTER -1 for not trading");
             int offer = Printer.askPlayerNumber(true, "How much do you want to offer for " +
-                            dragonToSell.name + " the " + dragonToSell.getClass().getSimpleName() + "?",
-                    visitor.getBalance(),-1);
+                            dragonToSell.name + " the " + dragonToSell.getClass().getSimpleName() +
+                            "(0-" + dragonToSell.price+ ")?",
+                    dragonToSell.price,-1);
             returnToGame(offer < 0,!game.actionDone);
             Player buyer = getPlayer(false, offer);
             if(buyer != null) {
                 game.actionDone = true;
-                System.out.println(TextColour.GREEN + "Turn the computer to [" + buyer.getName() + "]");
-                switch (Printer.askPlayerWithOptions(true, "Do you accept the offer?", "Yes", "No")) {
+                System.out.println(TextColour.GREEN + "Turn the computer to [" + buyer.getName() + "]" + TextColour.RESET);
+                switch (Printer.askPlayerWithOptions(true,
+                        "Do you accept the offer (" + offer + ") for " + dragonToSell.name+"?",
+                        "Yes", "No")){
                     case 1 -> {
                         visitor.removeDragon(dragonToSell, true, offer);
                         buyer.addDragon(dragonToSell, true, offer);
@@ -79,7 +84,7 @@ public class Trader extends Store{
                         System.out.println(TextColour.BLUE + "Trade unsuccessful" + TextColour.RESET);
                     }
                 }
-                System.out.println(TextColour.GREEN + "Turn the computer to [" + visitor.getName() + "]");
+                System.out.println(TextColour.GREEN + "Turn the computer to [" + visitor.getName() + "]" + TextColour.RESET);
                 if (askBuyMore("dragons", "trade")) {
                     trade();
                 }
@@ -93,27 +98,29 @@ public class Trader extends Store{
         ArrayList<Player> potentialTraders = new ArrayList<>();
         for(var player: players){
             if(visitorBuy) {
-                if (!player.losing() && player.getOwnedDragons().size() > 0) {
+                if (!player.losing() && player.getOwnedDragons().size() > 0 && player != visitor) {
                     potentialTraders.add(player);
                     System.out.println(potentialTraders.size() + ". " + player.getName());
                 }
             }
             else{
-                if (!player.losing() && player.getBalance() >= offer) {
+                if (!player.losing() && player.getBalance() >= offer && player != visitor) {
                     potentialTraders.add(player);
                     System.out.println(potentialTraders.size() + ". " + player.getName());
                 }
             }
         }
         checkListAndWarn(potentialTraders.size());
-        System.out.println("ENTER 0 for not trading");
-        int playerIndex = Printer.askPlayerNumber(true,
+        if(potentialTraders.size()>0){
+            System.out.println("ENTER 0 for not trading");
+            int playerIndex = Printer.askPlayerNumber(true,
                     "Choose a player you want to " +
                             (visitorBuy ? "buy dragons from." : "sell dragons to."),
-                potentialTraders.size(), 0) - 1;
-        returnToGame(playerIndex < 0 , !game.actionDone);
-        if(playerIndex >= 0){
-            return potentialTraders.get(playerIndex);
+                    potentialTraders.size(), 0) - 1;
+            returnToGame(playerIndex < 0, !game.actionDone);
+            if (playerIndex >= 0) {
+                return potentialTraders.get(playerIndex);
+            }
         }
         return null;
     }
