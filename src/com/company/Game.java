@@ -63,12 +63,10 @@ public class Game implements Serializable {
             toReturn += 1;
             print(toReturn + ". Heal sick dragons");
         }
-        /*
         if(players.size() > 1){
             toReturn += 1;
             print(toReturn + ". Trade");
         }
-         */
         print("\n0. Skip round");
         return toReturn;
     }
@@ -120,6 +118,7 @@ public class Game implements Serializable {
             print(TextColour.YELLOW + "[" + currentPlayer.getName() + "]" + TextColour.RESET +
                     " your turn has ended. Please turn the computer to next player.");
             Printer.askPlayerNumber(true, "ENTER a number when next player is ready", 9, 0);
+            Printer.sleep(1000);
         }
         if(players.indexOf(currentPlayer) == players.size()-1) {
             currentPlayer = players.get(0); //start over
@@ -134,6 +133,7 @@ public class Game implements Serializable {
         saveGame();
         for(var player: players){
             if(player.losing()){
+                System.out.println(TextColour.YELLOW + "[" + player.getName() + "] have lost." + TextColour.RESET);
                 continue;
             }
             for(var i = player.getOwnedDragons().size()-1; i >= 0; i--){
@@ -149,7 +149,7 @@ public class Game implements Serializable {
                     System.out.println(TextColour.CYAN + "[" + player.getName() + "]: " + player.getOwnedDragons().get(i).name + " is sick." + TextColour.RESET);
                 }
                 if(player.losing()){
-                    System.out.println(TextColour.YELLOW + player.getName() + " have lost!" + TextColour.RESET);
+                    System.out.println(TextColour.YELLOW + "[" + player.getName() + "] have lost!" + TextColour.RESET);
                 }
             }
         }
