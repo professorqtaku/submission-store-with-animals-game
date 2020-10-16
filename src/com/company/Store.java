@@ -51,8 +51,11 @@ public class Store implements Serializable {
         if(visitor != null){
             for (var dragon : dragonTypes.keySet()) {
                 if(visitor.getBalance() >= dragonTypes.get(dragon).getPriceNow()){
+                    if(dragonsPlayerCanBuy.size() == 0){
+                        System.out.println("Dragon (Price)");
+                    }
                     dragonsPlayerCanBuy.add(dragon);
-                    System.out.println(dragonsPlayerCanBuy.size() + ". " + dragon);
+                    System.out.printf("%d. %s (%d)\n",dragonsPlayerCanBuy.size(),dragon, dragonTypes.get(dragon).getPriceNow());
                 }
             }
         }
