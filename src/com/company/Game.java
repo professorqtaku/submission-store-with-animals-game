@@ -12,7 +12,7 @@ public class Game implements Serializable {
     private Player currentPlayer;
     private Store store;
     private Hospital hospital;
-    //private Trader trader;
+    private Trader trader;
     public boolean actionDone;
 
 
@@ -23,7 +23,7 @@ public class Game implements Serializable {
         this.players = players;
         this.store = new Store(this);
         this.hospital = new Hospital(this);
-        //this.trader = new Trader(this, this.players);
+        this.trader = new Trader(this, this.players);
     }
 
     public void startGame(){
@@ -87,9 +87,9 @@ public class Game implements Serializable {
                 if(currentPlayer.getOwnedDragons().size()>0){
                     hospital.visit(currentPlayer);
                 }
-                //else trader.visit(currentPlayer);
+                else trader.visit(currentPlayer);
             }
-            //case 7 -> trader.visit(currentPlayer);
+            case 7 -> trader.visit(currentPlayer);
         }
     }
 
