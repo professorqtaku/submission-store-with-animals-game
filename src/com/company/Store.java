@@ -112,10 +112,13 @@ public class Store implements Serializable {
         System.out.println("< Store: FOOD >");
         ArrayList<String> foodCanBuy = new ArrayList<String>();
         if(visitor != null){
-            for (var key : foodTypes.keySet()) {
-                if(visitor.getBalance() >= foodTypes.get(key).getPrice()){
-                    foodCanBuy.add(key);
-                    System.out.println(foodCanBuy.size() + ". " + key);
+            for (var food : foodTypes.keySet()) {
+                if(visitor.getBalance() >= foodTypes.get(food).getPrice()){
+                    if(foodCanBuy.size() == 0){
+                        System.out.println("Food (Price)");
+                    }
+                    foodCanBuy.add(food);
+                    System.out.printf("%d. %s (%d/kg)\n",foodCanBuy.size(),food, foodTypes.get(food).getPrice());
                 }
             }
         }
