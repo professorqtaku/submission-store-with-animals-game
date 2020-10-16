@@ -1,1 +1,3 @@
-new save.ser
+beededGood.ser
+Saga breeded 10 dragons.ser
+Saga only has female metallis.ser

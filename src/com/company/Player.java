@@ -182,7 +182,9 @@ public class Player implements Serializable {
         if(potentialDragons.size() > 0) {
             int partnerDragonIndex = (Printer.askPlayerNumber(true, "Choose partner", potentialDragons.size(), 0) - 1);
             backToGame(!game.actionDone, partnerDragonIndex == -1);
-            return potentialDragons.get(partnerDragonIndex);
+            if(partnerDragonIndex >= 0) {
+                return potentialDragons.get(partnerDragonIndex);
+            }
         }
         return null;
     }

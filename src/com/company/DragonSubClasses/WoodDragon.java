@@ -12,8 +12,9 @@ public class WoodDragon extends Dragon {
     }
 
     public void makeDragon(Player owner){
-        String name = Printer.askPlayer(true, "Please name the new " + this.getClass().getSimpleName());
         String gender = ((int) (Math.random()*2) == 1 ? "MALE": "FEMALE");
+        String name = Printer.askPlayer(true,
+                "Please name the new " + this.getClass().getSimpleName()+ " (" + gender + ")");
         WoodDragon newDragon = new WoodDragon(name,gender,owner);
         owner.addDragon(newDragon, false, 0);
     }
