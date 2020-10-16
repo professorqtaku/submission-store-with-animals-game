@@ -68,25 +68,27 @@ public class Trader extends Store{
                             "(0-" + dragonToSell.price+ ")?",
                     dragonToSell.price,-1);
             returnToGame(offer < 0,!game.actionDone);
-            Player buyer = getPlayer(false, offer);
-            if(buyer != null) {
-                game.actionDone = true;
-                System.out.println(TextColour.GREEN + "Turn the computer to [" + buyer.getName() + "]" + TextColour.RESET);
-                switch (Printer.askPlayerWithOptions(true,
-                        "Do you accept the offer (" + offer + ") for " + dragonToSell.name+"?",
-                        "Yes", "No")){
-                    case 1 -> {
-                        visitor.removeDragon(dragonToSell, true, offer);
-                        buyer.addDragon(dragonToSell, true, offer);
-                        System.out.println(TextColour.GREEN + "Trade successful" + TextColour.RESET);
+            if(offer >= 0) {
+                Player buyer = getPlayer(false, offer);
+                if (buyer != null) {
+                    game.actionDone = true;
+                    System.out.println(TextColour.GREEN + "Turn the computer to [" + buyer.getName() + "]" + TextColour.RESET);
+                    switch (Printer.askPlayerWithOptions(true,
+                            "Do you accept the offer (" + offer + ") for " + dragonToSell.name + "?",
+                            "Yes", "No")) {
+                        case 1 -> {
+                            visitor.removeDragon(dragonToSell, true, offer);
+                            buyer.addDragon(dragonToSell, true, offer);
+                            System.out.println(TextColour.GREEN + "Trade successful" + TextColour.RESET);
+                        }
+                        case 2 -> {
+                            System.out.println(TextColour.BLUE + "Trade unsuccessful" + TextColour.RESET);
+                        }
                     }
-                    case 2 -> {
-                        System.out.println(TextColour.BLUE + "Trade unsuccessful" + TextColour.RESET);
+                    System.out.println(TextColour.GREEN + "Turn the computer to [" + visitor.getName() + "]" + TextColour.RESET);
+                    if (askBuyMore("dragons", "trade")) {
+                        trade();
                     }
-                }
-                System.out.println(TextColour.GREEN + "Turn the computer to [" + visitor.getName() + "]" + TextColour.RESET);
-                if (askBuyMore("dragons", "trade")) {
-                    trade();
                 }
             }
         }
