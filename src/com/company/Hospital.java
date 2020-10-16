@@ -28,8 +28,11 @@ public class Hospital extends Store{
         if(visitor != null){
             for (var dragon : visitor.getOwnedDragons()) {
                 if(dragon.sick){
+                    if(sickDragons.size() == 0){
+                        System.out.println("Dragon (Hospital fee)");
+                    }
                     sickDragons.add(dragon);
-                    System.out.println(sickDragons.size() + ". " + dragon.name);
+                    System.out.printf("%d. %s (%d)\n",sickDragons.size(), dragon.name, dragon.getPriceNow()/2);
                 }
             }
         }
@@ -46,6 +49,7 @@ public class Hospital extends Store{
         returnToGame(dragonIndex == -1, !game.actionDone);
         if(dragonIndex >= 0) {
             Dragon dragonToHeal = sickDragons.get(dragonIndex);
+            visitor.pay(dragonToHeal.getPriceNow()/2);
             if((int)(Math.random()*2) == 1){
                 dragonToHeal.sick = false;
                 System.out.println(dragonToHeal.name + " is healed!");

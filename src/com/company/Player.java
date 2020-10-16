@@ -53,6 +53,10 @@ public class Player implements Serializable {
     public boolean losing(){
         return (balance <= 0 && ownedDragons.size() <= 0);
     }
+    
+    public void pay(int amount){
+        this.balance -= amount;
+    }
 
     public void buyFood(Food food, int quantity){
         balance -= food.getPrice()*quantity;
