@@ -138,8 +138,13 @@ public class Menu implements Serializable {
     public void howToPlay(){
         System.out.println(TextColour.YELLOW + "*** HOW TO PLAY ***\n" +
                 "You are dragon breeders. \n" +
+                "You choose how many rounds, start balance and amount of players. \n" +
                 "Buy dragons, food or sell dragon at the shop\n" +
                 "Dragon's selling price = buying price * health%\n" +
+                "After every round the animals will reduce health by 10-30 and have 20% chance to get sick. \n" +
+                "Animals regain health by 10/kg food they eat." +
+                "You cannot feed dragons that are sick. \n" +
+                "Take sick animals to the hospital to heal them, there is 50% chance for them to be healed." +
                 "Breed dragons of same element to get more dragons (can be done once/round)\n" +
                 "When the game is over, all dragons will be sold in the shop.\n" +
                 "The breeder with most money wins.\n" + TextColour.RESET);

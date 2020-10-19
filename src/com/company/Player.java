@@ -96,16 +96,15 @@ public class Player implements Serializable {
     }
 
     public boolean feed(){
-        if(ownedDragons.size() == 0 || !haveFood()){
+        ArrayList<Dragon> healthyDragons = getealthyDragons();
+        if(healthyDragons.size() == 0 || !haveFood()){
             System.out.println("There are no food/dragon!");
             return false;
         }
         System.out.println("Choose the dragon you want to feed:");
         System.out.println("Dragon\t (Health)");
-        for(int i = 0; i < ownedDragons.size(); i++){
-            System.out.println((i+1) + ". " + ownedDragons.get(i).name + " \t(" + ownedDragons.get(i).health + ")");
-        }
-        Dragon dragonToFeed = ownedDragons.get(Printer.askPlayerNumber(false,"", ownedDragons.size(),1)-1);
+        Printer.printDragonList(healthyDragons,"","");
+        Dragon dragonToFeed = healthyDragons.get(Printer.askPlayerNumber(false,"", ownedDragons.size(),1)-1);
         ArrayList<String> foodOptions = foodOptions(dragonToFeed);
         if(foodOptions != null){
             feedDragon(dragonToFeed, foodOptions);
@@ -187,6 +186,16 @@ public class Player implements Serializable {
             }
         }
         return null;
+    }
+
+    private ArrayList<Dragon> getealthyDragons(){
+        var toReturn = new ArrayList<Dragon>();
+        for(var dragon: ownedDragons){
+            if(!dragon.sick){
+                toReturn.add(dragon);
+            }
+        }
+        return toReturn;
     }
 
     private void checkListAndWarn(int listToCheckSize){

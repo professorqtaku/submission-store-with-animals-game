@@ -48,6 +48,7 @@ public class TradingCenter extends Store{
                     seller.removeDragon(dragonToBuy,true, offer);
                     visitor.addDragon(dragonToBuy,true,offer);
                     System.out.println(TextColour.GREEN + "Trade successful" + TextColour.RESET);
+                    game.announceLost(seller);
                 }
                 case 2 -> {
                     System.out.println(TextColour.BLUE + "Trade unsuccessful" + TextColour.RESET);
@@ -81,6 +82,7 @@ public class TradingCenter extends Store{
                             visitor.removeDragon(dragonToSell, true, offer);
                             buyer.addDragon(dragonToSell, true, offer);
                             System.out.println(TextColour.GREEN + "Trade successful" + TextColour.RESET);
+                            game.announceLost(visitor);
                         }
                         case 2 -> {
                             System.out.println(TextColour.BLUE + "Trade unsuccessful" + TextColour.RESET);

@@ -156,7 +156,7 @@ public class Game implements Serializable {
         Printer.sleep(2000);
     }
 
-    private void announceLost(Player player){
+    public void announceLost(Player player){
         if(player.losing()){
             System.out.println(TextColour.YELLOW + "[" + player.getName() + "] have lost!" + TextColour.RESET);
         }
