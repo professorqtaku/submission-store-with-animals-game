@@ -12,7 +12,7 @@ public class Game implements Serializable {
     private Player currentPlayer;
     private Store store;
     private Hospital hospital;
-    private Trader trader;
+    private TradingCenter tradingCenter;
     public boolean actionDone;
 
 
@@ -23,7 +23,7 @@ public class Game implements Serializable {
         this.players = players;
         this.store = new Store(this);
         this.hospital = new Hospital(this);
-        this.trader = new Trader(this, this.players);
+        this.tradingCenter = new TradingCenter(this, this.players);
     }
 
     public void startGame(){
@@ -85,9 +85,9 @@ public class Game implements Serializable {
                 if(currentPlayer.getOwnedDragons().size()>0){
                     hospital.visit(currentPlayer);
                 }
-                else trader.visit(currentPlayer);
+                else tradingCenter.visit(currentPlayer);
             }
-            case 7 -> trader.visit(currentPlayer);
+            case 7 -> tradingCenter.visit(currentPlayer);
         }
     }
 
@@ -132,11 +132,10 @@ public class Game implements Serializable {
         saveGame();
         for(var player: players){
             if(player.losing()){
-                System.out.println(TextColour.YELLOW + "[" + player.getName() + "] have lost." + TextColour.RESET);
                 continue;
             }
             for(var i = player.getOwnedDragons().size()-1; i >= 0; i--){
-                player.getOwnedDragons().get(i).reduceHealth((int)(Math.random()*21)+10);
+                player.getOwnedDragons().get(i).reduceHealth();
                 player.getOwnedDragons().get(i).age += 1;
                 if(!player.getOwnedDragons().get(i).living() || player.getOwnedDragons().get(i).sick){ // check if dead or sick, then die
                     System.out.println(TextColour.BLUE + "[" + player.getName() + "]: " + player.getOwnedDragons().get(i).name + " is dead. Cause: "
@@ -147,13 +146,20 @@ public class Game implements Serializable {
                 else if(player.getOwnedDragons().get(i).gettingSick()){ // if sick
                     System.out.println(TextColour.CYAN + "[" + player.getName() + "]: " + player.getOwnedDragons().get(i).name + " is sick." + TextColour.RESET);
                 }
-                if(player.losing()){
-                    System.out.println(TextColour.YELLOW + "[" + player.getName() + "] have lost!" + TextColour.RESET);
-                }
+                announceLost(player);
             }
+        }
+        if(playedRounds == 0){
+            return;
         }
         Printer.askPlayerNumber(true, "ENTER a number to start ROUND " + (playedRounds+1), 100000,0);
         Printer.sleep(2000);
+    }
+
+    private void announceLost(Player player){
+        if(player.losing()){
+            System.out.println(TextColour.YELLOW + "[" + player.getName() + "] have lost!" + TextColour.RESET);
+        }
     }
 
     private boolean gameOver(){

@@ -206,14 +206,6 @@ public class Player implements Serializable {
         }
     }
 
-    public void printAllOwnedDragons(){
-        int counter = 1;
-        for(var x: ownedDragons){
-            System.out.println(counter + ". " + x.name);
-            counter++;
-        }
-    }
-
     public String getName(){
         return this.name;
     }

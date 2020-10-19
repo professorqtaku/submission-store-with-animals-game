@@ -17,22 +17,22 @@ public class Hospital extends Store{
     }
 
     private void healDragon(){
+        System.out.println("< Hospital: DRAGONS >");
         ArrayList<Dragon> sickDragons = getSickDragons();
         checkListAndWarn(sickDragons.size());
-        healDragonAction(sickDragons);
+        if(sickDragons.size()>0) {
+            System.out.println("OBS! There are only 50% chance for survival!");
+            Printer.printDragonList(sickDragons, "hospital", "Hospital fee");
+            healDragonAction(sickDragons);
+        }
     }
 
     private ArrayList<Dragon> getSickDragons(){
-        System.out.println("< Hospital: DRAGONS >");
         ArrayList<Dragon> sickDragons = new ArrayList<>();
         if(visitor != null){
             for (var dragon : visitor.getOwnedDragons()) {
                 if(dragon.sick){
-                    if(sickDragons.size() == 0){
-                        System.out.println("Dragon (Hospital fee)");
-                    }
                     sickDragons.add(dragon);
-                    System.out.printf("%d. %s (%d)\n",sickDragons.size(), dragon.name, dragon.getPriceNow()/2);
                 }
             }
         }
@@ -52,6 +52,7 @@ public class Hospital extends Store{
             visitor.pay(dragonToHeal.getPriceNow()/2);
             if((int)(Math.random()*2) == 1){
                 dragonToHeal.sick = false;
+                dragonToHeal.health = 100;
                 System.out.println(dragonToHeal.name + " is healed!");
             }
             else{

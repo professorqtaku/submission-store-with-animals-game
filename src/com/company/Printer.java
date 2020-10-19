@@ -1,5 +1,7 @@
 package com.company;
 
+import com.company.DragonSubClasses.WoodDragon;
+
 import java.util.*;
 
 public class Printer {
@@ -60,10 +62,20 @@ public class Printer {
         }
     }
 
-    public static void printArrayList(ArrayList<String> listToPrint){
+    public static void printDragonList(ArrayList<Dragon> dragons, String action, String stringToAdd){
+        String toAdd = "-";
         int counter = 1;
-        for(var x: listToPrint){
-            print(counter + ". " + x);
+        System.out.println("Dragon name (Gender): \t Health \t (Age/Max age)\tType\tSICK/NOT\t " + toAdd + " " + stringToAdd);
+        for(var dragon: dragons){
+            switch (action){
+                case "hospital" -> {
+                    toAdd += dragon.getPriceNow()/2;
+                }
+                case "sell" -> {
+                    toAdd += dragon.getPriceNow();
+                }
+            }
+            print(counter + ". " + dragon + (toAdd.equals("-") ? "" : toAdd));
             counter++;
         }
     }

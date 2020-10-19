@@ -2,11 +2,11 @@ package com.company;
 
 import java.util.ArrayList;
 
-public class Trader extends Store{
+public class TradingCenter extends Store{
 
     private ArrayList<Player> players;
 
-    public Trader(Game game, ArrayList<Player> players){
+    public TradingCenter(Game game, ArrayList<Player> players){
         super(game);
         this.players = players;
     }
@@ -17,6 +17,7 @@ public class Trader extends Store{
     }
 
     public void trade(){
+        System.out.println("< Trading center: DRAGON >");
         int action = Printer.askPlayerWithOptions(true,"What do you want to do?",
                 "Buy dragons from other players",
                 "Sell dragons to other players");
@@ -129,8 +130,7 @@ public class Trader extends Store{
 
     private Dragon getDragon(Player seller, boolean visitorBuy){
         if(seller != null){
-            System.out.println("< Trade: DRAGON >");
-            seller.printAllOwnedDragons();
+            Printer.printDragonList(seller.getOwnedDragons(),"","");
             int dragonIndex = Printer.askPlayerNumber(true, "Choose the dragon you want to " +
                             (visitorBuy ? "buy" : "sell") + ".",
                     seller.getOwnedDragons().size(),0)-1;

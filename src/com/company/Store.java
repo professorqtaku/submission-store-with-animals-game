@@ -40,13 +40,13 @@ public class Store implements Serializable {
     }
 
     private void sellDragon(){
+        System.out.println("< Store: DRAGONS >");
         ArrayList<String> dragonsCanBuy = dragonsPlayerCanBuyMenu();
         checkListAndWarn(dragonsCanBuy.size());
         sellDragonAction(dragonsCanBuy);
     }
 
     private ArrayList<String> dragonsPlayerCanBuyMenu(){
-        System.out.println("< Store: DRAGONS >");
         ArrayList<String> dragonsPlayerCanBuy = new ArrayList<String>();
         if(visitor != null){
             for (var dragon : dragonTypes.keySet()) {
@@ -55,7 +55,7 @@ public class Store implements Serializable {
                         System.out.println("Dragon (Price)");
                     }
                     dragonsPlayerCanBuy.add(dragon);
-                    System.out.printf("%d. %s (%d)\n",dragonsPlayerCanBuy.size(),dragon, dragonTypes.get(dragon).getPriceNow());
+                    System.out.printf("%d. %s (%dp)\n",dragonsPlayerCanBuy.size(),dragon, dragonTypes.get(dragon).getPriceNow());
                 }
             }
         }
@@ -66,11 +66,16 @@ public class Store implements Serializable {
         if(dragonsCanBuy.size() < 1){
             return;
         }
-        System.out.println("ENTER 0 for NOT buying any dragon");
-        int dragonIndex = (Printer.askPlayerNumber(true,
-                "Which dragon do you want to buy?", dragonsCanBuy.size(),0)-1);
+        System.out.println(TextColour.YELLOW + "Your balance: " + visitor.getBalance() + "p" + TextColour.RESET);
+        System.out.println("ENTER 0 for NOT buying any dragon, 9 for information about the dragons");
+        int dragonIndex = Printer.askPlayerNumber(true,
+                "Which dragon do you want to buy?", 9,0) - 1;
         returnToGame(dragonIndex == -1, !game.actionDone);
-        if(dragonIndex >= 0) {
+        if(dragonIndex == 8){
+            printDragonInformation();
+            sellDragon();
+        }
+        else if(dragonIndex >= 0 && dragonIndex < dragonsCanBuy.size()) {
             String dragonToBuy = dragonsCanBuy.get(dragonIndex);
             System.out.println("You bought a " + dragonToBuy);
             String name = Printer.askPlayer(true, "Please name the " + dragonToBuy + ": ");
@@ -100,16 +105,20 @@ public class Store implements Serializable {
                 sellDragon();
             }
         }
+        else {
+            System.out.println("Please enter a number between 0-" + (dragonsCanBuy.size()-1));
+            sellDragon();
+        }
     }
 
     private void sellFood(){
+        System.out.println("< Store: FOOD >");
         ArrayList<String> foodCanBuy = foodPlayerCanBuyMenu();
         checkListAndWarn(foodCanBuy.size());
         sellFoodMenuAction(foodCanBuy);
     }
 
     private ArrayList<String> foodPlayerCanBuyMenu(){
-        System.out.println("< Store: FOOD >");
         ArrayList<String> foodCanBuy = new ArrayList<String>();
         if(visitor != null){
             for (var food : foodTypes.keySet()) {
@@ -129,14 +138,16 @@ public class Store implements Serializable {
         if(foodCanBuy.size() < 1){
             return;
         }
+        System.out.println(TextColour.YELLOW + "Your balance: " + visitor.getBalance() + "p" + TextColour.RESET);
         int foodIndex = Printer.askPlayerNumber(true, "What food do you want to buy?",foodCanBuy.size(),0) -1;
         if(foodIndex < 0) {
             returnToGame(true, !game.actionDone);
         }
         else {
             String foodToBuy = foodCanBuy.get(foodIndex);
+            System.out.println("Your balance: " + visitor.getBalance() + "p");
             int amount = Printer.askPlayerNumber(true, "How much do you want to buy (0-" +
-                            visitor.getBalance() / foodTypes.get(foodToBuy).getPrice() + ")? ",
+                            visitor.getBalance() / foodTypes.get(foodToBuy).getPrice() + " kg)? ",
                     visitor.getBalance() / foodTypes.get(foodToBuy).getPrice(), 0);
             returnToGame(amount == 0, !game.actionDone);
             visitor.buyFood(foodTypes.get(foodToBuy), amount);
@@ -148,18 +159,16 @@ public class Store implements Serializable {
     }
 
     private void buyDragonFromPlayer(){
+        System.out.println("< Store: SELL DRAGON >");
         if(visitor.getOwnedDragons().size() > 0) {
             System.out.println("Which dragon do you want to sell?");
             System.out.println("ENTER 0 for NOT selling");
-            System.out.println("Dragon (Price)");
-            for (var dragon : visitor.getOwnedDragons()) {
-                System.out.println((visitor.getOwnedDragons().indexOf(dragon) + 1) + ". " +
-                        dragon.name + " (" + dragon.getPriceNow() + ")");
-            }
+            Printer.printDragonList(visitor.getOwnedDragons(),"sell", "Price");
             int dragonIndex = Printer.askPlayerNumber(false, "", visitor.getOwnedDragons().size(), 0) - 1;
             returnToGame(dragonIndex < 0, !game.actionDone);
             if (dragonIndex >= 0) {
-                visitor.removeDragon(visitor.getOwnedDragons().get(dragonIndex), true, visitor.getOwnedDragons().get(dragonIndex).getPriceNow());
+                visitor.removeDragon(visitor.getOwnedDragons().get(dragonIndex), true,
+                        visitor.getOwnedDragons().get(dragonIndex).getPriceNow());
                 game.actionDone = true;
                 if (askBuyMore("dragons", "sell")) {
                     buyDragonFromPlayer();
@@ -169,6 +178,22 @@ public class Store implements Serializable {
         else{
             checkListAndWarn(visitor.getOwnedDragons().size());
         }
+    }
+
+    private void printDragonInformation(){
+        System.out.print(TextColour.GREEN);
+        System.out.println("-".repeat(50));
+        System.out.println("< Store: DRAGON information >");
+        for(var key: dragonTypes.keySet()){
+            System.out.printf("%s:\n",key);
+            System.out.printf("Max age is %d, can breed up to %d dragons and eats %s\n",
+                    dragonTypes.get(key).maxAge,dragonTypes.get(key).maxChildrenPerBreed, new ArrayList<>(Arrays.asList(dragonTypes.get(key).getFoodCanEat())));
+        }
+        System.out.println("\nTip: It's better to choose dragons that can breed more dragons,");
+        System.out.println("but don't forget to take care of you dragons and make good trades with your friends! :)");
+        System.out.println("-".repeat(50));
+        System.out.print(TextColour.RESET);
+        Printer.sleep(3000);
     }
 
     protected void checkListAndWarn(int listToCheckSize){

@@ -44,8 +44,8 @@ public abstract class Dragon implements Serializable{
         owner.consumeFood(foodType, foodQuantity);
     }
 
-    public void reduceHealth(int healthToLose){
-        this.health -= healthToLose;
+    public void reduceHealth(){
+        this.health -= (int)(Math.random()*21)+10;
     }
 
     public boolean living(){
@@ -83,9 +83,6 @@ public abstract class Dragon implements Serializable{
         this.owner = owner;
         if(owner != null){
             owner.addDragon(this, purchase,(purchase ? getPriceNow() : 0));
-        }
-        else {
-            owner.removeDragon(this, false, 0);
         }
     }
 
