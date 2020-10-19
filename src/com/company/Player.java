@@ -98,7 +98,7 @@ public class Player implements Serializable {
     public boolean feed(){
         ArrayList<Dragon> healthyDragons = getealthyDragons();
         if(healthyDragons.size() == 0 || !haveFood()){
-            System.out.println("There are no food/dragon!");
+            TextColour.inRed("There are no food/dragon!",true);
             return false;
         }
         System.out.println("Choose the dragon you want to feed:");

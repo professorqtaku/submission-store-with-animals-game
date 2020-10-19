@@ -78,7 +78,7 @@ public class Store implements Serializable {
         else if(dragonIndex >= 0 && dragonIndex < dragonsCanBuy.size()) {
             String dragonToBuy = dragonsCanBuy.get(dragonIndex);
             System.out.println("You bought a " + dragonToBuy);
-            String name = Printer.askPlayer(true, "Please name the " + dragonToBuy + ": ");
+            String name = Printer.askPlayer(true, "Please name the " + dragonToBuy + " (you will choose the gender after this): ");
             String gender = (Printer.askPlayerNumber(true, "Choose the gender (1 = male, 2 = female)",
                     2, 1) == 1 ? "male" : "female");
             Dragon dragonToSell = null;
@@ -99,15 +99,17 @@ public class Store implements Serializable {
                     dragonToSell = new MetalDragon(name, gender, visitor);
                 }
             }
-            visitor.addDragon(dragonToSell, true, dragonToSell.getPriceNow());
-            game.actionDone = true;
-            if (askBuyMore("Dragons", "buy")) {
-                sellDragon();
+            if(dragonToSell != null) {
+                visitor.addDragon(dragonToSell, true, dragonToSell.getPriceNow());
+                game.actionDone = true;
+                if (askBuyMore("Dragons", "buy")) {
+                    sellDragon();
+                }
             }
         }
-        else {
-            System.out.println("Please enter a number between 0-" + (dragonsCanBuy.size()-1));
-            sellDragon();
+        else if(!game.actionDone){
+                System.out.println("Please enter a number between 0-" + dragonsCanBuy.size() + " or 9");
+                sellDragon();
         }
     }
 
@@ -143,7 +145,7 @@ public class Store implements Serializable {
         if(foodIndex < 0) {
             returnToGame(true, !game.actionDone);
         }
-        else {
+        else if (!game.actionDone){
             String foodToBuy = foodCanBuy.get(foodIndex);
             System.out.println("Your balance: " + visitor.getBalance() + "p");
             int amount = Printer.askPlayerNumber(true, "How much do you want to buy (0-" +

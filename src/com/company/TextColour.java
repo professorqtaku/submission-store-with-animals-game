@@ -11,4 +11,12 @@ public class TextColour {
     public static final String PURPLE = "\u001B[35m";
     public static final String CYAN = "\u001B[36m";
     public static final String WHITE = "\u001B[37m";
+
+    public static void inYellow(String x, boolean ln){
+        if(!x.equals("")){ System.out.print(TextColour.YELLOW + x + TextColour.RESET + (ln ? "\n" : "")); }
+    }
+
+    public static void inRed(String x, boolean ln){
+        if(!x.equals("")){ System.out.print(TextColour.RED + x + TextColour.RESET + (ln ? "\n" : "")); }
+    }
 }

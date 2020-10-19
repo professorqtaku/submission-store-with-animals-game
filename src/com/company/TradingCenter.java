@@ -131,7 +131,8 @@ public class TradingCenter extends Store{
     }
 
     private Dragon getDragon(Player seller, boolean visitorBuy){
-        if(seller != null){
+        checkListAndWarn(seller.getOwnedDragons().size());
+        if(seller.getOwnedDragons().size() > 0){
             Printer.printDragonList(seller.getOwnedDragons(),"","");
             int dragonIndex = Printer.askPlayerNumber(true, "Choose the dragon you want to " +
                             (visitorBuy ? "buy" : "sell") + ".",
@@ -146,7 +147,7 @@ public class TradingCenter extends Store{
 
     protected void checkListAndWarn(int listToCheckSize){
         if(listToCheckSize == 0){
-            System.out.println(TextColour.RED + "There are no player you can trade with!" + TextColour.RESET);
+            System.out.println(TextColour.RED + "There are no players/dragons you can trade with!" + TextColour.RESET);
             Printer.sleep(2000);
             returnToGame(!game.actionDone,true);
         }

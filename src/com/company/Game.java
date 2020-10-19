@@ -46,9 +46,11 @@ public class Game implements Serializable {
     }
 
     public void playerTurn(){
-        printPlayerStatus();
-        int maxNumberOfChoice = printPlayerMenu();
-        playerMenuAction(Printer.askPlayerNumber(false,"",maxNumberOfChoice,0));
+        if(!actionDone) {
+            printPlayerStatus();
+            int maxNumberOfChoice = printPlayerMenu();
+            playerMenuAction(Printer.askPlayerNumber(false, "", maxNumberOfChoice, 0));
+        }
     }
 
     public int printPlayerMenu(){
@@ -76,7 +78,8 @@ public class Game implements Serializable {
             case 1, 2, 5-> {store.visit(currentPlayer, action);}
             case 3 -> {
                 if(!currentPlayer.feed()){
-                    Printer.sleep(1000);
+                    System.out.println("Going back to menu...");
+                    Printer.sleep(2000);
                     playerTurn();
                 }
             }
