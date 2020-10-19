@@ -46,7 +46,7 @@ public class Printer {
         return askPlayerNumber(false, "", choices.length, 1);
     }
 
-    private static void print(String x){
+    public static void print(String x){
         // print a string if it is not empty
         if(!x.equals("")){ System.out.println(x); }
     }

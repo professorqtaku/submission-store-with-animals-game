@@ -98,11 +98,10 @@ public class Game implements Serializable {
         print("Balance: " + currentPlayer.getBalance());
         print("Owned dragons: " + currentPlayer.getOwnedDragons().size());
         if(currentPlayer.getOwnedDragons().size() != 0) {
-            print("Name \t (Health) \t Type");
+            print("Name (Gender):\t Health (Age/Max age) \t Type");
             print("------------------------------");
             for (var dragon : currentPlayer.getOwnedDragons()) {
-                print(dragon.name + " \t (" + dragon.health + ") \t " + dragon.getClass().getSimpleName() +
-                        (dragon.sick ? TextColour.CYAN + " SICK" + TextColour.RESET : ""));
+                System.out.println(dragon);
             }
             print("------------------------------");
         }

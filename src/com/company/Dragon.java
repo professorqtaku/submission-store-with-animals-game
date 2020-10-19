@@ -1,8 +1,9 @@
 package com.company;
 
 import java.io.Serializable;
+import java.util.HashMap;
 
-public abstract class Dragon implements Serializable {
+public abstract class Dragon implements Serializable{
     enum Gender{
         MALE,
         FEMALE
@@ -89,8 +90,8 @@ public abstract class Dragon implements Serializable {
     }
 
     public boolean gettingSick(){
-        sick = ((int) (Math.random() * 5) + 1 == 1);
-        return sick;
+        this.sick = ((int) (Math.random() * 5) + 1 == 1);
+        return this.sick;
     }
 
     public String[] getFoodCanEat(){
@@ -100,4 +101,11 @@ public abstract class Dragon implements Serializable {
     public int getPriceNow(){
         return (int) Math.round(price * health/100.0 * (age == 0 ? 1.0 : (1.0 - (double)age/maxAge)) * (sick ? 0.5 : 1));
     }
-}
+
+    public String toString() {
+        // name (gender): health (age/maxAge) Type SICK/NOT SICK
+        return this.name + " (" + (this.gender == Gender.MALE ? "M" : "F")+"): \t " +
+                this.health + " \t (" + this.age + "/" + this.maxAge + ") \t " +
+                this.getClass().getSimpleName() +
+                (this.sick ? TextColour.CYAN + " SICK " + TextColour.RESET : ""); // trick
+    }}

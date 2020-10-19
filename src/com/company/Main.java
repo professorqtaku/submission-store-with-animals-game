@@ -14,6 +14,9 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         // DEADLINE 21/10 wednesday
-        new Menu();
+        var dragon = new WoodDragon("Helly","female",null);
+        dragon.gettingSick();
+        System.out.println(dragon);
+        //new Menu();
     }
 }
